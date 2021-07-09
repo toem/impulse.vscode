@@ -9,6 +9,14 @@
 
 ![impulse](images/1.png)
 
+## License
+
+see [LICENSE.md](LICENSE.md)
+see [Licensing options](https://toem.de/index.php/pricing/pricing-options)
+
+* Non-commercial use is free including all features.
+* Commercial use is free including essential features.
+
 ## Requirements
 
 impulse requires a java Runtime environment (at least JRE8). For communication to the osgi impulse server, a socket interface is used.
