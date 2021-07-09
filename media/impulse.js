@@ -1,0 +1,1 @@
+../../de.toem.impulse.html.frontend/build/bazel-bin/src/main/java/app/impulse.js

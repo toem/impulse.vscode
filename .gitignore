@@ -1,0 +1,6 @@
+out/
+*.vsix
+.git/
+media/*dev*
+impulse/configuration/org.eclipse.osgi
+media/links

@@ -1,0 +1,133 @@
+{
+	"name": "impulse",
+	"displayName": "impulse",
+	"description": "impulse is a powerful visualization and analysis workbench which helps engineers to comfortably understand and debug complex semiconductor and multi-core software systems.",
+	"publisher": "toem-de",
+	"homepage": "https://www.toem.de",
+	"author": {
+		"name": "Thomas Haber"
+	},
+	"license" : "SEE LICENSE IN LICENSE.md",
+	"version": "0.1.0",
+	"engines": {
+		"vscode": "^1.50.0"
+	},
+	"icon": "images/impulse.png",
+	"categories": [
+	  "Visualization",
+	  "Testing",
+	  "Data Science",
+	  "Other"
+	],
+	"keywords": [
+		"impulse", "visualization", "analysis", "workbench",
+		"vcd","trace","logging","rt"
+	  ],
+	"galleryBanner": {
+	  "color": "#F2F2F2",
+	  "theme": "light"
+	},
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/toem/impulse-vscode.git"
+	},
+	"bugs": {
+	  "url": "https://github.com/toem/impulse-vscode/issues"
+	},
+	"activationEvents": [
+		"onCustomEditor:de.toem.impulse.editor.records",
+		"onCustomEditor:de.toem.impulse.editor.wallet",
+		"onView:de.toem.impulse.parts.samples",
+		"onView:de.toem.impulse.parts.samples.2",
+		"onView:de.toem.impulse.parts.samples.3",
+		"onView:de.toem.impulse.parts.samples.4",
+		"onCommand:catCustoms.pawDraw.new"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"customEditors": [
+			{
+				"viewType": "de.toem.impulse.editor.records",
+				"displayName": "impulse Viewer",
+				"selector": [
+					{
+						"filenamePattern": "*"
+					}
+				],
+				"priority": "option"
+			}			
+		],
+		"viewsContainers": {
+			"panel": [
+				{
+					"id": "samples-container",
+					"title": "Samples",
+					"icon": "$(clear-all)"
+				}
+			]
+		},
+		"views": {
+			"samples-container": [
+				{
+					"type": "webview",
+					"id": "de.toem.impulse.parts.samples",
+					"name": "1"
+
+				},
+				{
+					"type": "webview",
+					"id": "de.toem.impulse.parts.samples.2",
+					"name": "2",
+					"visibility": "hidden"
+				},
+				{
+					"type": "webview",
+					"id": "de.toem.impulse.parts.samples.3",
+					"name": "3",
+					"visibility": "hidden"
+				},
+				{
+					"type": "webview",
+					"id": "de.toem.impulse.parts.samples.4",
+					"name": "4",
+					"visibility": "hidden"
+				}
+			]
+		},
+		"configuration": [
+			{
+				"title": "impulse",
+				"properties": {
+					"impulse.java": {
+						"type": "string",
+						"default": "java -Xms128m -Xmx2048m",
+						"description": "Command line to start the impulse java osgi backend. Changes only take effect after a restart. "
+					},
+					"impulse.port": {
+						"type": "string",
+						"default": "5055",
+						"description": "Communication port for the impulse backend. Changes only take effect after a restart. "
+					}
+				}
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"lint": "eslint . --ext .ts,.tsx",
+		"watch": "tsc -w -p ./"
+	},
+	"dependencies": {
+		"ws": "^6.0.0"
+	},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^3.0.2",
+		"@typescript-eslint/parser": "^3.0.2",
+		"eslint": "^7.1.0",
+		"typescript": "^4.0.2",
+		"@types/vscode": "^1.50.0",
+		"@types/ws": "^6.0.0"
+	}
+}
