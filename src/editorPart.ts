@@ -5,7 +5,7 @@ import { getNonce } from './util';
 import { AbstractPartProvider } from './abstractPart';
 
 /**
- * Define the document (the data model) used for paw draw files.
+
  */
 class Document extends Disposable implements vscode.CustomDocument {
 

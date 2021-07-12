@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Register providers
 	context.subscriptions.push(EditPartProvider.register(context, 'de.toem.impulse.editor.records'));
-	context.subscriptions.push(EditPartProvider.register(context, 'de.toem.impulse.editor.wallet'));
+	//context.subscriptions.push(EditPartProvider.register(context, 'de.toem.impulse.editor.wallet'));
 	context.subscriptions.push(ViewPartProvider.register(context, 'de.toem.impulse.parts.samples'));
 	context.subscriptions.push(ViewPartProvider.register(context, 'de.toem.impulse.parts.samples.2'));
 	context.subscriptions.push(ViewPartProvider.register(context, 'de.toem.impulse.parts.samples.3'));
@@ -46,11 +46,14 @@ export function activate(context: vscode.ExtensionContext) {
 		const cp = require('child_process')
 		process = cp.exec(cmd, {
 			cdw: impulsePath.fsPath
-		});
+		},(error:Error, stdout:any, stderr:any) => {
+			if (error) {
+				vscode.window.showErrorMessage("Could not start impulse server:" + error.message,"Open Preferences").then((ret) => {
+					vscode.commands.executeCommand( 'workbench.action.openSettings', 'impulse' );
+				});
+			}});
 		process.stdout.on('data', (data: any) => {
 			console.log(data);
-
-
 
 			if (!client && (typeof data === "string") && data.includes("Server started")) {
 				connect(context, host, port);
@@ -64,6 +67,7 @@ export function activate(context: vscode.ExtensionContext) {
 		connect(context, host, port);
 
 }
+
 
 function connect(context: vscode.ExtensionContext, host: string, port: number) {
 	// json connection

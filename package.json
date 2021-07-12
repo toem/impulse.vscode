@@ -37,12 +37,10 @@
 	},
 	"activationEvents": [
 		"onCustomEditor:de.toem.impulse.editor.records",
-		"onCustomEditor:de.toem.impulse.editor.wallet",
 		"onView:de.toem.impulse.parts.samples",
 		"onView:de.toem.impulse.parts.samples.2",
 		"onView:de.toem.impulse.parts.samples.3",
-		"onView:de.toem.impulse.parts.samples.4",
-		"onCommand:catCustoms.pawDraw.new"
+		"onView:de.toem.impulse.parts.samples.4"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -53,7 +51,22 @@
 				"selector": [
 					{
 						"filenamePattern": "*"
-					}
+					},
+					{
+						"filenamePattern": "*.vcd"
+					},
+					{
+						"filenamePattern": "*.recJs"
+					},
+					{
+						"filenamePattern": "*.trace"
+					},
+					{
+						"filenamePattern": "*.recML"
+					},
+					{
+						"filenamePattern": "*.recMZ"
+					}					
 				],
 				"priority": "option"
 			}			

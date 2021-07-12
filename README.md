@@ -1,6 +1,6 @@
 # impulse for Visual Studio Code
 
-[**impulse**](https://toem.de/index.php/products/impulse) is a powerful event and waveform visualization and analysis workbench which helps engineers to comfortably understand and debug complex semiconductor and multi-core software systems.
+[**impulse**](https://toem.de/index.php/products/impulse) is a powerful event and waveform visualization and analysis workbench (simulation, traces, logs) which helps engineers to comfortably understand and debug complex semiconductor and multi-core software systems.
 
 > This vscode extension is an early beta (non-productive) version with basic features.  
 >
@@ -12,10 +12,15 @@
 ## License
 
 see [LICENSE.md](LICENSE.md)
+
 see [Licensing options](https://toem.de/index.php/pricing/pricing-options)
 
-* Non-commercial use is free including all features.
-* Commercial use is free including essential features.
+**Our guiding principle for this and all subsequent versions is:**
+
+* Non-commercial use is free - including all features.
+* Commercial use is free only for essential features.
+
+*This beta version does not require any license keys.*
 
 ## Requirements
 
@@ -23,11 +28,37 @@ impulse requires a java Runtime environment (at least JRE8). For communication t
 
 ## Preferences
 
-The cueent beta release, allows to configuure the java command options, and the communication port for to the osgi impulse server.
+The current beta release, allows to configure the java command options, and the communication port for the osgi impulse server.
 
 ![preferences](images/2.png)
 
-## File Formats
+## Quick Start
+
+* Select a file to view.
+* Use the context menus 'Open with' and select the impulse Viewer (You may select the impulse Viewer as the default option at this point).
+* On activation, it may take a while (a few secs) to load the backend java server. The OS may ask you for approval.
+* Have fun !
+
+## Documentation
+ 
+Enter [https://toem.de/index.php/resources/documentation](https://toem.de/index.php/resources/documentation) for more information about impulse. 
+ 
+The exstisting documentation currently only convers the eclipse version of impulse - although the principles and usage are quite similar.
+
+## Sources
+
+Find the source code of the vscode extension at [https://github.com/toem/impulse.vscode](https://github.com/toem/impulse.vscode/issues). 
+
+## Issues and Proposals
+
+Use [https://github.com/toem/impulse.vscode/issues](https://github.com/toem/impulse.vscode/issues) for issues and proposals.
+
+You may use [support@toem.de](mailto:support@toem.de) for further information.
+
+
+## Features
+
+### File Formats
 
 * recMl/ recMZ
 
@@ -57,7 +88,7 @@ The cueent beta release, allows to configuure the java command options, and the 
 
     Reader for debugging purpose. Extract bytes blocks from the input stream.
 
-## Plot types
+### Plot types
 
 
 * Logic
@@ -107,7 +138,7 @@ The cueent beta release, allows to configuure the java command options, and the 
     Javascript charts
 
 
-## Axis & Cursors
+### Axis & Cursors
 
 * Supports multiple domains
 

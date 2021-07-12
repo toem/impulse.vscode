@@ -10,7 +10,7 @@
 
 **Unless otherwise indicated below, the Content is provided to you under the terms and conditions of the MIT License**. 
     
-A copy of the License is available in the "licenses" sub-folder.
+A copy of the License is available in the "LICENSES" sub-folder.
 
 ### 1. eclipse equinox
 
@@ -18,7 +18,7 @@ The Content includes eclipse equinox jar files (binary).
 
 These files are provided to you under the terms and conditions of the **Eclipse Public License Version 2.0 ("EPL")**. 
 
-A copy of the EPL is available at http://www.eclipse.org/legal/epl-v20.html and in  the "licenses" sub-folder.
+A copy of the EPL is available at http://www.eclipse.org/legal/epl-v20.html and in  the "LICENSES" sub-folder.
 
 #### Files:
 
@@ -28,7 +28,7 @@ A copy of the EPL is available at http://www.eclipse.org/legal/epl-v20.html and 
 
 The Content includes impulse jar files (binary).
 
-These files are provided to you under the terms and conditions of the **Impulse End-User License**. A copy of the License is available in the "licenses" sub-folder.
+These files are provided to you under the terms and conditions of the **Impulse End-User License**. A copy of the License is available in the "LICENSES" sub-folder.
 
 #### Files:
 
@@ -43,7 +43,7 @@ These files are provided to you under the terms and conditions of the **Impulse 
 
 The Content includes impulse js files (compressed javascript).
 
-These files are provided to you under the terms and conditions of the **Impulse End-User License**. A copy of the License is available in the "licenses" sub-folder.
+These files are provided to you under the terms and conditions of the Impulse End-User License. A copy of the License is available in the "LICENSES" sub-folder.
 
 #### Files:
 
