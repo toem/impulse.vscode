@@ -31,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// get free port
 	host = 'localhost'
-	port = (typeof cport === "string") ? parseInt(cport) :8001;
+	port = (typeof cport === "string") ? parseInt(cport) : 8001;
 
 	if (true) {
 
@@ -46,12 +46,13 @@ export function activate(context: vscode.ExtensionContext) {
 		const cp = require('child_process')
 		process = cp.exec(cmd, {
 			cdw: impulsePath.fsPath
-		},(error:Error, stdout:any, stderr:any) => {
+		}, (error: Error, stdout: any, stderr: any) => {
 			if (error) {
-				vscode.window.showErrorMessage("Could not start impulse server:" + error.message,"Open Preferences").then((ret) => {
-					vscode.commands.executeCommand( 'workbench.action.openSettings', 'impulse' );
+				vscode.window.showErrorMessage("Could not start impulse server:" + error.message, "Open Preferences").then((ret) => {
+					vscode.commands.executeCommand('workbench.action.openSettings', 'impulse');
 				});
-			}});
+			}
+		});
 		process.stdout.on('data', (data: any) => {
 			console.log(data);
 
@@ -98,6 +99,7 @@ export function deactivate() {
 var nextRequestId = 1;
 var requests = new Map<number, (response: any) => void>();
 var outputChannels = new Map<string, vscode.OutputChannel>();
+var progressMessages = new Map<number, any>();
 
 export function postMessage(receiver: any | null, message: any, listener: ((response: any) => void) | null) {
 	if (!receiver)
@@ -150,8 +152,52 @@ export function onMessage(sender: any, message: any) {
 					vscode.window.showInformationMessage(title, { modal: true }, ...(message.x3)).then((ret) => {
 						sender.postMessage({ id: message.id, op: message.op, i0: message.i0, i1: message.x3.indexOf(ret) });
 					});
+
 				}
 					break;
+
+				case "Progress": {
+
+					// start progress
+					if (message.i1 == 0) {
+
+						progressMessages.set(message.i0, message);
+
+						const progressId: number = message.i0;
+						const label = message.s2;
+						vscode.window.withProgress({
+							location: vscode.ProgressLocation.Notification,
+							cancellable: true,
+							title: label
+						}, async (progress) => {
+							var increments = 0;
+							while (progressMessages.has(progressId)) {
+								const m = progressMessages.get(progressId);
+								if (m) {
+									//console.log(m.s3,m.d4 * 100 - increments);
+									progress.report({
+										message: m.s3,
+										increment: m.d4 * 100 - increments,
+									});
+									increments = m.d4 * 100;
+								}
+								await new Promise(r => setTimeout(r, 500));
+							}
+						}).then((ret) => {
+						sender.postMessage({ id: message.id, op: message.op, i0: message.i0 });
+					});
+					} 
+					// update progress
+					else if (message.i1 == 1) {
+						progressMessages.set(message.i0, message);
+					} 
+					// end progress
+					else if (message.i1 == -1) {
+						progressMessages.delete(message.i0);
+					}
+				}
+					break;
+
 				case "TextEditor": {
 
 					var uri: vscode.Uri = elementFSInstance.assertFile(message.s0, message.s1);
@@ -161,9 +207,9 @@ export function onMessage(sender: any, message: any) {
 				}
 					break;
 				case "View": {
-					vscode.commands.executeCommand(message.s0+'.focus');
-					}
-						break;
+					vscode.commands.executeCommand(message.s0 + '.focus');
+				}
+					break;
 				case "Console": {
 
 					outputChannels.set(message.s0, vscode.window.createOutputChannel(message.s1));
