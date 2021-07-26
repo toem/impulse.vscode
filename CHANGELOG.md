@@ -1,4 +1,13 @@
 
+## V0.1.2 JUL 19th, 2021
+- [FEATURE]  Updating while loading record files
+- [IMPROVEMENT]  Tested frontend charts (to be intergrated)
+- [IMPROVEMENT]  Improved drag/drop into view
+- [FEATURE]  Inital Copy/Paste implementation
+- [IMPROVEMENT]  Changed resize button to not interfer with tree button
+- [IMPROVEMENT]  Updated plot dialog; Added color selector
+- [BUG] Layout problem between grid and panel layout
+
 ## V0.1.1 JUL 19th, 2021
 - [IMPROVEMENT]  Table column resize
 - [IMPROVEMENT]  Table column reorder (drag/drop)
