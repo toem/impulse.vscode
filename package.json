@@ -8,7 +8,7 @@
 		"name": "Thomas Haber"
 	},
 	"license" : "SEE LICENSE IN LICENSE.md",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"engines": {
 		"vscode": "^1.50.0"
 	},
@@ -34,6 +34,7 @@
 	"bugs": {
 	  "url": "https://github.com/toem/impulse.vscode/issues"
 	},
+	"extensionKind": ["workspace"],
 	"activationEvents": [
 		"onCustomEditor:de.toem.impulse.editor.records",
 		"onView:de.toem.impulse.parts.samples",

@@ -2,8 +2,7 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import { getNonce } from './util';
 import { onMessage } from './extension';
-import { host } from './extension';
-import { port } from './extension';
+import { impulsePartsUri } from './extension';
 
 export class AbstractPartProvider {
 
@@ -39,6 +38,9 @@ export class AbstractPartProvider {
 		const styleMainUri = webview.asWebviewUri(vscode.Uri.file(
 			path.join(this._context.extensionPath, 'media', 'impulse.css')
 		));
+		const chartUri = webview.asWebviewUri(vscode.Uri.file(
+			path.join(this._context.extensionPath, 'media', 'chart.js')
+		)); 
 
 		// Use a nonce to whitelist which scripts can be run
 		const nonce = getNonce();
@@ -53,7 +55,7 @@ export class AbstractPartProvider {
 				Use a content security policy to only allow loading images from https or from our extension directory,
 				and only allow scripts that have a specific nonce.
 				-->
-				<meta http-equiv="Content-Security-Policy" content="default-src 'self' ; img-src 'self' data:; style-src ${webview.cspSource};font-src ${webview.cspSource}; script-src 'nonce-${nonce}';connect-src ws:;">
+				<meta http-equiv="Content-Security-Policy" content="default-src 'self' ; img-src 'self' data:; style-src ${webview.cspSource};font-src ${webview.cspSource}; script-src 'nonce-${nonce}' 'unsafe-eval';connect-src ws:;">
 
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -65,8 +67,7 @@ export class AbstractPartProvider {
 			</head>
 			<body>
 				<script nonce="${nonce}">
-				    var impulseHost = "${host}";
-					var impulsePort = "${port}";
+				    var impulseUri = "${impulsePartsUri.toString()}";
 					var idePartRequest = "${this.id}";
 					var ideUriRequest = "${uri}";	
 					const vscode = acquireVsCodeApi();
@@ -77,6 +78,7 @@ export class AbstractPartProvider {
 				</script> 
 			    <script nonce="${nonce}" src="${configUri}"></script>				
 				<script nonce="${nonce}" src="${scriptUri}"></script>
+				<!--<script nonce="${nonce}" src="${chartUri}"></script> -->
 			</body>
 			</html>`;
 	}

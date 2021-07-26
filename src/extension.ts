@@ -5,11 +5,11 @@ import { EditPartProvider } from './editorPart';
 import { ViewPartProvider } from './viewPart';
 import { ElementFS, elementFSInstance } from './elementFsProvider';
 
-export var host: string;
-export var port: number;
+export var impulseIdeUri:vscode.Uri;
+export var impulsePartsUri:vscode.Uri;
 var process: any;
 var client: WebSocket;
-var impulse: any;
+var impulseIdeChannel: any;
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -29,11 +29,19 @@ export function activate(context: vscode.ExtensionContext) {
 	const cjava = config.get('java');
 	const cport = config.get('port');
 
-	// get free port
-	host = 'localhost'
-	port = (typeof cport === "string") ? parseInt(cport) : 8001;
+	// get host
+	var host: string = 'localhost';
 
-	if (true) {
+	// get free port
+	var port: number = (typeof cport === "string") ? parseInt(cport) : 8001;
+
+	// create uris
+	impulseIdeUri = 	vscode.Uri.parse('ws://' + host + ':' + port + '/ide');
+	impulsePartsUri =  vscode.Uri.parse('ws://' + host + ':' + port + '/parts'); 
+
+
+	// start server
+	if (true) { 
 
 		// command
 		const osgi = vscode.Uri.file(
@@ -49,7 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}, (error: Error, stdout: any, stderr: any) => {
 			if (error) {
 				vscode.window.showErrorMessage("Could not start impulse server:" + error.message, "Open Preferences").then((ret) => {
-					vscode.commands.executeCommand('workbench.action.openSettings', 'impulse');
+					if (ret) vscode.commands.executeCommand('workbench.action.openSettings', 'impulse');
 				});
 			}
 		});
@@ -57,7 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
 			console.log(data);
 
 			if (!client && (typeof data === "string") && data.includes("Server started")) {
-				connect(context, host, port);
+				connect(context);
 			}
 		});
 		process.stderr.on('data', (data: any) => {
@@ -65,24 +73,24 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 	}
 	else
-		connect(context, host, port);
+		connect(context);
 
 }
 
 
-function connect(context: vscode.ExtensionContext, host: string, port: number) {
+function connect(context: vscode.ExtensionContext) {
 	// json connection
-	client = new WebSocket('ws://' + host + ':' + port + '/ide');
+	client = new WebSocket(impulseIdeUri.toString());
 	client.on('open', () => {
 		console.log('TCP connection established with the server.');
 		client.send(JSON.stringify([{ id: 0, op: 'init', s0: context.storageUri?.toString(), s1: context.globalStorageUri.toString() }]));
 		setInterval(() => { client.send("ping") }, 1000);
 	});
-	impulse = { postMessage: function (m: any) { client.send(JSON.stringify([m])); } };
+	impulseIdeChannel = { postMessage: function (m: any) { client.send(JSON.stringify([m])); } };
 	client.on('message', (message: string) => {
 		const obj = JSON.parse(message);
 		for (let i = 0; i < obj.length; i++) {
-			onMessage(impulse, obj[i]);
+			onMessage(impulseIdeChannel, obj[i]);
 		}
 
 	});
@@ -103,7 +111,7 @@ var progressMessages = new Map<number, any>();
 
 export function postMessage(receiver: any | null, message: any, listener: ((response: any) => void) | null) {
 	if (!receiver)
-		receiver = impulse;
+		receiver = impulseIdeChannel;
 	var requestId = 0;
 	if (listener) {
 		requestId = nextRequestId++;
@@ -175,22 +183,28 @@ export function onMessage(sender: any, message: any) {
 								const m = progressMessages.get(progressId);
 								if (m) {
 									//console.log(m.s3,m.d4 * 100 - increments);
-									progress.report({
-										message: m.s3,
-										increment: m.d4 * 100 - increments,
-									});
-									increments = m.d4 * 100;
+									if (m.d4 > 0) {
+										progress.report({
+											message: m.s3,
+											increment: m.d4 * 100 - increments,
+										});
+										increments = m.d4 * 100;
+									} else {
+										progress.report({
+											message: m.s3
+										});
+									}
 								}
 								await new Promise(r => setTimeout(r, 500));
 							}
 						}).then((ret) => {
-						sender.postMessage({ id: message.id, op: message.op, i0: message.i0 });
-					});
-					} 
+							sender.postMessage({ id: message.id, op: message.op, i0: message.i0 });
+						});
+					}
 					// update progress
 					else if (message.i1 == 1) {
 						progressMessages.set(message.i0, message);
-					} 
+					}
 					// end progress
 					else if (message.i1 == -1) {
 						progressMessages.delete(message.i0);
