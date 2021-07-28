@@ -1,8 +1,10 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
+import WebSocket = require('ws');
 import { Disposable, disposeAll } from './dispose';
 import { getNonce } from './util';
 import { AbstractPartProvider } from './abstractPart';
+
 
 /**
 
@@ -191,24 +193,27 @@ export class EditPartProvider extends AbstractPartProvider implements vscode.Cus
 		webviewPanel.webview.options = {
 			enableScripts: true,
 		};
+
+		// setup html
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview, document.uri);
 
-		webviewPanel.webview.onDidReceiveMessage(message => {
+		// ready and connect state
+		var ready: boolean = false;
+		var client: WebSocket | undefined;
 
-			switch (message.id) {
+		// wait for webview ready 
+		var readyListener: vscode.Disposable = webviewPanel.webview.onDidReceiveMessage(message => {
+			readyListener.dispose();
+			ready = true;
+			if (client && ready)
+				this.initPart(document, webviewPanel, client);
+		})
 
-				case 0: {
-					switch (message.op) {
-						case "init": {
-
-							webviewPanel.webview.postMessage({ id: 0, op: "Activation", t0: webviewPanel.active });
-							webviewPanel.webview.postMessage({ id: 0, op: "Visibility", t0: webviewPanel.visible });
-						}
-					}
-				}
-			}
-
-			this.onMessage(webviewPanel.webview, message);
+		// create connection to impulse server
+		AbstractPartProvider.connect(webviewPanel.webview, (result) => {
+			client = result;
+			if (client && ready)
+				this.initPart(document, webviewPanel, client);
 		});
 
 		/*
@@ -216,24 +221,37 @@ export class EditPartProvider extends AbstractPartProvider implements vscode.Cus
 			webviewPanel.webview.postMessage({ id: 0, op: "dispose" });
 		});
 */
-		// activation / visiblity
+
+	}
+
+	private initPart(document: Document,
+		webviewPanel: vscode.WebviewPanel, client: WebSocket) {
+
+		// request the part
+		AbstractPartProvider.send(client, { id: 0, op: "init", s0: this.id, s1: document.uri.toString() });
+
+		// close connection on dispose
+		webviewPanel.onDidDispose(e => {
+			AbstractPartProvider.disconnect(client);
+		});
+
+		// notify panel status
 		const panel: any = webviewPanel;
 		panel.impulse = { document: document, active: webviewPanel.active, visible: webviewPanel.visible };
 		webviewPanel.onDidChangeViewState(e => {
 			if (panel.impulse.active != webviewPanel.active) {
-				webviewPanel.webview.postMessage({ id: 0, op: "Activation", t0: webviewPanel.active });
+				AbstractPartProvider.send(client, { id: 0, op: "Activation", t0: webviewPanel.active });
 				panel.impulse.active = webviewPanel.active;
 			}
 			if (panel.impulse.visible != webviewPanel.visible) {
-				webviewPanel.webview.postMessage({ id: 0, op: "Visibility", t0: webviewPanel.visible });
+				AbstractPartProvider.send(client, { id: 0, op: "Visibility", t0: webviewPanel.visible });
 				panel.impulse.visible = webviewPanel.visible;
 			}
 		});
-
-
+		AbstractPartProvider.send(client, { id: 0, op: "Activation", t0: webviewPanel.active });
+		AbstractPartProvider.send(client, { id: 0, op: "Visibility", t0: webviewPanel.visible });
 
 	}
-
 
 	private readonly _onDidChangeCustomDocument = new vscode.EventEmitter<vscode.CustomDocumentEditEvent<Document>>();
 	public readonly onDidChangeCustomDocument = this._onDidChangeCustomDocument.event;

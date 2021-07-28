@@ -41,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 	// start server
-	if (true) { 
+	if (false) { 
 
 		// command
 		const osgi = vscode.Uri.file(
@@ -82,7 +82,7 @@ function connect(context: vscode.ExtensionContext) {
 	// json connection
 	client = new WebSocket(impulseIdeUri.toString());
 	client.on('open', () => {
-		console.log('TCP connection established with the server.');
+		console.log('IDE connection established with the server.');
 		client.send(JSON.stringify([{ id: 0, op: 'init', s0: context.storageUri?.toString(), s1: context.globalStorageUri.toString() }]));
 		setInterval(() => { client.send("ping") }, 1000);
 	});
@@ -177,9 +177,9 @@ export function onMessage(sender: any, message: any) {
 							location: vscode.ProgressLocation.Notification,
 							cancellable: true,
 							title: label
-						}, async (progress) => {
+						}, async (progress, token) => {
 							var increments = 0;
-							while (progressMessages.has(progressId)) {
+							while (progressMessages.has(progressId) && !token.isCancellationRequested) {
 								const m = progressMessages.get(progressId);
 								if (m) {
 									//console.log(m.s3,m.d4 * 100 - increments);

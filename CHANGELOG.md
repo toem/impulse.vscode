@@ -1,5 +1,5 @@
 
-## V0.1.2 JUL 19th, 2021
+## V0.1.2 JUL 26th, 2021
 - [FEATURE]  Updating while loading record files
 - [IMPROVEMENT]  Tested frontend charts (to be intergrated)
 - [IMPROVEMENT]  Improved drag/drop into view

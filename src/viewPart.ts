@@ -1,22 +1,23 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
+import WebSocket = require('ws');
 import { AbstractPartProvider } from './abstractPart';
 import { getNonce } from './util';
 
 
 export class ViewPartProvider extends AbstractPartProvider implements vscode.WebviewViewProvider {
 
-    public static register(context: vscode.ExtensionContext,id: string): vscode.Disposable {
+	public static register(context: vscode.ExtensionContext, id: string): vscode.Disposable {
 
-                return vscode.window.registerWebviewViewProvider(
-                    id,
-                    new ViewPartProvider(context,id),{
-						webviewOptions: {
-							retainContextWhenHidden: true,
-						}
-					}
-                    );
-            }
+		return vscode.window.registerWebviewViewProvider(
+			id,
+			new ViewPartProvider(context, id), {
+			webviewOptions: {
+				retainContextWhenHidden: true,
+			}
+		}
+		);
+	}
 
 	private _view?: vscode.WebviewView;
 
@@ -36,35 +37,52 @@ export class ViewPartProvider extends AbstractPartProvider implements vscode.Web
 			]
 		};
 
-		webviewView.webview.html = this.getHtmlForWebview(webviewView.webview,vscode.Uri.file(''));
+		// setup html
+		webviewView.webview.html = this.getHtmlForWebview(webviewView.webview, vscode.Uri.file(''));
 
+		// ready and connect state
+		var ready: boolean = false;
+		var client: WebSocket | undefined;
 
-		webviewView.webview.onDidReceiveMessage(message => {
+		// wait for webview ready 
+		var readyListener: vscode.Disposable = webviewView.webview.onDidReceiveMessage(message => {
+			readyListener.dispose();
+			ready = true;
+			if (client && ready)
+				this.initPart(webviewView, client);
+		})
 
-			switch (message.id) {
+		// create connection to impulse server
+		AbstractPartProvider.connect(webviewView.webview, (result) => {
+			client = result;
+			if (client && ready)
+				this.initPart(webviewView, client);
+		});
 
-				case 0: {
-					switch (message.op) {
-						case "init": {
+	}
 
-							webviewView.webview.postMessage({ id: 0, op: "Visibility", t0: webviewView.visible });
-						}
-					}
-				}
-			}
+	private initPart(webviewView: vscode.WebviewView, client: WebSocket) {
 
-			this.onMessage(webviewView.webview, message);
-		});	
+		// request the part
+		AbstractPartProvider.send(client, { id: 0, op: "init", s0: this.id, s1: "" });
+
 			
-			// activation / visiblity
-			const panel: any = webviewView;
-			panel.impulse = { visible: webviewView.visible };
-			webviewView.onDidChangeVisibility(e => {
-				if (panel.impulse.visible != webviewView.visible) {
-					webviewView.webview.postMessage({ id: 0, op: "Visibility", t0: webviewView.visible });
-					panel.impulse.visible = webviewView.visible;
-				}
-			});	
+		// close connection on dispose
+		webviewView.onDidDispose(e => {
+			AbstractPartProvider.disconnect(client);
+		});
+
+		// notify panel status
+		const panel: any = webviewView;
+		panel.impulse = { visible: webviewView.visible };
+		webviewView.onDidChangeVisibility(e => {
+			if (panel.impulse.visible != webviewView.visible) {
+				AbstractPartProvider.send(client, { id: 0, op: "Visibility", t0: webviewView.visible });
+				panel.impulse.visible = webviewView.visible;
+			}
+		});
+		AbstractPartProvider.send(client, { id: 0, op: "Visibility", t0: webviewView.visible });
+
 	}
 
 }

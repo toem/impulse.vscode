@@ -1,14 +1,15 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
+import * as WebSocket from 'ws';
 import { getNonce } from './util';
 import { onMessage } from './extension';
 import { impulsePartsUri } from './extension';
 
 export class AbstractPartProvider {
 
-    constructor(
+	constructor(
 		protected readonly _context: vscode.ExtensionContext,
-		protected  readonly id : string
+		protected readonly id: string
 	) { }
 
 	//#endregion
@@ -16,19 +17,19 @@ export class AbstractPartProvider {
 	/**
 	 * Get the static HTML used for in our editor's webviews.
 	 */
-     protected getHtmlForWebview(webview: vscode.Webview, uri: vscode.Uri): string {
-		
-        //const ext = '_dev';
-        const ext = '';
+	protected getHtmlForWebview(webview: vscode.Webview, uri: vscode.Uri): string {
 
-        
+		const ext = '_dev';
+		//const ext = '';
+
+
 		// Local path to script and css for the webview
 		const configUri = webview.asWebviewUri(vscode.Uri.file(
-			path.join(this._context.extensionPath, 'media', 'impulse'+ext+'_config.js')
-		)); 
+			path.join(this._context.extensionPath, 'media', 'impulse' + ext + '_config.js')
+		));
 		const scriptUri = webview.asWebviewUri(vscode.Uri.file(
-			path.join(this._context.extensionPath, 'media', 'impulse'+ext+'.js')
-		)); 
+			path.join(this._context.extensionPath, 'media', 'impulse' + ext + '.js')
+		));
 		const styleResetUri = webview.asWebviewUri(vscode.Uri.file(
 			path.join(this._context.extensionPath, 'media', 'reset.css')
 		));
@@ -40,7 +41,7 @@ export class AbstractPartProvider {
 		));
 		const chartUri = webview.asWebviewUri(vscode.Uri.file(
 			path.join(this._context.extensionPath, 'media', 'chart.js')
-		)); 
+		));
 
 		// Use a nonce to whitelist which scripts can be run
 		const nonce = getNonce();
@@ -67,12 +68,9 @@ export class AbstractPartProvider {
 			</head>
 			<body>
 				<script nonce="${nonce}">
-				    var impulseUri = "${impulsePartsUri.toString()}";
-					var idePartRequest = "${this.id}";
-					var ideUriRequest = "${uri}";	
 					const vscode = acquireVsCodeApi();
-					var sendMessageToIde = vscode.postMessage;	
-					var receiveMessagesFromIde = function(listener){
+					var sendMessageToContainer = vscode.postMessage;	
+					var receiveMessagesFromContainer = function(listener){
 						window.addEventListener("message",listener);
 					};
 				</script> 
@@ -83,33 +81,48 @@ export class AbstractPartProvider {
 			</html>`;
 	}
 
-	protected onMessage(sender :any, message: any) {
-		
-		onMessage(sender,message);
-		switch (message.id) {
-			/*
-			case -11:{
-				switch (message.op) {
-					case "Information":{
-		
-						vscode.window.showInformationMessage(message.s0 + ": "+message.s1);
-		
-		
-						
-					}
-					case "YesNoQuestion":{
-		
-						vscode.window.showInformationMessage(message.s0 + ": "+message.s1,{modal:true}, "Yes","No").then((ret)=>{
-							webview.postMessage({id:message.id,op:message.op,i0:message.i2,s1:ret});
-						});
-					
-		
-						
-					}
-				}
-			}
-*/
-		}
+	protected onMessage(sender: any, message: any) {
+
+		onMessage(sender, message);
 	}
 
+	protected static connect(webview: vscode.Webview,  listener: ((client:WebSocket) => void)) {
+
+		// json connection
+		var client = new WebSocket(impulsePartsUri.toString());
+		var established = false;
+		client.on('open', () => {
+			established = true;
+			console.log('Part connection established with the server.');
+			setInterval(() => { client.send("ping") }, 1000);
+			webview.onDidReceiveMessage(message => {
+				AbstractPartProvider.send(client,message);
+			})
+			client.on('message', (message: string) => {
+				const jsonArray = JSON.parse(message);
+				for (let i = 0; i < jsonArray.length; i++) {
+					var jsonObject = jsonArray[i];
+					if (jsonObject.id == -11)
+						onMessage({ postMessage: function (m: any) { AbstractPartProvider.send(client,m); } }, jsonObject);
+				}
+				webview.postMessage(jsonArray);
+			});
+			listener(client);
+		});
+		client.on('error', () => {
+			if (!established) {
+				console.log('Not found - trying again');
+				this.connect(webview,listener);
+			} else
+				console.log('WebSocket error:');
+		})
+	}
+
+	protected static send(client:WebSocket, message:any) {
+		client.send("[" + JSON.stringify(message) + "]")
+}
+
+	protected static disconnect(client:WebSocket) {
+			client.close;
+	}
 }
