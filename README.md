@@ -1,3 +1,4 @@
+
 # impulse for Visual Studio Code
 
 [**impulse**](https://toem.de/index.php/products/impulse) is a powerful event and waveform visualization and analysis workbench (simulation, traces, logs) which helps engineers to comfortably understand and debug complex semiconductor and multi-core software systems.
@@ -38,6 +39,8 @@ The current beta release, allows to configure the java command options, and the 
 * Use the context menus 'Open with' and select the impulse Viewer (You may select the impulse Viewer as the default option at this point).
 * On activation, it may take a while (a few secs) to load the backend java server. The OS may ask you for approval.
 * Have fun !
+
+https://user-images.githubusercontent.com/9350222/127842523-0da465e4-77aa-49ab-9b9e-2e72a6fe2838.mp4
 
 ## Documentation
  
