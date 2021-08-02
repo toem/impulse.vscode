@@ -1,4 +1,12 @@
 
+## V0.2.0 AUG 2nd, 2021
+- [FEATURE]  Supports remote development (e.g. gipod)
+- [IMPROVEMENT]  Improved progress handling (cancel/ kill)  
+- [IMPROVEMENT]  Improved drag/drop
+- [FEATURE]  Added shortcuts
+- [FEATURE]  Added main menu
+- [IMPROVEMENT]  Added theme change handling
+
 ## V0.1.2 JUL 26th, 2021
 - [FEATURE]  Updating while loading record files
 - [IMPROVEMENT]  Tested frontend charts (to be intergrated)

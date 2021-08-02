@@ -11,16 +11,16 @@
 
 ## License
 
-see [LICENSE.md](LICENSE.md)
-
-see [Licensing options](https://toem.de/index.php/pricing/pricing-options)
-
 **Our guiding principle for this and all subsequent versions is:**
 
 * Non-commercial use is free - including all features.
 * Commercial use is free only for essential features.
 
 *This beta version does not require any license keys.*
+
+see [LICENSE.md](LICENSE.md)
+
+see [Licensing options](https://toem.de/index.php/pricing/pricing-options)
 
 ## Requirements
 

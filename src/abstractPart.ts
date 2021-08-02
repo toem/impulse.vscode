@@ -19,8 +19,8 @@ export class AbstractPartProvider {
 	 */
 	protected getHtmlForWebview(webview: vscode.Webview, uri: vscode.Uri): string {
 
-		const ext = '_dev';
-		//const ext = '';
+		//const ext = '_dev';
+		const ext = '';
 
 
 		// Local path to script and css for the webview
@@ -76,7 +76,7 @@ export class AbstractPartProvider {
 				</script> 
 			    <script nonce="${nonce}" src="${configUri}"></script>				
 				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<!--<script nonce="${nonce}" src="${chartUri}"></script> -->
+				<!-- <script nonce="${nonce}" src="${chartUri}"></script> -->
 			</body>
 			</html>`;
 	}
@@ -111,7 +111,7 @@ export class AbstractPartProvider {
 		});
 		client.on('error', () => {
 			if (!established) {
-				console.log('Not found - trying again');
+				console.log('Not found - trying again');				
 				this.connect(webview,listener);
 			} else
 				console.log('WebSocket error:');

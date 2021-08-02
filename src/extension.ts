@@ -41,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 	// start server
-	if (false) { 
+	if (true) { 
 
 		// command
 		const osgi = vscode.Uri.file(
@@ -63,28 +63,31 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 		process.stdout.on('data', (data: any) => {
 			console.log(data);
-
+/*
 			if (!client && (typeof data === "string") && data.includes("Server started")) {
 				connect(context);
 			}
+			*/
 		});
 		process.stderr.on('data', (data: any) => {
 			console.log(data);
 		});
 	}
-	else
-		connect(context);
+		
+	connect(context);
 
 }
 
 
 function connect(context: vscode.ExtensionContext) {
 	// json connection
-	client = new WebSocket(impulseIdeUri.toString());
+	var established = false;
+	client = client = new WebSocket(impulseIdeUri.toString());
 	client.on('open', () => {
+		established = true;
 		console.log('IDE connection established with the server.');
-		client.send(JSON.stringify([{ id: 0, op: 'init', s0: context.storageUri?.toString(), s1: context.globalStorageUri.toString() }]));
 		setInterval(() => { client.send("ping") }, 1000);
+		client.send(JSON.stringify([{ id: 0, op: 'init', s0: context.storageUri?.toString(), s1: context.globalStorageUri.toString() }]));
 	});
 	impulseIdeChannel = { postMessage: function (m: any) { client.send(JSON.stringify([m])); } };
 	client.on('message', (message: string) => {
@@ -94,7 +97,16 @@ function connect(context: vscode.ExtensionContext) {
 		}
 
 	});
+	client.on('error', () => {
+		if (!established) {
+			console.log('Not found - trying again');				
+			connect(context);
+		} else
+			console.log('WebSocket error:');
+	})
 }
+
+
 export function deactivate() {
 
 	if (client) client.close();
@@ -160,7 +172,14 @@ export function onMessage(sender: any, message: any) {
 					vscode.window.showInformationMessage(title, { modal: true }, ...(message.x3)).then((ret) => {
 						sender.postMessage({ id: message.id, op: message.op, i0: message.i0, i1: message.x3.indexOf(ret) });
 					});
+				}
+					break;
 
+				case "Input": {
+
+					vscode.window.showInputBox({ title: message.s1 ,prompt:message.s2 ,value:message.s3/*,validateInput:(value)=>{} */}).then((ret) => {
+						sender.postMessage({ id: message.id, op: message.op, i0: message.i0, s1:ret });
+					});
 				}
 					break;
 

@@ -4,3 +4,4 @@ out/
 media/*dev*
 impulse/configuration/org.eclipse.osgi
 media/links
+node_modules/
