@@ -1,3 +1,4 @@
+
 # impulse for Visual Studio Code
 
 [**impulse**](https://toem.de/index.php/products/impulse) is a powerful event and waveform visualization and analysis workbench (simulation, traces, logs) which helps engineers to comfortably understand and debug complex semiconductor and multi-core software systems.
