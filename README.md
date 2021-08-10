@@ -37,7 +37,11 @@ The current beta release, allows to configure the java command options, and the 
 * Select a file to view.
 * Use the context menus 'Open with' and select the impulse Viewer (You may select the impulse Viewer as the default option at this point).
 * On activation, it may take a while (a few secs) to load the backend java server. The OS may ask you for approval.
+* Create a new view.
+* Use the first toolbar button to open the samples area. 
 * Have fun !
+
+https://user-images.githubusercontent.com/9350222/127842523-0da465e4-77aa-49ab-9b9e-2e72a6fe2838.mp4
 
 ## Documentation
  

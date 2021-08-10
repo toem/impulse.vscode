@@ -20,6 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(ViewPartProvider.register(context, 'de.toem.impulse.parts.samples.2'));
 	context.subscriptions.push(ViewPartProvider.register(context, 'de.toem.impulse.parts.samples.3'));
 	context.subscriptions.push(ViewPartProvider.register(context, 'de.toem.impulse.parts.samples.4'));
+	context.subscriptions.push(ViewPartProvider.register(context, 'de.toem.impulse.parts.sample'));
 	context.subscriptions.push(ElementFS.register(context, 'impulse.Preferences'));
 
 	// Configuation

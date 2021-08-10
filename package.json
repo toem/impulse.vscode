@@ -8,7 +8,7 @@
 		"name": "Thomas Haber"
 	},
 	"license" : "SEE LICENSE IN LICENSE.md",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"engines": {
 		"vscode": "^1.50.0"
 	},
@@ -105,8 +105,16 @@
 					"id": "de.toem.impulse.parts.samples.4",
 					"name": "4",
 					"visibility": "hidden"
+				},
+				{
+					"type": "webview",
+					"id": "de.toem.impulse.parts.sample",
+					"name": "Inspector"
 				}
 			]
+		},
+		"files.associations": {
+			"*.recJs": "javascript"
 		},
 		"configuration": [
 			{
