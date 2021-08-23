@@ -76,7 +76,7 @@ export class AbstractPartProvider {
 				</script> 
 			    <script nonce="${nonce}" src="${configUri}"></script>				
 				<script nonce="${nonce}" src="${scriptUri}"></script>
-				<!-- <script nonce="${nonce}" src="${chartUri}"></script> -->
+				<script nonce="${nonce}" src="${chartUri}"></script>
 			</body>
 			</html>`;
 	}

@@ -1,4 +1,15 @@
 
+## V0.2.2 AUG 23rd, 2021
+- [FEATURE]  Added Charts
+- [IMPROVEMENT]  Improved UI behaviour 
+- [IMPROVEMENT]  Improved key handling
+
+## V0.2.1 AUG 10th, 2021
+- [FEATURE]  Added Inspector View
+- [FEATURE]  Added VP and SPice extrensions
+- [IMPROVEMENT]  Added View configuration 
+- [BUG]  Scrollbar missing with Firefox
+
 ## V0.2.0 AUG 2nd, 2021
 - [FEATURE]  Supports remote development (e.g. gipod)
 - [IMPROVEMENT]  Improved progress handling (cancel/ kill)  
