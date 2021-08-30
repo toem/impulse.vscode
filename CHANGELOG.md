@@ -1,3 +1,7 @@
+## V0.2.3 AUG 30th, 2021
+- [IMPROVEMENT]  Improved Relation hopping 
+- [IMPROVEMENT]  Improved backward/forward
+- [IMPROVEMENT]  Change under mouse presentation
 
 ## V0.2.2 AUG 23rd, 2021
 - [FEATURE]  Added Charts

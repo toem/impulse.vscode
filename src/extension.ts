@@ -5,8 +5,8 @@ import { EditPartProvider } from './editorPart';
 import { ViewPartProvider } from './viewPart';
 import { ElementFS, elementFSInstance } from './elementFsProvider';
 
-export var impulseIdeUri:vscode.Uri;
-export var impulsePartsUri:vscode.Uri;
+export var impulseIdeUri: vscode.Uri;
+export var impulsePartsUri: vscode.Uri;
 var process: any;
 var client: WebSocket;
 var impulseIdeChannel: any;
@@ -37,12 +37,12 @@ export function activate(context: vscode.ExtensionContext) {
 	var port: number = (typeof cport === "string") ? parseInt(cport) : 8001;
 
 	// create uris
-	impulseIdeUri = 	vscode.Uri.parse('ws://' + host + ':' + port + '/ide');
-	impulsePartsUri =  vscode.Uri.parse('ws://' + host + ':' + port + '/parts'); 
+	impulseIdeUri = vscode.Uri.parse('ws://' + host + ':' + port + '/ide');
+	impulsePartsUri = vscode.Uri.parse('ws://' + host + ':' + port + '/parts');
 
 
 	// start server
-	if (true) { 
+	if (true) {
 
 		// command
 		const osgi = vscode.Uri.file(
@@ -64,17 +64,17 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 		process.stdout.on('data', (data: any) => {
 			console.log(data);
-/*
-			if (!client && (typeof data === "string") && data.includes("Server started")) {
-				connect(context);
-			}
-			*/
+			/*
+						if (!client && (typeof data === "string") && data.includes("Server started")) {
+							connect(context);
+						}
+						*/
 		});
 		process.stderr.on('data', (data: any) => {
 			console.log(data);
 		});
 	}
-		
+
 	connect(context);
 
 }
@@ -100,7 +100,7 @@ function connect(context: vscode.ExtensionContext) {
 	});
 	client.on('error', () => {
 		if (!established) {
-			console.log('Not found - trying again');				
+			console.log('Not found - trying again');
 			connect(context);
 		} else
 			console.log('WebSocket error:');
@@ -169,18 +169,22 @@ export function onMessage(sender: any, message: any) {
 				}
 					break;
 				case "Question": {
-					const title: string = message.s1 + ": " + message.s2;
-					vscode.window.showInformationMessage(title, { modal: true }, ...(message.x3)).then((ret) => {
-						sender.postMessage({ id: message.id, op: message.op, i0: message.i0, i1: message.x3.indexOf(ret) });
-					});
+					setTimeout(() => {
+						const title: string = message.s1 + ": " + message.s2;
+						vscode.window.showInformationMessage(title, { modal: true }, ...(message.x3)).then((ret) => {
+							sender.postMessage({ id: message.id, op: message.op, i0: message.i0, i1: message.x3.indexOf(ret) });
+						});
+					}, 500);
+
 				}
 					break;
 
 				case "Input": {
-
-					vscode.window.showInputBox({ title: message.s1 ,prompt:message.s2 ,value:message.s3/*,validateInput:(value)=>{} */}).then((ret) => {
-						sender.postMessage({ id: message.id, op: message.op, i0: message.i0, s1:ret });
-					});
+					setTimeout(() => {
+						vscode.window.showInputBox({ title: message.s1, prompt: message.s2, value: message.s3/*,validateInput:(value)=>{} */ }).then((ret) => {
+							sender.postMessage({ id: message.id, op: message.op, i0: message.i0, s1: ret });
+						});
+					}, 500);
 				}
 					break;
 
