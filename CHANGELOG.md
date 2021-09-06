@@ -1,7 +1,8 @@
-## V0.2.3 AUG 30th, 2021
-- [IMPROVEMENT]  Improved Relation hopping 
-- [IMPROVEMENT]  Improved backward/forward
-- [IMPROVEMENT]  Change under mouse presentation
+## V0.2.4 SEP 6th, 2021
+- [FEATURE]  Added Log extension
+- [IMPROVEMENT]  Drag to table
+- [IMPROVEMENT]  Property tables now working
+- [IMPROVEMENT]  Backward/Forward added
 
 ## V0.2.2 AUG 23rd, 2021
 - [FEATURE]  Added Charts

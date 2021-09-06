@@ -10,6 +10,23 @@
 
 ![impulse](images/1.png)
 
+## Quick Start
+
+* Select a file to view.
+* Use the context menus 'Open with' and select the impulse Viewer (You may select the impulse Viewer as the default option at this point).
+* On activation, it may take a while (a few secs) to load the backend java server. The OS may ask you for approval.
+* Create a new view.
+* Open the 'Samples panel' to examine the signal details. 
+* Have fun !
+
+https://user-images.githubusercontent.com/9350222/127842523-0da465e4-77aa-49ab-9b9e-2e72a6fe2838.mp4
+
+## Playground (gitpod)
+
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/toem/playground)
+
+Just enter [https://www.gitpod.io#https://github.com/toem/impulse.playground](https://www.gitpod.io#https://github.com/toem/impulse.playground) into your browser and log-in with your github account.
+
 ## License
 
 **Our guiding principle for this and all subsequent versions is:**
@@ -32,17 +49,6 @@ impulse requires a java Runtime environment (at least JRE8). For communication t
 The current beta release, allows to configure the java command options, and the communication port for the osgi impulse server.
 
 ![preferences](images/2.png)
-
-## Quick Start
-
-* Select a file to view.
-* Use the context menus 'Open with' and select the impulse Viewer (You may select the impulse Viewer as the default option at this point).
-* On activation, it may take a while (a few secs) to load the backend java server. The OS may ask you for approval.
-* Create a new view.
-* Open the 'Samples panel' to examine the signal details. 
-* Have fun !
-
-https://user-images.githubusercontent.com/9350222/127842523-0da465e4-77aa-49ab-9b9e-2e72a6fe2838.mp4
 
 ## Documentation
  

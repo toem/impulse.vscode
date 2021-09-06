@@ -426,12 +426,16 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
 .tlktable  .header .resize  {border-right: 2px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 
 .tlktable .rows  {padding:1px;}
-.tlktable  .row {padding:1px;}
-.tlktable  .row.selected  {color: var(--de-toem-toolkits-tlk-css-list-inactive-selection-foreground); background-color: var(--de-toem-toolkits-tlk-css-list-inactive-selection-background);}
+.tlktable .row {padding:1px;}
+.tlktable .row.selected  {color: var(--de-toem-toolkits-tlk-css-list-inactive-selection-foreground); background-color: var(--de-toem-toolkits-tlk-css-list-inactive-selection-background);}
 .tlktable:focus  .row.selected {color:  var(--de-toem-toolkits-tlk-css-list-selection-foreground);background-color: var(--de-toem-toolkits-tlk-css-list-selection-background);}
 .tlktable:focus  .row.selected:hover {color:  var(--de-toem-toolkits-tlk-css-list-selection-foreground);background-color: var(--de-toem-toolkits-tlk-css-list-selection-background);}
 .tlktable:focus  .row:hover {background-color: var(--de-toem-toolkits-tlk-css-list-hover-background)}
 .tlktable:focus  .row.focus  {outline: 1px solid var(--de-toem-toolkits-tlk-css-general-focus-border);}
+.tlktable .row {border: 1px solid #00000000;}
+.tlktable .row.dropon  {border: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
+.tlktable .row.dropafter  {border-bottom: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
+.tlktable .row.dropbefore  {border-top: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 
 .tlktable .cell  {overflow: hidden;}
 .tlktable .lead  {overflow: hidden;}
