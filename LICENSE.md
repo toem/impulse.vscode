@@ -43,9 +43,18 @@ These files are provided to you under the terms and conditions of the **Impulse 
 
 The Content includes impulse js files (compressed javascript).
 
-These files are provided to you under the terms and conditions of the Impulse End-User License. A copy of the License is available in the "LICENSES" sub-folder.
+These files are provided to you under the terms and conditions of the **Impulse End-User License**. A copy of the License is available in the "LICENSES" sub-folder.
 
 #### Files:
 
 * media/impulse.js
 
+### 4. remix iconset (media)
+
+The Content includes remixicon  files.
+
+These files are provided to you under the terms and conditions of the **Apache License Version 2.0**. A copy of the License is available in the "LICENSES" sub-folder.
+
+#### Files:
+
+* media/impulse.js

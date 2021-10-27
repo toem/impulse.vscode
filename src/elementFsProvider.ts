@@ -2,7 +2,8 @@ import * as path from 'path';
 import * as querystring from 'querystring';
 import { TextDecoder, TextEncoder } from 'util';
 import * as vscode from 'vscode';
-import { postMessage } from './extension';
+import { ideClient } from './extension';
+
 
 export var elementFSInstance: ElementFS;
 
@@ -153,7 +154,7 @@ export class ElementFS implements vscode.FileSystemProvider {
         this._fireSoon({ type: vscode.FileChangeType.Changed, uri });
 
         if (!options.init)
-            postMessage(null, { id: 0, op: 'Set', s0: this.uri2link(uri), s1: new TextDecoder('utf-8').decode(content) }, null);
+            ideClient.send( { id: 0, op: 'Set', s0: this.uri2link(uri), s1: new TextDecoder('utf-8').decode(content) });
 
 
     }

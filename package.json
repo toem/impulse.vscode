@@ -1,14 +1,14 @@
 {
 	"name": "impulse",
 	"displayName": "impulse",
-	"description": "impulse is a powerful visualization and analysis workbench which helps engineers to comfortably understand and debug complex semiconductor and multi-core software systems.",
+	"description": "impulse is a visualization and analysis workbench which helps engineers to comfortably understand and debug complex semiconductor and multi-core software systems.",
 	"publisher": "toem-de",
 	"homepage": "https://www.toem.de",
 	"author": {
 		"name": "Thomas Haber"
 	},
 	"license" : "SEE LICENSE IN LICENSE.md",
-	"version": "0.2.4",
+	"version": "0.3.0",
 	"engines": {
 		"vscode": "^1.50.0"
 	},
@@ -37,6 +37,7 @@
 	"extensionKind": ["workspace"],
 	"activationEvents": [
 		"onCustomEditor:de.toem.impulse.editor.records",
+		"onCustomEditor:de.toem.impulse.editor.wallet",
 		"onView:de.toem.impulse.parts.samples",
 		"onView:de.toem.impulse.parts.samples.2",
 		"onView:de.toem.impulse.parts.samples.3",
@@ -69,7 +70,20 @@
 					}					
 				],
 				"priority": "option"
-			}			
+			},		
+			{
+				"viewType": "de.toem.impulse.editor.wallet",
+				"displayName": "impulse Wallet Editor",
+				"selector": [
+					{
+						"filenamePattern": "*.walml"
+					},
+					{
+						"filenamePattern": "*.walmz"
+					}
+				],
+				"priority": "default"
+			}		
 		],
 		"viewsContainers": {
 			"panel": [
@@ -150,5 +164,11 @@
 		"typescript": "^4.0.2",
 		"@types/vscode": "^1.50.0",
 		"@types/ws": "^6.0.0"
-	}
+	},
+	"impulseBundles":["impulse/plugins/de.toem.impulse.extension.hdl_3.0.1",
+		"impulse/plugins/de.toem.impulse.extension.vp_3.0.1.jar",
+		"impulse/plugins/de.toem.impulse.extension.spice_3.0.1.jar",
+		"impulse/plugins/de.toem.impulse.extension.log_3.0.1.jar",
+		"impulse/plugins/de.toem.impulse.extension.embedded_3.0.1.jar"
+	]
 }

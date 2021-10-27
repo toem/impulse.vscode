@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+  <context id="fsdb_preferences">
+    <description> FSDB (Fast Signal Database) is a format mainly used in used by the Verdi tools (Synopsys). The reader requires a tools installation (FsdbReader). 
+    The FSDB reader uses a native extension, meaning that it calls  a native application (converter) to open and read data from a file.   </description>
+    <topic href="https://toem.de/index.php/resources/all-documents/129-setting-up-the-fsdb-reader" label="RH01 Setting up the FSDB reader native extension" /> 
+    <topic href="https://toem.de/index.php/resources/all-documents/217-fsdb-reader" label="RH04 FSDB Reader" /> 
+    <topic href="https://toem.de/index.php/products/impulse-hdl" label="impulse HDL" />
+    <topic href="https://www.toem.de/index.php/resources/documentation#impulseManual" label="MANUAL" />
+    <topic href="https://www.toem.de/index.php/resources/all-documents/87-02-signal-basics" label="02 Signal Basics" /> 
+    <topic href="https://www.toem.de/index.php/resources/all-documents/88-9-preferences" label="09 Preferences" /> 
+    <topic href="https://toem.de/index.php/resources/all-documents/90-native-extensions" label="17 Native Extensions " />        
+  </context>
+  <context id="fst_preferences">
+    <description> FST (Fast Signal Trace) used by the CVC simulator. The reader is based on libraries from the gtkWave project. 
+    The FST reader uses a native extension, meaning that it calls  a native application (converter) to open and read data from a file.   </description>
+    <topic href="https://toem.de/index.php/resources/all-documents/38-setting-up-the-fst-reader" label="RH02 Setting up the FST reader native extension" /> 
+    <topic href="https://toem.de/index.php/resources/all-documents/218-fst-reader" label="RH05 FST Reader" /> 
+    <topic href="https://toem.de/index.php/products/impulse-hdl" label="impulse HDL" />
+    <topic href="https://www.toem.de/index.php/resources/documentation#impulseManual" label="MANUAL" />
+    <topic href="https://www.toem.de/index.php/resources/all-documents/87-02-signal-basics" label="02 Signal Basics" /> 
+    <topic href="https://www.toem.de/index.php/resources/all-documents/88-9-preferences" label="09 Preferences" /> 
+    <topic href="https://toem.de/index.php/resources/all-documents/90-native-extensions" label="17 Native Extensions " />   
+  </context> 
+  <context id="wlf_preferences">
+    <description> WLF is a format used in ModelSim tools (Mentor Graphics). The reader requires a tools installation (wlfapi). 
+    The WLF reader uses a native extension, meaning that it calls  a native application (converter) to open and read data from a file.   </description>
+    <topic href="https://toem.de/index.php/resources/all-documents/29-setting-up-the-wlf-reader" label="RH03 Setting up the WLF reader native extension" /> 
+    <topic href="https://toem.de/index.php/resources/all-documents/219-wlf-reader" label="RH06 WLF Reader" /> 
+    <topic href="https://toem.de/index.php/products/impulse-hdl" label="impulse HDL" />
+    <topic href="https://www.toem.de/index.php/resources/documentation#impulseManual" label="MANUAL" />
+    <topic href="https://www.toem.de/index.php/resources/all-documents/87-02-signal-basics" label="02 Signal Basics" /> 
+    <topic href="https://www.toem.de/index.php/resources/all-documents/88-9-preferences" label="09 Preferences" /> 
+    <topic href="https://toem.de/index.php/resources/all-documents/90-native-extensions" label="17 Native Extensions " />   
+  </context>   
+</contexts> 

@@ -1,3 +1,8 @@
+## V0.3.0 Oct 17th, 2021
+- [FEATURE]  Wallet editor 
+- [IMPROVEMENT] Support browser zoom 
+- [IMPROVEMENT] New clean icon set
+
 ## V0.2.4 SEP 6th, 2021
 - [FEATURE]  Added Log extension
 - [IMPROVEMENT]  Drag to table

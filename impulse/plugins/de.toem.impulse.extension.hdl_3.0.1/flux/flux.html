@@ -1,0 +1,625 @@
+<div class="uk-alert uk-alert-success"><p>Overview</p></div><ul>
+<p>Buffer creation and handling</p>
+<li><a href="#FLX_BUFFER_BYTES">#define FLX_BUFFER_BYTES</a></li>
+<li><a href="#flxCreateFixedBuffer">flxBuffer flxCreateFixedBuffer</a></li>
+<li><a href="#flxClearBuffer">void flxClearBuffer</a></li>
+<li><a href="#flxGetBufferBytes">flxbint flxGetBufferBytes</a></li>
+<li><a href="#flxFlushBuffer">flxresult flxFlushBuffer</a></li>
+<p>Trace creation and handling</p>
+<li><a href="#FLX_TRACE_BYTES">#define FLX_TRACE_BYTES</a></li>
+<li><a href="#flxCreateTrace">flxTrace flxCreateTrace</a></li>
+<li><a href="#flxSetBuffer">flxresult flxSetBuffer</a></li>
+<p>Adding trace entries</p>
+<p>Items</p>
+<li><a href="#flxAddHead">flxresult flxAddHead</a></li>
+<li><a href="#flxAddHeadDerived">flxresult flxAddHeadDerived</a></li>
+<li><a href="#flxAddSignal">flxresult flxAddSignal</a></li>
+<li><a href="#flxAddScatteredSignal">flxresult flxAddScatteredSignal</a></li>
+<li><a href="#flxAddSignals">flxresult flxAddSignals</a></li>
+<li><a href="#flxAddSignalReference">flxresult flxAddSignalReference</a></li>
+<li><a href="#flxAddScatteredSignalReference">flxresult flxAddScatteredSignalReference</a></li>
+<li><a href="#flxAddScope">flxresult flxAddScope</a></li>
+<li><a href="#flxIsSignal">flxbool flxIsSignal</a></li>
+<li><a href="#flxIsScope">flxbool flxIsScope</a></li>
+<p>Sequences - Open & Close</p>
+<li><a href="#flxOpen">flxresult flxOpen</a></li>
+<li><a href="#flxSetDefaultOpenDomain">flxresult flxSetDefaultOpenDomain</a></li>
+<li><a href="#flxIsOpen">flxbool flxIsOpen</a></li>
+<li><a href="#flxClose">flxresult flxClose</a></li>
+<p>Enums & Members</p>
+<li><a href="#flxWriteEnumDef">flxresult flxWriteEnumDef</a></li>
+<li><a href="#flxWriteArrayDef">flxresult flxWriteArrayDef</a></li>
+<li><a href="#flxInitMember">flxresult flxInitMember</a></li>
+<li><a href="#flxWriteMemberDef">flxresult flxWriteMemberDef</a></li>
+<li><a href="#flxWriteMemberDefs">flxresult flxWriteMemberDefs</a></li>
+<p>Writing samples</p>
+<li><a href="#flxSetDomainValue">flxresult flxSetDomainValue</a></li>
+<li><a href="#flxWriteNoneAt">flxresult flxWriteNoneAt</a></li>
+<li><a href="#flxWriteIntAt">flxresult flxWriteIntAt</a></li>
+<li><a href="#flxWriteIntArrayAt">flxresult flxWriteIntArrayAt</a></li>
+<li><a href="#flxWriteFloatAt">flxresult flxWriteFloatAt</a></li>
+<li><a href="#flxWriteFloatArrayAt">flxresult flxWriteFloatArrayAt</a></li>
+<li><a href="#flxWriteEventAt">flxresult flxWriteEventAt</a></li>
+<li><a href="#flxWriteEventArrayAt">flxresult flxWriteEventArrayAt</a></li>
+<li><a href="#flxWriteTextAt">flxresult flxWriteTextAt</a></li>
+<li><a href="#flxWriteBinaryAt">flxresult flxWriteBinaryAt</a></li>
+<li><a href="#flxWriteLogicStatesAt">flxresult flxWriteLogicStatesAt</a></li>
+<li><a href="#flxWriteLogicTextAt">flxresult flxWriteLogicTextAt</a></li>
+<li><a href="#flxSetMember">flxresult flxSetMember</a></li>
+<li><a href="#flxWriteMembersAt">flxresult flxWriteMembersAt</a></li>
+<p>Relation & Labels</p>
+<li><a href="#flxWriteRelation">flxresult flxWriteRelation</a></li>
+<li><a href="#flxWriteLabel">flxresult flxWriteLabel</a></li>
+<p>Control entries</p>
+<li><a href="#flxWriteControlReqEntry">flxresult flxWriteControlReqEntry</a></li>
+<li><a href="#flxWriteControlResEntry">flxresult flxWriteControlResEntry</a></li>
+<li><a href="#flxWriteControlRequest">flxresult flxWriteControlRequest</a></li>
+<li><a href="#flxWriteControlResult">flxresult flxWriteControlResult</a></li>
+</ul>
+<div class="uk-alert uk-alert-success"><p>Details</p></div><h3>Buffer creation and handling</h3>
+<a id="FLX_BUFFER_BYTES"></a>
+<b>FLX_BUFFER_BYTES</b>
+<p>Calculates the required memory for a buffer with given resulting bufferSize.</p>
+<ul  class="uk-list uk-list-striped">
+<li>bufferSize : The resulting buffer size</li>
+<li> <b>Returns the required memory size</b></li>
+</ul>
+<pre>#define  FLX_BUFFER_BYTES(bufferSize) (sizeof(struct flxBufferStruct) +  bufferSize)</pre><hr/>
+<a id="flxCreateFixedBuffer"></a>
+<b>flxCreateFixedBuffer</b>
+<p>Creates a new 'fixed' buffer.</p>
+<ul  class="uk-list uk-list-striped">
+<li>bytes : Memory pointer for the new buffer</li>
+<li>len : Size of the memory</li>
+<li>handle : Buffer handler</li>
+<li>user : User parameter</li>
+<li> <b>Returns the newly created buffer</b></li>
+</ul>
+<pre>flxBuffer flxCreateFixedBuffer(flxbptr bytes, flxbint len, flxBufferHandle handle, void *user)</pre><hr/>
+<a id="flxClearBuffer"></a>
+<b>flxClearBuffer</b>
+<p>Clear the buffer.</p>
+<ul  class="uk-list uk-list-striped">
+<li>buffer : Buffer to be cleared</li>
+<li> <b>null</b></li>
+</ul>
+<pre>void flxClearBuffer(flxBuffer buffer)</pre><hr/>
+<a id="flxGetBufferBytes"></a>
+<b>flxGetBufferBytes</b>
+<p>Returns the the number of bytes in the buffer.</p>
+<ul  class="uk-list uk-list-striped">
+<li>buffer : Buffer to be used</li>
+<li> <b>Returns the the number of bytes</b></li>
+</ul>
+<pre>flxbint flxGetBufferBytes(flxBuffer buffer)</pre><hr/>
+<a id="flxFlushBuffer"></a>
+<b>flxFlushBuffer</b>
+<p>Flushes the buffer.</p>
+<ul  class="uk-list uk-list-striped">
+<li>buffer : Buffer to be flushed</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxFlushBuffer(flxBuffer buffer)</pre><hr/>
+<h3>Trace creation and handling</h3>
+<a id="FLX_TRACE_BYTES"></a>
+<b>FLX_TRACE_BYTES</b>
+<p>Calculates the required memory for a trace with given multi-open flag and item count.</p>
+<ul  class="uk-list uk-list-striped">
+<li>multiOpen : Set to true, if you wan to allow sequence opens on items != 0</li>
+<li>maxItemId : The maximal item id to be used</li>
+<li> <b>Returns the required memory size.</b></li>
+</ul>
+<pre>#define  FLX_TRACE_BYTES(multiOpen,maxItemId) (sizeof(struct flxTraceStruct) +  (multiOpen ? sizeof(struct flxTraceItemStruct) * (maxItemId):0))</pre><hr/>
+<a id="flxCreateTrace"></a>
+<b>flxCreateTrace</b>
+<p>Creates a trace object</p>
+<ul  class="uk-list uk-list-striped">
+<li>traceId : Id of the new trace object</li>
+<li>maxItemId : The maximal item id to be used</li>
+<li>maxEntrySize : The maximal allowed entry size (e.g. 4096).</li>
+<li>traceBytes : Required memory for this trace structure</li>
+<li>traceBytesLen : Size of the given memory</li>
+<li>buffer : Initial buffe to be used for this trace</li>
+<li> <b>Returns the newly created trace object</b></li>
+</ul>
+<pre>flxTrace flxCreateTrace(flxid traceId, flxid maxItemId, flxbint maxEntrySize, flxbptr traceBytes, flxbint traceBytesLen,		flxBuffer buffer)</pre><hr/>
+<a id="flxSetBuffer"></a>
+<b>flxSetBuffer</b>
+<p>Sets a new buffer for the given trace.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The tarce object</li>
+<li>buffer : Buffer to be used as output</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxSetBuffer(flxTrace trace, flxBuffer buffer)</pre><hr/>
+<h3>Adding trace entries</h3>
+<h4>Items</h4>
+<a id="flxAddHead"></a>
+<b>flxAddHead</b>
+<p>Writes a head entry. The head entry contains information data about the trace and is also used as file identification.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>name : The name of the item</li>
+<li>description : Descriptive text for this item or 0</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxAddHead(flxTrace trace, flxtext name, flxtext description)</pre><hr/>
+<a id="flxAddHeadDerived"></a>
+<b>flxAddHeadDerived</b>
+<p>Writes a head entry for a derived format. The head entry contains information data about the trace and is also used as file identification.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>format4 : Format identification (4 characters)</li>
+<li>name : The name of the item</li>
+<li>description : Descriptive text for this item or 0</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxAddHeadDerived(flxTrace trace, flxtext format4, flxtext name, flxtext description)</pre><hr/>
+<a id="flxAddSignal"></a>
+<b>flxAddSignal</b>
+<p>Writes a signal item entry.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id for this new item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>parentId : Defines the parent of this new item (or 0 for the root item) : Defines the parent of this new item (or 0 for the root item)</li>
+<li>name : The name of the item</li>
+<li>description : Descriptive text for this item or 0</li>
+<li>signalType : The type of this new signal (FLX_TYPE_...)</li>
+<li>signalDescriptor : Extended definition of the signal type, usually set to 0 for default</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxAddSignal(flxTrace trace, flxid itemId, flxid parentId, flxtext name, flxtext description,		flxbyte signalType, flxtext signalDescriptor)</pre><hr/>
+<a id="flxAddScatteredSignal"></a>
+<b>flxAddScatteredSignal</b>
+<p>Writes an item entry for scattered signals.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id for this new item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>parentId : Defines the parent of this new item (or 0 for the root item)</li>
+<li>name : The name of the item</li>
+<li>description : Descriptive text for this item or 0</li>
+<li>signalType : The type of this new signal (FLX_TYPE_...)</li>
+<li>signalDescriptor : Extended definition of the signal type, usually set to 0 for default</li>
+<li>scatteredFrom : Scattered from (e.g. bit position 0)</li>
+<li>scatteredTo : Scattered to (e.g. bit position 4)</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxAddScatteredSignal(flxTrace trace, flxid itemId, flxid parentId, flxtext name, flxtext description,		flxbyte signalType, flxtext signalDescriptor, flxuint scatteredFrom, flxuint scatteredTo)</pre><hr/>
+<a id="flxAddSignals"></a>
+<b>flxAddSignals</b>
+<p>Writes an item entry for multiple signals.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemIdFrom : The first item id for this new item set. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>itemIdTo : The last item id for this new item set. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>parentId : Defines the parent of this new item (or 0 for the root item)</li>
+<li>name : The name of the item</li>
+<li>description : Descriptive text for this item or 0</li>
+<li>signalType : The type of this new signal (FLX_TYPE_...)</li>
+<li>signalDescriptor : Extended definition of the signal type, usually set to 0 for default</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxAddSignals(flxTrace trace, flxid itemIdFrom, flxid itemIdTo, flxid parentId, flxtext name,		flxtext description, flxbyte signalType, flxtext signalDescriptor)</pre><hr/>
+<a id="flxAddSignalReference"></a>
+<b>flxAddSignalReference</b>
+<p>Writes an item entry for a signal reference.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>referenceId</li>
+<li>parentId : Defines the parent of this new item (or 0 for the root item)</li>
+<li>name : The name of the item</li>
+<li>description : Descriptive text for this item or 0</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxAddSignalReference(flxTrace trace, flxid referenceId, flxid parentId, flxtext name, flxtext description)</pre><hr/>
+<a id="flxAddScatteredSignalReference"></a>
+<b>flxAddScatteredSignalReference</b>
+<p>Writes an item entry for a scattered signal reference.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>referenceId</li>
+<li>parentId : Defines the parent of this new item (or 0 for the root item)</li>
+<li>name : The name of the item</li>
+<li>description : Descriptive text for this item or 0</li>
+<li>scatteredFrom : Scattered from (e.g. bit position 0)</li>
+<li>scatteredTo : Scattered to (e.g. bit position 4)</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxAddScatteredSignalReference(flxTrace trace, flxid referenceId, flxid parentId, flxtext name,		flxtext description, flxuint scatteredFrom, flxuint scatteredTo)</pre><hr/>
+<a id="flxAddScope"></a>
+<b>flxAddScope</b>
+<p>Writes an item entry for a scope.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id for this new item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>parentId : Defines the parent of this new item (or 0 for the root item)</li>
+<li>name : The name of the item</li>
+<li>description : Descriptive text for this item or 0</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxAddScope(flxTrace trace, flxid itemId, flxid parentId, flxtext name, flxtext description)</pre><hr/>
+<a id="flxIsSignal"></a>
+<b>flxIsSignal</b>
+<p>Tests the item type.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li> <b>Returns true if the item is a signal</b></li>
+</ul>
+<pre>flxbool flxIsSignal(flxTrace trace, flxid itemId)</pre><hr/>
+<a id="flxIsScope"></a>
+<b>flxIsScope</b>
+<p>Tests the item type.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li> <b>Returns true if the item is a scope</b></li>
+</ul>
+<pre>flxbool flxIsScope(flxTrace trace, flxid itemId)</pre><hr/>
+<h4>Sequences - Open & Close</h4>
+<a id="flxOpen"></a>
+<b>flxOpen</b>
+<p>Opens a new sequence. This opens the sequence for the references item and all items below (children,...).</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item to be opened (1..maxItemId or 0 for the root item)</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or 0 for default.</li>
+<li>start : Domain position as a multiple of its domain base (e.g. domain base=1ms, units = 100, -> domain value = 100ms)</li>
+<li>rate : Domain rate as a multiple of its domain base</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxOpen(flxTrace trace, flxid itemId, flxtext domain, flxdomain start, flxdelta rate)</pre><hr/>
+<a id="flxSetDefaultOpenDomain"></a>
+<b>flxSetDefaultOpenDomain</b>
+<p>Sets the default domain. This is used when using the flxOpen with domain=0</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or 0 for default.</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxSetDefaultOpenDomain(flxTrace trace, flxtext domain)</pre><hr/>
+<a id="flxIsOpen"></a>
+<b>flxIsOpen</b>
+<p>Checks the open state of an item.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item to be opened (1..maxItemId or 0 for the root item)</li>
+<li> <b>Returns true if a sequence has been opened for the given item.</b></li>
+</ul>
+<pre>flxbool flxIsOpen(flxTrace trace, flxid itemId)</pre><hr/>
+<a id="flxClose"></a>
+<b>flxClose</b>
+<p>Closes a sequence. This closes the sequence for the references item and all items below (children,...).</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item to be opened (1..maxItemId or 0 for the root item)</li>
+<li>end : Domain position as a multiple of its domain base (e.g. domain base=1ms , units = 100, -> domain value = 100ms).</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxClose(flxTrace trace, flxid itemId, flxdomain end)</pre><hr/>
+<h4>Enums & Members</h4>
+<a id="flxWriteEnumDef"></a>
+<b>flxWriteEnumDef</b>
+<p>Writes an entry for a enumeration.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>enumeration : Define the enumeration domain (e.g. FLX_ENUM_GLOBAL, FLX_ENUM_MEMBER_0, ..)</li>
+<li>label : The textual representation of the enum.</li>
+<li>value : The value : The integer value of the enum. This value must be unique for one enumeration domain.</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteEnumDef(flxTrace trace, flxid itemId, flxuint enumeration, flxtext label, flxuint value)</pre><hr/>
+<a id="flxWriteArrayDef"></a>
+<b>flxWriteArrayDef</b>
+<p>Writes an entry for an array definition.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>index : Index of the array member (0..size-1).</li>
+<li>label : Label of the array member.</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteArrayDef(flxTrace trace, flxid itemId, flxuint index, flxtext label)</pre><hr/>
+<a id="flxInitMember"></a>
+<b>flxInitMember</b>
+<p>Initializes a member structure.</p>
+<ul  class="uk-list uk-list-striped">
+<li>member : Member structure of type flxMemberValue</li>
+<li>memberId : Id of the member (0..N). This id need to be unique for one signal item.</li>
+<li>label : Label of the struct member.</li>
+<li>memberType : Data type of this member (FLX_STRUCTTYPE_TEXT, FLX_STRUCTTYPE_ENUM,...)</li>
+<li>memberDescriptor : Type descriptor or 0 for default.</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxInitMember(flxMemberValue member, flxuint memberId, flxtext label, flxbyte memberType,		flxtext memberDescriptor)</pre><hr/>
+<a id="flxWriteMemberDef"></a>
+<b>flxWriteMemberDef</b>
+<p>Writes an entry for a member definition.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>member : Member structure of type flxMemberValue</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteMemberDef(flxTrace trace, flxid itemId, flxMemberValue member)</pre><hr/>
+<a id="flxWriteMemberDefs"></a>
+<b>flxWriteMemberDefs</b>
+<p>Writes multiple entries for member definition.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>member : Member structure of type flxMemberValue</li>
+<li>count : No of members in the member array.</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteMemberDefs(flxTrace trace, flxid itemId, flxMemberValue member, flxuint count)</pre><hr/>
+<h4>Writing samples</h4>
+<a id="flxSetDomainValue"></a>
+<b>flxSetDomainValue</b>
+<p>Sets the domain position.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxSetDomainValue(flxTrace trace, flxid itemId, flxdomain * domain, flxbool isDelta)</pre><hr/>
+<a id="flxWriteNoneAt"></a>
+<b>flxWriteNoneAt</b>
+<p>Writes a 'none' samples.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteNoneAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta)</pre><hr/>
+<a id="flxWriteIntAt"></a>
+<b>flxWriteIntAt</b>
+<p>Writes an integer sample.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li>value : The value</li>
+<li>size : Size of the value in bytes</li>
+<li>signd : 1 if value is a signed integer</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteIntAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta, void *value,		flxbyte size, flxbool signd)</pre><hr/>
+<a id="flxWriteIntArrayAt"></a>
+<b>flxWriteIntArrayAt</b>
+<p>Writes an integer array sample.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li>value : The value</li>
+<li>intsize : Size of the int values (4 or 8) in bytes</li>
+<li>signd : 1 if value is a signed integer</li>
+<li>count : No of array members</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteIntArrayAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta,		void *value, flxbyte intsize, flxbool signd, flxuint count)</pre><hr/>
+<a id="flxWriteFloatAt"></a>
+<b>flxWriteFloatAt</b>
+<p>Writes a float sample.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li>value : The value</li>
+<li>size : Size of the value in bytes (4 or 8)</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteFloatAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta,		void *value, flxbyte size)</pre><hr/>
+<a id="flxWriteFloatArrayAt"></a>
+<b>flxWriteFloatArrayAt</b>
+<p>Writes a float array sample.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li>value : The value</li>
+<li>floatsize : Size of the value in bytes (4 or 8)</li>
+<li>count : No of array members</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteFloatArrayAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta,		void *value, flxbyte floatsize, flxuint count)</pre><hr/>
+<a id="flxWriteEventAt"></a>
+<b>flxWriteEventAt</b>
+<p>Writes an event sample.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li>value : The value</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteEventAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta,		flxuint value)</pre><hr/>
+<a id="flxWriteEventArrayAt"></a>
+<b>flxWriteEventArrayAt</b>
+<p>Writes an event array sample.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li>value : The value</li>
+<li>count : No of array members</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteEventArrayAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta,		flxuint *value, flxuint count)</pre><hr/>
+<a id="flxWriteTextAt"></a>
+<b>flxWriteTextAt</b>
+<p>Writes a text sample.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li>value : The value</li>
+<li>size : Size of the value in characters</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteTextAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta,		flxtext value, flxuint size)</pre><hr/>
+<a id="flxWriteBinaryAt"></a>
+<b>flxWriteBinaryAt</b>
+<p>Writes a binary sample.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li>value : The value</li>
+<li>size : Size of the value in bytes</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteBinaryAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta,		flxbptr value, flxuint size)</pre><hr/>
+<a id="flxWriteLogicStatesAt"></a>
+<b>flxWriteLogicStatesAt</b>
+<p>Writes a logic sample using an array of states.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li>precedingStates : If the given no of bits less than the defined one, the preceding states will be filled to the left</li>
+<li>value : The value</li>
+<li>size : Size of the value in states</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteLogicStatesAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta,		flxbyte precedingStates, flxbptr value, flxuint size)</pre><hr/>
+<a id="flxWriteLogicTextAt"></a>
+<b>flxWriteLogicTextAt</b>
+<p>Writes a logic sample using a text.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li>precedingStates : If the given no of bits less than the defined one, the preceding states will be filled to the left</li>
+<li>value : The value</li>
+<li>size : Size of the value in characters</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteLogicTextAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta,		flxbyte precedingStates, flxtext value, flxuint size)</pre><hr/>
+<a id="flxSetMember"></a>
+<b>flxSetMember</b>
+<p>Sets the member values of a struct signal member.</p>
+<ul  class="uk-list uk-list-striped">
+<li>member : Member structure of type flxMemberValue</li>
+<li>value : The value</li>
+<li>size : Size of the value in bytes</li>
+<li>option : integer->signed flag</li>
+<li>valid : Marks this member as valid. In-valid members are not written.</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxSetMember(flxMemberValue member, void* value, flxuint size, flxuint option, flxbool valid)</pre><hr/>
+<a id="flxWriteMembersAt"></a>
+<b>flxWriteMembersAt</b>
+<p>Writes a struct sample.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>conflict : Marks the new sample as a 'conflict' one. In impulse conflict samples are painted in red</li>
+<li>domain : Domain base (e.g. ns, us, Hz,..), or null for default.</li>
+<li>isDelta : If set to true, domain will be taken as positive relative value (0 to keep the domain position)</li>
+<li>value : The value</li>
+<li>count : No of array members</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteMembersAt(flxTrace trace, flxid itemId, flxbool conflict, flxdomain domain, flxbool isDelta,		flxMemberValue value, flxuint count)</pre><hr/>
+<h4>Relation & Labels</h4>
+<a id="flxWriteRelation"></a>
+<b>flxWriteRelation</b>
+<p>Writes an relation entry. An relation connects the previously written sample with any other item (path of the item) at a relative position.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>target : Path to the target signal (e.g. "\\scope\\signal")</li>
+<li>style : Enumeration id of the style description.</li>
+<li>delta : Delta position</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteRelation(flxTrace trace, flxid itemId, flxuint target, flxuint style, flxsdelta delta)</pre><hr/>
+<a id="flxWriteLabel"></a>
+<b>flxWriteLabel</b>
+<p>Writes a label entry. The label is added to the previously written sample.</p>
+<ul  class="uk-list uk-list-striped">
+<li>trace : The trace object</li>
+<li>itemId : The item id of the referenced item. The id must be unique for this trace and in the range of 1..maxItemId</li>
+<li>style : Enumeration id of the style description.</li>
+<li>x</li>
+<li>y</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteLabel(flxTrace trace, flxid itemId, flxuint style, flxsint x, flxsint y)</pre><hr/>
+<h4>Control entries</h4>
+<a id="flxWriteControlReqEntry"></a>
+<b>flxWriteControlReqEntry</b>
+<p>Writes a control request entry into a buffer.</p>
+<ul  class="uk-list uk-list-striped">
+<li>buffer : Target of this write entry</li>
+<li>controlId : Identifies a control function</li>
+<li>messageId : Identifies a message (may be used to identify the result message)</li>
+<li>value : The value (set of members)</li>
+<li>count : No of array members</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteControlReqEntry(flxBuffer buffer, flxid controlId, flxid messageId, flxMemberValue value,		flxuint count)</pre><hr/>
+<a id="flxWriteControlResEntry"></a>
+<b>flxWriteControlResEntry</b>
+<p>Writes a control result entry into a buffer.</p>
+<ul  class="uk-list uk-list-striped">
+<li>buffer : Target of this write entry</li>
+<li>controlId : Identifies a control function</li>
+<li>messageId : Identifies a message (may be used to identify the result message)</li>
+<li>value : The value (set of members)</li>
+<li>count : No of array members</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteControlResEntry(flxBuffer buffer, flxid controlId, flxid messageId, flxMemberValue value,		flxuint count)</pre><hr/>
+<a id="flxWriteControlRequest"></a>
+<b>flxWriteControlRequest</b>
+<p>Writes a control request entry into a trace.</p>
+<ul  class="uk-list uk-list-striped">
+<li>buffer : Target of this write entry</li>
+<li>controlId : Identifies a control function</li>
+<li>messageId : Identifies a message (may be used to identify the result message)</li>
+<li>value : The value (set of members)</li>
+<li>count : No of array members</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteControlRequest(flxTrace trace, flxid controlId, flxid messageId, flxMemberValue value, flxuint count)</pre><hr/>
+<a id="flxWriteControlResult"></a>
+<b>flxWriteControlResult</b>
+<p>Writes a control result entry into a trace.</p>
+<ul  class="uk-list uk-list-striped">
+<li>buffer : Target of this write entry</li>
+<li>controlId : Identifies a control function</li>
+<li>messageId : Identifies a message (may be used to identify the result message)</li>
+<li>value : The value (set of members)</li>
+<li>count : No of array members</li>
+<li> <b>Returns FLX_OK is succeeded, or FLX_ERROR_ in the error case</b></li>
+</ul>
+<pre>flxresult flxWriteControlResult(flxTrace trace, flxid controlId, flxid messageId, flxMemberValue value, flxuint count)</pre><hr/>

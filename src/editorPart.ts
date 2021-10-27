@@ -4,7 +4,7 @@ import WebSocket = require('ws');
 import { Disposable, disposeAll } from './dispose';
 import { getNonce } from './util';
 import { AbstractPartProvider } from './abstractPart';
-
+import { AbstractPart } from './abstractPart';
 
 /**
 
@@ -16,7 +16,13 @@ class Document extends Disposable implements vscode.CustomDocument {
 		backupId: string | undefined,
 	): Promise<Document | PromiseLike<Document>> {
 		// If we have a backup, read that. Otherwise read the resource from the workspace
-		const dataFile = typeof backupId === 'string' ? vscode.Uri.parse(backupId) : uri;
+		const dataFile: vscode.Uri = typeof backupId === 'string' ? vscode.Uri.parse(backupId) : uri;
+
+		//var fileData;
+		//if (uri.scheme != "file") {
+		//	fileData = await Document.readFile(uri);
+		//}
+
 		return new Document(uri);
 	}
 
@@ -69,36 +75,110 @@ class Document extends Disposable implements vscode.CustomDocument {
 	}
 
 
-	/**
-	 * Called by VS Code when the user saves the document.
-	 */
-	async save(cancellation: vscode.CancellationToken): Promise<void> {
-		await this.saveAs(this.uri, cancellation);
-		// this._savedEdits = Array.from(this._edits);
+
+	private static async readFile(uri: vscode.Uri): Promise<Uint8Array> {
+		if (uri.scheme === 'untitled') {
+			return new Uint8Array();
+		}
+		return vscode.workspace.fs.readFile(uri);
+	}
+}
+
+class EditorPart extends AbstractPart {
+
+	public constructor(
+		private readonly editprovider: EditPartProvider,
+		private readonly webviewPanel: vscode.WebviewPanel,
+		socket: WebSocket,
+		private readonly document: Document
+	) {
+		super(editprovider, webviewPanel.webview, socket);
+
+		// request the part
+		this.send({ id: 0, op: "init", s0: editprovider.id, s1: document.uri.toString() });
+
+		// close connection on dispose
+		webviewPanel.onDidDispose(e => {
+			this.disconnect();
+			AbstractPart.remove(this);
+		});
+
+		// notify panel status
+		const panel: any = webviewPanel;
+		panel.impulse = { document: document, active: webviewPanel.active, visible: webviewPanel.visible };
+		webviewPanel.onDidChangeViewState(e => {
+			if (panel.impulse.active != webviewPanel.active) {
+				this.send({ id: 0, op: "Activation", t0: webviewPanel.active });
+				panel.impulse.active = webviewPanel.active;
+			}
+			if (panel.impulse.visible != webviewPanel.visible) {
+				this.send({ id: 0, op: "Visibility", t0: webviewPanel.visible });
+				panel.impulse.visible = webviewPanel.visible;
+			}
+		});
+		this.send({ id: 0, op: "Activation", t0: webviewPanel.active });
+		this.send({ id: 0, op: "Visibility", t0: webviewPanel.visible });
+
+
+		AbstractPart.add(this);
 	}
 
-	/**
-	 * Called by VS Code when the user saves the document to a new location.
-	 */
-	async saveAs(targetResource: vscode.Uri, cancellation: vscode.CancellationToken): Promise<void> {
-		// const fileData = await this._delegate.getFileData();
-		// if (cancellation.isCancellationRequested) {
-		// 	return;
-		// }
-		// await vscode.workspace.fs.writeFile(targetResource, fileData);
+	protected handle(message: any) {
+
+		super.handle(message);
+		if (message.id == 0 && message.op != "Response")
+			switch (message.op) {
+				case "Dirty": {
+					if (message.t0)
+						this.editprovider.onDidChangeCustomDocumentEmitter.fire({ document: this.document });
+				}
+					break;
+			}
 	}
 
-	/**
-	 * Called by VS Code when the user calls `revert` on a document.
-	 */
-	async revert(_cancellation: vscode.CancellationToken): Promise<void> {
-		// const diskContent = await RecordDocument.readFile(this.uri);
-		// this._documentData = diskContent;
-		// this._edits = this._savedEdits;
-		// this._onDidChangeDocument.fire({
-		// 	content: diskContent,
-		// 	edits: this._edits,
-		// });
+	public static getFromDocument(document: Document): EditorPart | null {
+		var result: EditorPart | null = null;
+		AbstractPart.parts.forEach((p, index) => {
+			if (p instanceof EditorPart && (p as EditorPart).document == document) {
+				result = p as EditorPart;
+			}
+		});
+		return result;
+	}
+
+
+	public save(cancellation: vscode.CancellationToken): Promise<void> {
+		return new Promise((resolve, reject) => {
+			this.request({ id: 0, op: "Save" }, (response) => {
+				if (response.t1)
+					resolve();
+				else
+					reject("Save failed");
+			});
+		});
+	}
+
+	public saveAs(uri: vscode.Uri, cancellation: vscode.CancellationToken): Promise<void> {
+
+		return new Promise((resolve, reject) => {
+			this.request({ id: 0, op: "SaveAs", s1: uri.toString() }, (response) => {
+				if (response.t1)
+					resolve();
+				else
+					reject("Save failed");
+			});
+		});
+	}
+
+	public revert(_cancellation: vscode.CancellationToken): Promise<void> {
+		return new Promise((resolve, reject) => {
+			this.request({ id: 0, op: "Revert" }, (response) => {
+				if (response.t1)
+					resolve();
+				else
+					reject("Revert failed");
+			});
+		});
 	}
 
 	/**
@@ -120,36 +200,17 @@ class Document extends Disposable implements vscode.CustomDocument {
 			}
 		};
 	}
+
 }
 
-/**
- * 
- * - How to implement a custom editor for binary files.
- * - Setting up the initial webview for a custom editor.
- * - Loading scripts and styles in a custom editor.
- * - Communication between VS Code and the custom editor.
- * - Using CustomDocuments to store information that is shared between multiple custom editors.
- * - Implementing save, undo, redo, and revert.
- * - Backing up a custom editor.
- */
 export class EditPartProvider extends AbstractPartProvider implements vscode.CustomEditorProvider<Document> {
 
 	public static register(context: vscode.ExtensionContext, id: string): vscode.Disposable {
 
-		/*		vscode.commands.executeCommand('setContext', 'showMyCommand', true);
-		
-				vscode.commands.registerCommand('de.toem.impulse.commands.geometry.signals', () => {
-					vscode.window.showInformationMessage("hoho");
-						
-				});
-		*/
 		return vscode.window.registerCustomEditorProvider(
 			id,
 			new EditPartProvider(context, id),
 			{
-				// For this demo extension, we enable `retainContextWhenHidden` which keeps the 
-				// webview alive even when it is not visible. You should avoid using this setting
-				// unless is absolutely required as it does have memory overhead.
 				webviewOptions: {
 					retainContextWhenHidden: true,
 				},
@@ -158,27 +219,12 @@ export class EditPartProvider extends AbstractPartProvider implements vscode.Cus
 	}
 
 
-
-	//#region CustomEditorProvider
-
 	async openCustomDocument(
 		uri: vscode.Uri,
 		openContext: { backupId?: string },
 		_token: vscode.CancellationToken
 	): Promise<Document> {
 		const document: Document = await Document.create(uri, openContext.backupId);
-
-		const listeners: vscode.Disposable[] = [];
-
-		listeners.push(document.onDidChange(e => {
-			// Tell VS Code that the document has been edited by the use.
-			this._onDidChangeCustomDocument.fire({
-				document,
-				...e,
-			});
-		}));
-
-		document.onDidDispose(() => disposeAll(listeners));
 
 		return document;
 	}
@@ -189,87 +235,67 @@ export class EditPartProvider extends AbstractPartProvider implements vscode.Cus
 		_token: vscode.CancellationToken
 	): Promise<void> {
 
+		const webview: vscode.Webview = webviewPanel.webview;
+
 		// Setup initial content for the webview
-		webviewPanel.webview.options = {
+		webview.options = {
 			enableScripts: true,
 		};
 
 		// setup html
-		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview, document.uri);
+		webview.html = this.getHtmlForWebview(webview, document.uri);
 
 		// ready and connect state
 		var ready: boolean = false;
-		var client: WebSocket | undefined;
+		var socket: WebSocket | undefined;
 
 		// wait for webview ready 
-		var readyListener: vscode.Disposable = webviewPanel.webview.onDidReceiveMessage(message => {
+		var readyListener: vscode.Disposable = webview.onDidReceiveMessage(message => {
 			readyListener.dispose();
 			ready = true;
-			if (client && ready)
-				this.initPart(document, webviewPanel, client);
+			if (socket && ready)
+				new EditorPart(this, webviewPanel, socket, document);
 		})
 
-		// create connection to impulse server
-		AbstractPartProvider.connect(webviewPanel.webview, (result) => {
-			client = result;
-			if (client && ready)
-				this.initPart(document, webviewPanel, client);
+		// wait for connection ready to impulse server
+		this.connect(webview, (result) => {
+			socket = result;
+			if (socket && ready)
+				new EditorPart(this, webviewPanel, socket, document);
 		});
-
-		/*
-		webviewPanel.onDidDispose(e => {
-			webviewPanel.webview.postMessage({ id: 0, op: "dispose" });
-		});
-*/
 
 	}
 
-	private initPart(document: Document,
-		webviewPanel: vscode.WebviewPanel, client: WebSocket) {
 
-		// request the part
-		AbstractPartProvider.send(client, { id: 0, op: "init", s0: this.id, s1: document.uri.toString() });
-
-		// close connection on dispose
-		webviewPanel.onDidDispose(e => {
-			AbstractPartProvider.disconnect(client);
-		});
-
-		// notify panel status
-		const panel: any = webviewPanel;
-		panel.impulse = { document: document, active: webviewPanel.active, visible: webviewPanel.visible };
-		webviewPanel.onDidChangeViewState(e => {
-			if (panel.impulse.active != webviewPanel.active) {
-				AbstractPartProvider.send(client, { id: 0, op: "Activation", t0: webviewPanel.active });
-				panel.impulse.active = webviewPanel.active;
-			}
-			if (panel.impulse.visible != webviewPanel.visible) {
-				AbstractPartProvider.send(client, { id: 0, op: "Visibility", t0: webviewPanel.visible });
-				panel.impulse.visible = webviewPanel.visible;
-			}
-		});
-		AbstractPartProvider.send(client, { id: 0, op: "Activation", t0: webviewPanel.active });
-		AbstractPartProvider.send(client, { id: 0, op: "Visibility", t0: webviewPanel.visible });
-
-	}
-
-	private readonly _onDidChangeCustomDocument = new vscode.EventEmitter<vscode.CustomDocumentEditEvent<Document>>();
-	public readonly onDidChangeCustomDocument = this._onDidChangeCustomDocument.event;
+	public readonly onDidChangeCustomDocumentEmitter = new vscode.EventEmitter<vscode.CustomDocumentContentChangeEvent<Document>>();
+	public readonly onDidChangeCustomDocument = this.onDidChangeCustomDocumentEmitter.event;
 
 	public saveCustomDocument(document: Document, cancellation: vscode.CancellationToken): Thenable<void> {
-		return document.save(cancellation);
+		const part = EditorPart.getFromDocument(document);
+		if (part)
+			return part.save(cancellation);
+		return Promise.reject();
 	}
 
 	public saveCustomDocumentAs(document: Document, destination: vscode.Uri, cancellation: vscode.CancellationToken): Thenable<void> {
-		return document.saveAs(destination, cancellation);
+		const part = EditorPart.getFromDocument(document);
+		if (part)
+			return part.saveAs(destination, cancellation);
+		return Promise.reject();
 	}
 
 	public revertCustomDocument(document: Document, cancellation: vscode.CancellationToken): Thenable<void> {
-		return document.revert(cancellation);
+		const part = EditorPart.getFromDocument(document);
+		if (part)
+			return part.revert(cancellation);
+		return Promise.reject();
 	}
 
 	public backupCustomDocument(document: Document, context: vscode.CustomDocumentBackupContext, cancellation: vscode.CancellationToken): Thenable<vscode.CustomDocumentBackup> {
-		return document.backup(context.destination, cancellation);
+		const part = EditorPart.getFromDocument(document);
+		if (part)
+			return part.backup(context.destination, cancellation);
+		return Promise.reject();
 	}
 
 }

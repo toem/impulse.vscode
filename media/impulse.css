@@ -1,18 +1,11 @@
 
 :root {
-  
-
+  --container-paddding: 0px;
+  --input-padding-vertical: 6px;
+  --input-padding-horizontal: 4px;
+  --input-margin-vertical: 4px;
+  --input-margin-horizontal: 0;
 }
-
-
-:root {
-	--container-paddding: 0px;
-	--input-padding-vertical: 6px;
-	--input-padding-horizontal: 4px;
-	--input-margin-vertical: 4px;
-	--input-margin-horizontal: 0;
-}
-
 body {
 
 	color: var(--vscode-foreground);
@@ -100,93 +93,35 @@ textarea::placeholder {
 	color: var(--vscode-input-placeholderForeground);
 }
 
+div {grid-row-gap: 2px;grid-column-gap: 2px;}
 
-@font-face {
-	font-family: "codicon";
-	src: url("codicon.ttf") format("truetype");
-}
 
 :root {
 
+  /* tlk */
+  --de-toem-toolkits-tlk-css-general-focus-border: var(--vscode-focusBorder);
+  --de-toem-toolkits-tlk-css-general-border: var(--vscode-panelSectionHeader-background);
 
+  --de-toem-toolkits-tlk-css-general-open-image:ri-folder-opened;
+  --de-toem-toolkits-tlk-css-general-edit-image:codicon-edit;
+  --de-toem-toolkits-tlk-css-general-inplace-image:codicon-window;
+  --de-toem-toolkits-tlk-css-general-save-image:codicon-save;
+  --de-toem-toolkits-tlk-css-general-save-as-image:codicon-save-as;
+  --de-toem-toolkits-tlk-css-general-filter-image:codicon-filter;
+  --de-toem-toolkits-tlk-css-general-copy-image:codicon-copy;
+  --de-toem-toolkits-tlk-css-general-paste-image:ri-clipboard-line;
+  --de-toem-toolkits-tlk-css-general-cut-image:ri-scissors-cut-line;
+  --de-toem-toolkits-tlk-css-general-delete-image:ri-delete-back-line;
+  --de-toem-toolkits-tlk-css-general-delete-all-image:ri-delete-bin-2-line;
+  --de-toem-toolkits-tlk-css-general-add-image:codicon-add;
+  --de-toem-toolkits-tlk-css-general-insert-image:ri-insert-row-bottom;
+  --de-toem-toolkits-tlk-css-general-find-image:ri-find-replace-line;
+  --de-toem-toolkits-tlk-css-general-print-image:ri-find-replace-line;
+  --de-toem-toolkits-tlk-css-general-help-image:codicon-question;
+  --de-toem-toolkits-tlk-css-general-settings-image:codicon-settings;
 
-
-
-	--de-toem-toolkits-tlk-css-general-edit-content: "\ea73";
-	--de-toem-toolkits-tlk-css-general-edit-font: normal normal normal 16px/1 codicon;
-  --de-toem-toolkits-tlk-css-general-inplace-content: "\eb7f";
-	--de-toem-toolkits-tlk-css-general-inplace-font: normal normal normal 16px/1 codicon;
-	--de-toem-toolkits-tlk-css-general-focus-border: var(--vscode-focusBorder);
-
-	--de-toem-toolkits-tlk-css-panel-background: var(--vscode-panel-background);
-	--de-toem-toolkits-tlk-css-panel-title-foreground: var(--vscode-panelTitle-activeForeground);
-	--de-toem-toolkits-tlk-css-panel-title-background: var(--vscode-panelSectionHeader-background);
-	--de-toem-toolkits-tlk-css-panel-hover-background: var(--vscode-panelSectionHeader-background);
-	--de-toem-toolkits-tlk-css-panel-border: 2px solid var(--vscode-panelSectionHeader-background);
-
-  /*--vscode-toolbar-activeBackground*/
-  
-	--de-toem-toolkits-tlk-css-toolbar-background: var(--vscode-panelSectionHeader-background);
-  --de-toem-toolkits-tlk-css-toolbar-hover-background: var(--vscode-toolbar-hoverBackground);
-	--de-toem-toolkits-tlk-css-toolbar-menu-content: "\eab4";
-	--de-toem-toolkits-tlk-css-toolbar-menu-font: normal normal normal 16px/1 codicon;
-
-	--de-toem-toolkits-tlk-css-sash-background: var(--vscode-panelSectionHeader-background);
-	--de-toem-toolkits-tlk-css-sash-hover-background: var(--vscode-focusBorder);
-
-	--de-toem-toolkits-tlk-css-button-background: var(--vscode-button-background);
-	--de-toem-toolkits-tlk-css-button-foreground: var(--vscode-button-foreground);
-	--de-toem-toolkits-tlk-css-button-selected-foreground: var(--vscode-list-activeSelectionForeground);
-	--de-toem-toolkits-tlk-css-button-selected-background: var(--vscode-list-activeSelectionBackground);
-	--de-toem-toolkits-tlk-css-button-hover-background: var(--vscode-button-hoverBackground);
-	
-	--de-toem-toolkits-tlk-css-menu-background: var(--vscode-menu-background);
-	--de-toem-toolkits-tlk-css-menu-foreground: var(--vscode-menu-foreground);
-	--de-toem-toolkits-tlk-css-menu-selected-foreground: var(--vscode-menu-selectionForeground);
-	--de-toem-toolkits-tlk-css-menu-selected-background: var(--vscode-menu-selectionBackground);
-	--de-toem-toolkits-tlk-css-menu-menu-content: "\ea9f";
-	--de-toem-toolkits-tlk-css-menu-menu-font: normal normal normal 16px/1 codicon;
-		
-	--de-toem-toolkits-tlk-css-list-foreground: var(--vscode-foreground);
-	--de-toem-toolkits-tlk-css-list-background: var(--vscode-panel-background);
-	--de-toem-toolkits-tlk-css-list-stripe-background: var(--vscode-panel-background);
-	--de-toem-toolkits-tlk-css-list-inactive-background: color(var(--vscode-panel-background) lightness(-10%));
-	--de-toem-toolkits-tlk-css-list-hover-background: var(--vscode-list-hoverBackground);
-	--de-toem-toolkits-tlk-css-list-object: var(--vscode-foreground);
-	--de-toem-toolkits-tlk-css-list-selection-foreground: var(--vscode-list-activeSelectionForeground);
-	--de-toem-toolkits-tlk-css-list-selection-background: var(--vscode-list-activeSelectionBackground);
-	--de-toem-toolkits-tlk-css-list-inactive-selection-foreground:  var(--vscode-list-activeSelectionForeground);
-	--de-toem-toolkits-tlk-css-list-inactive-selection-background:  var(--vscode-list-inactiveSelectionBackground);
-
-	
-	
-	--de-toem-toolkits-tlk-css-header-foreground: var(--vscode-panelTitle-activeForeground);
-	--de-toem-toolkits-tlk-css-header-background: var(--vscode-panelSectionHeader-background);
-	--de-toem-toolkits-tlk-css-header-inactive-foreground: var(--vscode-panelTitle-inactiveForeground);
-	--de-toem-toolkits-tlk-css-header-inactive-background: color(var(--vscode-panel-background) lightness(-10%));
-	--de-toem-toolkits-tlk-css-header-object: var(--vscode-foreground);
-	--de-toem-toolkits-tlk-css-header-selection-foreground: var(--vscode-list-activeSelectionForeground);
-	--de-toem-toolkits-tlk-css-header-selection-background: var(--vscode-list-activeSelectionBackground);
-	--de-toem-toolkits-tlk-css-header-inactive-selection-foreground:  var(--vscode-list-inactiveSelectionForeground);
-	--de-toem-toolkits-tlk-css-header-inactive-selection-background:  var(--vscode-list-inactiveSelectionBackground);
-	--de-toem-toolkits-tlk-css-header-focus-foreground: var(--vscode-list-focusForeground);
-	--de-toem-toolkits-tlk-css-header-focus-background: var(--vscode-list-focusBackground);
-	--de-toem-toolkits-tlk-css-header-hover-foreground: var(--vscode-list-hoverForeground);
-	--de-toem-toolkits-tlk-css-header-hover-background: var(--vscode-list-hoverBackground);
-
-	--de-toem-toolkits-tlk-css-header-sortup-content: "\eab7";
-	--de-toem-toolkits-tlk-css-header-sortup-font: normal normal normal 16px/1 codicon;
-	--de-toem-toolkits-tlk-css-header-sortdown-content: "\eab4";
-	--de-toem-toolkits-tlk-css-header-sortdown-font: normal normal normal 16px/1 codicon;
-	--de-toem-toolkits-tlk-css-header-filter-content: "\eaf1";
-	--de-toem-toolkits-tlk-css-header-filter-font: normal normal normal 16px/1 codicon;
-	
-	
-	--de-toem-toolkits-tlk-css-tree-expanded-content: "\eab4";
-	--de-toem-toolkits-tlk-css-tree-expanded-font: normal normal normal 16px/1 codicon;
-	--de-toem-toolkits-tlk-css-tree-collapsed-content: "\eab6";
-	--de-toem-toolkits-tlk-css-tree-collapsed-font: normal normal normal 16px/1 codicon;
-
+  --de-toem-toolkits-tlk-css-general-codicon-font:normal normal normal 16px/1 codicon;
+  --de-toem-toolkits-tlk-css-general-remixicon-font:normal normal normal 16px/1 remixicon;
 
   --de-toem-toolkits-tlk-css-color-white: #ffffff;
   --de-toem-toolkits-tlk-css-color-black: #000000;
@@ -200,28 +135,140 @@ textarea::placeholder {
   --de-toem-toolkits-tlk-css-color-dark-yellow: #4b0000;
   --de-toem-toolkits-tlk-css-color-dark-green: #0a5200;
   --de-toem-toolkits-tlk-css-color-dark-blue: #00014b;
+
+  /* tlkcomposite */
+  --de-toem-toolkits-tlk-css-composite-background: var(--vscode-panel-background);
+
+  /* tlkpanel */
+  --de-toem-toolkits-tlk-css-panel-background: var(--vscode-panel-background);
+  --de-toem-toolkits-tlk-css-panel-title-foreground: var(--vscode-panelTitle-activeForeground);
+  --de-toem-toolkits-tlk-css-panel-title-background: var(--vscode-panelSectionHeader-background);
+  --de-toem-toolkits-tlk-css-panel-hover-background: var(--vscode-panelSectionHeader-background);
+  --de-toem-toolkits-tlk-css-panel-close-content: "\eab8";
+  --de-toem-toolkits-tlk-css-panel-close-font: var(--de-toem-toolkits-tlk-css-general-codicon-font);
+
+  /* tlkgroup */
+  --de-toem-toolkits-tlk-css-group-hover-background: var(--vscode-panelSectionHeader-background);
+
+  /* tlkexpandable */
+  --de-toem-toolkits-tlk-css-expandable-expanded-content: "\eab4";
+  --de-toem-toolkits-tlk-css-expandable-collapsed-content: "\eab6";
+  --de-toem-toolkits-tlk-css-expandable-symbol-font: var(--de-toem-toolkits-tlk-css-general-codicon-font);
+
+  /* tlktabfolder */
+  --de-toem-toolkits-tlk-css-tabfolder-background: var(--vscode-panelSectionHeader-background);
+  --de-toem-toolkits-tlk-css-tabfolder-foreground: var(--vscode-button-foreground);
+  --de-toem-toolkits-tlk-css-tabfolder-selected-foreground: var(--vscode-list-activeSelectionForeground);
+  --de-toem-toolkits-tlk-css-tabfolder-selected-background: var(--vscode-list-activeSelectionBackground);
+  --de-toem-toolkits-tlk-css-tabfolder-hover-background: var(--vscode-button-hoverBackground);  
+
+  /* tlksash */
+  --de-toem-toolkits-tlk-css-sash-background: var(--vscode-panelSectionHeader-background);
+  --de-toem-toolkits-tlk-css-sash-hover-background: var(--vscode-focusBorder);
+  
+  /* tlkbutton */
+  --de-toem-toolkits-tlk-css-button-background: var(--vscode-button-background);
+  --de-toem-toolkits-tlk-css-button-foreground: var(--vscode-button-foreground);
+  --de-toem-toolkits-tlk-css-button-selected-foreground: var(--vscode-list-activeSelectionForeground);
+  --de-toem-toolkits-tlk-css-button-selected-background: var(--vscode-list-activeSelectionBackground);
+  --de-toem-toolkits-tlk-css-button-hover-background: var(--vscode-button-hoverBackground);
+
+  /* tlkradio */
+  --de-toem-toolkits-tlk-css-radio-selected-foreground: var(--vscode-list-activeSelectionForeground);
+  --de-toem-toolkits-tlk-css-radio-selected-background: var(--vscode-list-activeSelectionBackground);
+  --de-toem-toolkits-tlk-css-radio-hover-background: var(--vscode-button-hoverBackground);
+
+  /* tlktoolbar */
+  --de-toem-toolkits-tlk-css-toolbar-background: var(--vscode-panelSectionHeader-background);
+  --de-toem-toolkits-tlk-css-toolbar-hover-background: var(--vscode-toolbar-hoverBackground);
+  --de-toem-toolkits-tlk-css-toolbar-menu-content: "\eab4";
+  --de-toem-toolkits-tlk-css-toolbar-symbol-font: var(--de-toem-toolkits-tlk-css-general-codicon-font);
+
+  /* tlkmenu */
+  --de-toem-toolkits-tlk-css-menu-background: var(--vscode-menu-background);
+  --de-toem-toolkits-tlk-css-menu-foreground: var(--vscode-menu-foreground);
+  --de-toem-toolkits-tlk-css-menu-selected-foreground: var(--vscode-menu-selectionForeground);
+  --de-toem-toolkits-tlk-css-menu-selected-background: var(--vscode-menu-selectionBackground);
+  --de-toem-toolkits-tlk-css-menu-menu-content: "\ea6d";
+  --de-toem-toolkits-tlk-css-menu-checked-content: "\eb85";
+  --de-toem-toolkits-tlk-css-menu-unchecked-content: "\eb7f";
+  --de-toem-toolkits-tlk-css-menu-symbol-font: var(--de-toem-toolkits-tlk-css-general-remixicon-font);	
+
+  /* list & header */
+  --de-toem-toolkits-tlk-css-list-foreground: var(--vscode-foreground);
+  --de-toem-toolkits-tlk-css-list-background: var(--vscode-panel-background);
+  --de-toem-toolkits-tlk-css-list-stripe-background: var(--vscode-panel-background);
+  --de-toem-toolkits-tlk-css-list-inactive-background: color(var(--vscode-panel-background) lightness(-10%));
+  --de-toem-toolkits-tlk-css-list-hover-background: var(--vscode-list-hoverBackground);
+  --de-toem-toolkits-tlk-css-list-object: var(--vscode-foreground);
+  --de-toem-toolkits-tlk-css-list-selection-foreground: var(--vscode-list-activeSelectionForeground);
+  --de-toem-toolkits-tlk-css-list-selection-background: var(--vscode-list-activeSelectionBackground);
+  --de-toem-toolkits-tlk-css-list-inactive-selection-foreground:  var(--vscode-list-activeSelectionForeground);
+  --de-toem-toolkits-tlk-css-list-inactive-selection-background:  var(--vscode-list-inactiveSelectionBackground);
+	
+  --de-toem-toolkits-tlk-css-header-foreground: var(--vscode-panelTitle-activeForeground);
+  --de-toem-toolkits-tlk-css-header-background: var(--vscode-panelSectionHeader-background);
+  --de-toem-toolkits-tlk-css-header-inactive-foreground: var(--vscode-panelTitle-inactiveForeground);
+  --de-toem-toolkits-tlk-css-header-inactive-background: color(var(--vscode-panel-background) lightness(-10%));
+  --de-toem-toolkits-tlk-css-header-object: var(--vscode-foreground);
+  --de-toem-toolkits-tlk-css-header-selection-foreground: var(--vscode-list-activeSelectionForeground);
+  --de-toem-toolkits-tlk-css-header-selection-background: var(--vscode-list-activeSelectionBackground);
+  --de-toem-toolkits-tlk-css-header-inactive-selection-foreground:  var(--vscode-list-inactiveSelectionForeground);
+  --de-toem-toolkits-tlk-css-header-inactive-selection-background:  var(--vscode-list-inactiveSelectionBackground);
+  --de-toem-toolkits-tlk-css-header-focus-foreground: var(--vscode-list-focusForeground);
+  --de-toem-toolkits-tlk-css-header-focus-background: var(--vscode-list-focusBackground);
+  --de-toem-toolkits-tlk-css-header-hover-foreground: var(--vscode-list-hoverForeground);
+  --de-toem-toolkits-tlk-css-header-hover-background: var(--vscode-list-hoverBackground);
+
+  --de-toem-toolkits-tlk-css-header-sortup-content: "\eab7";
+  --de-toem-toolkits-tlk-css-header-sortdown-content: "\eab4";
+  --de-toem-toolkits-tlk-css-header-filter-content: "\eaf1";
+  --de-toem-toolkits-tlk-css-header-symbol-font: var(--de-toem-toolkits-tlk-css-general-codicon-font);
+
+  /* tlktree */	
+  --de-toem-toolkits-tlk-css-tree-expanded-image:codicon-chevron-down;
+  --de-toem-toolkits-tlk-css-tree-collapsed-image:codicon-chevron-right;
+  --de-toem-toolkits-tlk-css-tree-expanded-content: "\eab4";
+  --de-toem-toolkits-tlk-css-tree-collapsed-content: "\eab6";
+  --de-toem-toolkits-tlk-css-tree-symbol-font: var(--de-toem-toolkits-tlk-css-general-codicon-font);
+
+  /* tlktable */	
+  --de-toem-toolkits-tlk-css-table-expanded-content: "\ea4e";
+  --de-toem-toolkits-tlk-css-table-collapsed-content: "\ea6e";
+  --de-toem-toolkits-tlk-css-table-checked-content: "\eb85";
+  --de-toem-toolkits-tlk-css-table-unchecked-content: "\eb7f";
+  --de-toem-toolkits-tlk-css-table-intermediate-content: "\eb84";
+  --de-toem-toolkits-tlk-css-table-symbol-font: var(--de-toem-toolkits-tlk-css-general-remixicon-font);
+
 }
 
+/**********************************************************************************
+* tlk
+**********************************************************************************/
 
-div {grid-row-gap: 2px;grid-column-gap: 2px;}
+[class^="tlk"] .border {border:  2px solid var(--de-toem-toolkits-tlk-css-general-border);}
 
-/* tlkcomposite */
+/**********************************************************************************
+* tlkcomposite
+**********************************************************************************/
+
 .tlkcomposite  {user-select: none;overflow:hidden;}
 .tlkcomposite.vscroll  {overflow-y:auto;}
 .tlkcomposite.hscroll  {overflow-x:auto;}
 .tlkcomposite:not(.vscroll) > .container  {height:100%;}
 .tlkcomposite:not(.hscroll) > .container  {width:100%;}
+.tlkcomposite.background {background-color: var(--de-toem-toolkits-tlk-css-composite-background);}
 
 /**********************************************************************************
 * tlkpanel
 **********************************************************************************/
+
 .tlkpanel  {user-select: none; overflow:hidden;}
 .tlkpanel > .header {color: var(--de-toem-toolkits-tlk-css-panel-title-foreground); background-color: var(--de-toem-toolkits-tlk-css-panel-title-background);}
 .tlkpanel > .header > .label {flex-grow:1;}
-.tlkpanel > .header > .button {color: var(--de-toem-toolkits-tlk-css-button-foreground); background-color: var(--de-toem-toolkits-tlk-css-button-background);}
-.tlkpanel > .header > .button:hover {background-color: var(--de-toem-toolkits-tlk-css-button-hover-background);}
-.tlkpanel > .header > .tool.close {font: var(--de-toem-toolkits-tlk-css-tree-expanded-font);border: 1px solid #00000000;}
-.tlkpanel > .header > .tool.close::before {content:"\eab8";}
+.tlkpanel > .header > .tool:hover {background-color: var(--de-toem-toolkits-tlk-css-button-hover-background);}
+.tlkpanel > .header > .tool.close {font: var(--de-toem-toolkits-tlk-css-panel-close-font);border: 1px solid #00000000;}
+.tlkpanel > .header > .tool.close::before {content:var(--de-toem-toolkits-tlk-css-panel-close-content);}
 .tlkpanel > .header:focus  > .tool.close{border: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 
 .tlkpanel > .main {flex:1 1 auto;min-height:0;}
@@ -237,49 +284,41 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
 .tlkpanel.horizontal {display:flex;flex-direction:column; }
 .tlkpanel.horizontal  {background-color: var(--de-toem-toolkits-tlk-css-panel-background);}
 .tlkpanel.horizontal:focus-within > .header {display:flex;color: var(--de-toem-toolkits-tlk-css-panel-title-foreground); background-color: var(--de-toem-toolkits-tlk-css-panel-title-background);}
-.tlkpanel.horizontal > .header > .label {background: repeating-linear-gradient(0deg,var(--de-toem-toolkits-tlk-css-panel-background) 0px,var(--de-toem-toolkits-tlk-css-panel-background) 3px,var(--de-toem-toolkits-tlk-css-panel-title-background) 3px,var(--de-toem-toolkits-tlk-css-panel-title-background) 4px);}
 .tlkpanel.horizontal > .header{display:flex;flex-direction:row; }
 .tlkpanel.horizontal > .main {padding-left:5px;}
 
 .tlkpanel.vertical {display:flex;flex-direction:row; }
 .tlkpanel.vertical > .header {display:none; }
 .tlkpanel.vertical > .main {border-right:4px solid var(--de-toem-toolkits-tlk-css-button-background);}
-/*.tlkpanel.vertical .header  {order: 5;}*/
 
 /**********************************************************************************
-* tlklabel
+* tlkgroup
 **********************************************************************************/
-.tlklabel {user-select: none; overflow:hidden;display:flex; align-items: center;}
-.tlklabel.border {border: var(--de-toem-toolkits-tlk-css-panel-border); }
-.tlklabel.vscroll {overflow:auto; }
 
-
-.tlktext {}
-.tlktextbox {resize: none;white-space: nowrap;overflow:auto;}
-
-/* tlkgroup */
 .tlkgroup {user-select: none; overflow:hidden; }
 .tlkgroup {display:flex; flex-direction:column; }
-.tlkgroup:hover { background-color: var(--de-toem-toolkits-tlk-css-panel-hover-background);}
+.tlkgroup:hover { background-color: var(--de-toem-toolkits-tlk-css-group-hover-background);}
 .tlkgroup > .header {display:flex; flex-direction:row; margin:15px 0px 10px 0px ;font-weight: bold;}
 .tlkgroup > .container {flex-grow:1;padding:2px 2px 2px 8px;}
 
 /**********************************************************************************
 * tlkexpandable
 **********************************************************************************/
+
 .tlkexpandable {user-select: none; overflow:hidden; }
-.tlkexpandable:is(:hover,:focus-within)  { background-color: var(--de-toem-toolkits-tlk-css-panel-hover-background);}
+.tlkexpandable:is(:hover,:focus-within)  { background-color: var(--de-toem-toolkits-tlk-css-group-hover-background);}
 .tlkexpandable > .header  > .expand {border: 1px solid #00000000;}
 .tlkexpandable > .header:focus  > .expand{border: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 .tlkexpandable > .header {display:flex; flex-direction:row; margin:15px 0px 10px 0px; font-weight: bold;}
 .tlkexpandable > .container {padding:2px 2px 2px 8px;}
-.tlkexpandable.selected  > .header > .expand::before { content: var(--de-toem-toolkits-tlk-css-tree-expanded-content); }
-.tlkexpandable  > .header > .expand::before { content: var(--de-toem-toolkits-tlk-css-tree-collapsed-content); }
-.tlkexpandable  > .header > .expand { font: var(--de-toem-toolkits-tlk-css-tree-expanded-font); }
+.tlkexpandable.selected  > .header > .expand::before { content: var(--de-toem-toolkits-tlk-css-expandable-expanded-content); }
+.tlkexpandable  > .header > .expand::before { content: var(--de-toem-toolkits-tlk-css-expandable-collapsed-content); }
+.tlkexpandable  > .header > .expand { font: var(--de-toem-toolkits-tlk-css-expandable-symbol-font); }
 
 /**********************************************************************************
 * tlktabfolder
 **********************************************************************************/
+
 .tlktabfolder.top  {display:flex;flex-direction:column; }
 .tlktabfolder.top > .header {display:flex;flex-direction:row; }
 .tlktabfolder.top > .container  {flex: 1 1 auto;;min-height:0;}
@@ -289,9 +328,14 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
 .tlktabfolder.bottom > .container  {flex: 1 1 auto;min-height:0;} 
 
 .tlktabfolder > .header > .button {padding:5px 5px 5px 5px;}
-.tlktabfolder > .header > .button  {user-select: none; color: var(--de-toem-toolkits-tlk-css-button-foreground); background-color: var(--de-toem-toolkits-tlk-css-toolbar-background);}
-.tlktabfolder > .header > .button.selected {color: var(--de-toem-toolkits-tlk-css-button-selected-foreground); background-color: var(--de-toem-toolkits-tlk-css-button-selected-background);}
-.tlktabfolder > .header > .button:is(:hover,:focus) {background-color: var(--de-toem-toolkits-tlk-css-button-hover-background);}
+.tlktabfolder > .header > .button .image {font-size:2em;}
+.tlktabfolder > .header > .button  {user-select: none; color: var(--de-toem-toolkits-tlk-css-tabfolder-foreground); background-color: var(--de-toem-toolkits-tlk-css-tabfolder-background);}
+.tlktabfolder > .header > .button.selected {color: var(--de-toem-toolkits-tlk-css-tabfolder-selected-foreground); background-color: var(--de-toem-toolkits-tlk-css-tabfolder-selected-background);}
+.tlktabfolder > .header > .button:is(:hover,:focus) {background-color: var(--de-toem-toolkits-tlk-css-tabfolder-hover-background);}
+
+/**********************************************************************************
+* tlktab
+**********************************************************************************/
 
 .tlktab  {user-select: none;overflow:hidden;width:100%;height:100%;}
 .tlktab.vscroll  {overflow-y:auto;}
@@ -299,22 +343,56 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
 .tlktab.vscroll:not(.hscroll) > .container  {width:100%;}
 .tlktab.hscroll:not(.vscroll) > .container  {height:100%;}
 
-/* tlksash */
+/**********************************************************************************
+* tlksash
+**********************************************************************************/
+
 .tlksash {padding:2px;}
 .tlksash {background-color: var(--de-toem-toolkits-tlk-css-sash-background); transition: background-color .2s ease-out;transition-delay: .3s;}
 .tlksash.vertical {cursor:col-resize;}
 .tlksash.horizontal {cursor:row-resize;}
 .tlksash:hover {background-color: var(--de-toem-toolkits-tlk-css-sash-hover-background);}
 
+/**********************************************************************************
+* tlkdrag
+**********************************************************************************/
 
-/* tlkbutton */
+.tlkdrag {color:  var(--de-toem-toolkits-tlk-css-list-selection-foreground);background-color: var(--de-toem-toolkits-tlk-css-list-selection-background);border: 1px solid var(--de-toem-toolkits-tlk-css-general-focus-border);}
+
+
+/**********************************************************************************
+* tlklabel
+**********************************************************************************/
+
+.tlklabel {user-select: none; overflow:hidden;display:flex; align-items: center;}
+.tlklabel.vscroll {overflow:auto; }
+
+/**********************************************************************************
+* tlktext
+**********************************************************************************/
+
+.tlktext {}
+
+/**********************************************************************************
+* tlktextbox
+**********************************************************************************/
+
+.tlktextbox {resize: none;white-space: nowrap;overflow:auto;}
+
+/**********************************************************************************
+* tlkbutton
+**********************************************************************************/
+
 .tlkbutton {display: flex; flex-direction:row;justify-content:center; align-items: center;}
 .tlkbutton  {user-select: none; color: var(--de-toem-toolkits-tlk-css-button-foreground); background-color: var(--de-toem-toolkits-tlk-css-button-background);}
-/*.tlkbutton.toggle.selected {color: var(--de-toem-toolkits-tlk-css-button-selected-foreground); background-color: var(--de-toem-toolkits-tlk-css-button-selected-background);}*/
 .tlkbutton:is(:hover,:focus) {background-color: var(--de-toem-toolkits-tlk-css-button-hover-background);}
 .tlkbutton:disabled {opacity: 0.5;}
+.tlkbutton.tool {min-width: 1.5em;min-height:2.5em;}
 
-/* tlkradio */
+/**********************************************************************************
+* tlkradio
+**********************************************************************************/
+
 .tlkradio {display: flex;flex-direction:row;justify-content:flex-start;align-items: stretch ;}
 .tlkradio:not(.tool) {padding:4px;}
 
@@ -323,47 +401,47 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
 .tlkradio.tool {margin:4px;}
 .tlkradio.tool label div{margin:4px;}
 .tlkradio.tool label img{margin:4px;}
-.tlkradio.tool:not(.color) input:checked ~ label {color: var(--de-toem-toolkits-tlk-css-button-selected-foreground); background-color: var(--de-toem-toolkits-tlk-css-button-selected-background);}
-.tlkradio.tool:is(:hover,:focus-within):not(.color) input ~ label{background-color: var(--de-toem-toolkits-tlk-css-button-hover-background);} 
+.tlkradio.tool:not(.color) input:checked ~ label {color: var(--de-toem-toolkits-tlk-css-radio-selected-foreground); background-color: var(--de-toem-toolkits-tlk-css-radio-selected-background);}
+.tlkradio.tool:is(:hover,:focus-within):not(.color) input ~ label{background-color: var(--de-toem-toolkits-tlk-css-radio-hover-background);} 
 
 .tlkradio.tool.color label {display: flex;min-height:30px; flex-direction:row;justify-content:flex-start;align-items: stretch ;border: 2px solid #00000000;}
-.tlkradio.tool.color input:checked ~ label {border: 2px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
+.tlkradio.tool.color input:checked ~ label {border: 2px solid var(--de-toem-toolkits-tlk-css-radio-hover-background);}
 .tlkradio.tool.color:is(:hover,:focus) {opacity: 0.5;}
 
 .tlkradio label {flex:1;}
 
+/**********************************************************************************
+* tlkcheck
+**********************************************************************************/
 
-
-/* tlkcheck */
 .tlkcheck {display: flex;justify-content:flex-start;align-items: center ;}
 
+/**********************************************************************************
+* tlkimage
+**********************************************************************************/
 
-
-
-/* tlkimage */
 .tlkimage {display: flex; align-items: center;}
 
+/**********************************************************************************
+* tlktoolbar
+**********************************************************************************/
 
-
-/* tlktoolbar */
 .tlktoolbar {background-color: var(--de-toem-toolkits-tlk-css-toolbar-background)}
 .tlktoolbar.horizontal {display:flex;flex-direction:row; justify-content: flex-end;align-items:center;}
 .tlktoolbar.vertical {display:flex;flex-direction:column; justify-content: flex-start;align-items:center;}
 
-
-/* tlktoolitem */
-.tlktoolbar .item {margin:5px;text-align: center;}
-.tlktoolbar .item.selected {border-left: 2px solid var(--de-toem-toolkits-tlk-css-panel-hover-background);}
-.tlktoolbar .item img {filter: grayscale(100%) contrast(100%);}  /* grayscale(100%)*/
-.tlktoolbar .item.selected img {filter: none;}
-
+.tlktoolbar .item {padding:5px;text-align: center;}
+.tlktoolbar .item .image{font-size:1.2em;}
+.tlktoolbar .item.selected .image{color: var(--de-toem-toolkits-tlk-css-general-focus-border);}
 .tlktoolbar .item:hover:not(.disabled) { background-color: var(--de-toem-toolkits-tlk-css-toolbar-hover-background);} 
-.tlktoolbar .item:hover:not(.disabled) img {filter: grayscale(30%) contrast(150%);} 
-.tlktoolbar .item .menu::after { content: var(--de-toem-toolkits-tlk-css-toolbar-menu-content); font: var(--de-toem-toolkits-tlk-css-toolbar-menu-font);}
-.tlktoolbar .item .menu:hover{user-select: none; color: var(--de-toem-toolkits-tlk-css-button-foreground); background-color: var(--de-toem-toolkits-tlk-css-button-background); }
+.tlktoolbar .item .menu::after { content: var(--de-toem-toolkits-tlk-css-toolbar-menu-content); font: var(--de-toem-toolkits-tlk-css-toolbar-symbol-font);}
+.tlktoolbar .item .menu:hover{user-select: none; color: var(--de-toem-toolkits-tlk-css-general-focus-border); }
 .tlktoolbar .item.disabled {opacity: 0.5;}
 
-/* tlkmenu */
+/**********************************************************************************
+* tlkmenu
+**********************************************************************************/
+
 .tlkmenu {margin:5px;box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);}
 .tlkmenu {color: var(--de-toem-toolkits-tlk-css-menu-foreground); background-color: var(--de-toem-toolkits-tlk-css-menu-background);}
 .tlkmenu .item {padding:5px;cursor: pointer;}
@@ -372,58 +450,59 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
 .tlkmenu .item .image {min-width: 20px;}
 .tlkmenu .item .label {flex:1;}
 .tlkmenu .item .binding {margin-left:10px;opacity: 0.5;}
-.tlkmenu .item.menu .binding::after { content: var(--de-toem-toolkits-tlk-css-menu-menu-content); font: var(--de-toem-toolkits-tlk-css-menu-menu-font);}
+.tlkmenu .item.menu .binding::after { content: var(--de-toem-toolkits-tlk-css-menu-menu-content); font: var(--de-toem-toolkits-tlk-css-menu-symbol-font);}
+.tlkmenu .item:not(.selected) .check::after { content: var(--de-toem-toolkits-tlk-css-menu-unchecked-content); font: var(--de-toem-toolkits-tlk-css-menu-symbol-font);}
+.tlkmenu .item.selected .check::after { content: var(--de-toem-toolkits-tlk-css-menu-checked-content); font: var(--de-toem-toolkits-tlk-css-menu-symbol-font);}
 .tlkmenu .item.disabled {opacity: 0.5;}
-.tlkmenu .item img {filter: grayscale(50%) contrast(100%);}  /* grayscale(100%)*/
-.tlkmenu .item.selected img {filter: none;}
-.tlkmenu .item.selected img {border-left: 2px solid var(--de-toem-toolkits-tlk-css-panel-hover-background);}
+.tlkmenu  {box-shadow: 0px 0px 15px var(--de-toem-toolkits-tlk-css-menu-background);}
 
-/* tree */
+/**********************************************************************************
+* tlktree
+**********************************************************************************/
+
 .tlktree  {user-select: none;padding:1px;overflow:auto;}
 .tlktree  {color: var(--de-toem-toolkits-tlk-css-list-foreground); background-color: var(--de-toem-toolkits-tlk-css-list-background);}
-.tlktree.border {border: var(--de-toem-toolkits-tlk-css-panel-border); }
 
-.tlktree  .row {padding:1px;}
+.tlktree .row {padding:1px;}
 .tlktree .row {display:flex;flex-direction:row; }
-.tlktree  .row.selected  {color: var(--de-toem-toolkits-tlk-css-list-inactive-selection-foreground); background-color: var(--de-toem-toolkits-tlk-css-list-inactive-selection-background);}
+.tlktree .row.selected  {color: var(--de-toem-toolkits-tlk-css-list-inactive-selection-foreground); background-color: var(--de-toem-toolkits-tlk-css-list-inactive-selection-background);}
 .tlktree:focus  .row.selected {color:  var(--de-toem-toolkits-tlk-css-list-selection-foreground);background-color: var(--de-toem-toolkits-tlk-css-list-selection-background);}
 .tlktree:focus  .row.selected:hover {color:  var(--de-toem-toolkits-tlk-css-list-selection-foreground);background-color: var(--de-toem-toolkits-tlk-css-list-selection-background);}
 .tlktree:focus  .row:hover {background-color: var(--de-toem-toolkits-tlk-css-list-hover-background)}
 .tlktree:focus  .row.focus  {outline: 1px solid var(--de-toem-toolkits-tlk-css-general-focus-border);}
 
-
 .tlktree  .row .expand  {margin-left:10px; min-width: 20px;background-repeat: no-repeat; background-position: center; }
-/*.tlktree  .row .expand.expanded {background-image: url('file:///home/thomas/Workspaces/impulse/de.toem.impulse.web.backend/icons/de.toem.eclipse.toolkits.images.expanded.gtk');}
-  .tlktree  .row .expand.collapsed {background-image: url('file:///home/thomas/Workspaces/impulse/de.toem.impulse.web.backend/icons/de.toem.eclipse.toolkits.images.collapsed.gtk');}*/
 .tlktree  .row .expand.expanded::before { content: var(--de-toem-toolkits-tlk-css-tree-expanded-content); }
 .tlktree  .row .expand.collapsed::before { content: var(--de-toem-toolkits-tlk-css-tree-collapsed-content); }
-.tlktree  .row .expand { font: var(--de-toem-toolkits-tlk-css-tree-expanded-font); }
-.tlktree .row .image {min-width: 20px;}
+.tlktree  .row .expand { font: var(--de-toem-toolkits-tlk-css-tree-symbol-font); }
+.tlktree  .row .image {min-width: 20px;}
+.tlktree  .row {border: 1px solid #00000000;}
+.tlktree  .row.dropon  {border: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
+.tlktree  .row.dropafter  {border-bottom: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
+.tlktree  .row.dropbefore  {border-top: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 
-
-
-
-
+/**********************************************************************************
+* tlktable
+**********************************************************************************/
 
 .tlktable  {user-select: none;padding:1px;overflow:auto;}
 .tlktable  {color: var(--de-toem-toolkits-tlk-css-list-foreground); background-color: var(--de-toem-toolkits-tlk-css-list-background);}
-.tlktable.border {border: var(--de-toem-toolkits-tlk-css-panel-border); }
 
 .tlktable  .header {padding:1px;}
 .tlktable  .header {color:  var(--de-toem-toolkits-tlk-css-header-foreground);}
 .tlktable  .header > div { background-color: var(--de-toem-toolkits-tlk-css-header-background);}
 .tlktable  .header .cell { display: flex; flex-direction: row;align-content:flex-end;overflow:hidden;height:20px;}
-.tlktable  .header .cell.sort-up::after { content: var(--de-toem-toolkits-tlk-css-header-sortup-content); font: var(--de-toem-toolkits-tlk-css-header-sortup-font);}
-.tlktable  .header .cell.sort-down::after { content: var(--de-toem-toolkits-tlk-css-header-sortdown-content); font: var(--de-toem-toolkits-tlk-css-header-sortdown-font);}
+.tlktable  .header .cell.sort-up::after { content: var(--de-toem-toolkits-tlk-css-header-sortup-content); font: var(--de-toem-toolkits-tlk-css-header-symbol-font);}
+.tlktable  .header .cell.sort-down::after { content: var(--de-toem-toolkits-tlk-css-header-sortdown-content); font: var(--de-toem-toolkits-tlk-css-header-symbol-font);}
 .tlktable  .header .filter  {display: flex; flex-direction: row;overflow:hidden;}
 .tlktable  .header .filter .input {outline: 0px; padding:0px;margin:0px 2px 0px  2px ;flex:1;width:100%;}
-.tlktable  .header .filter .button {}
-.tlktable  .header .filter .button::before { content: var(--de-toem-toolkits-tlk-css-header-filter-content);font: var(--de-toem-toolkits-tlk-css-header-filter-font); }
+.tlktable  .header .filter .button::before { content: var(--de-toem-toolkits-tlk-css-header-filter-content);font: var(--de-toem-toolkits-tlk-css-header-symbol-font); }
 .tlktable  .header .filter .button.selected {background-color: var(--de-toem-toolkits-tlk-css-button-selected-background);}
 .tlktable  .header .filter .button:hover {background-color: var(--de-toem-toolkits-tlk-css-button-hover-background);}
 .tlktable  .header > .dropbefore  {border-left: 2px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 .tlktable  .header > .dropafter  {border-right: 2px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 .tlktable  .header .resize  {border-right: 2px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
+.tlktable  .header .check { overflow: hidden;font: var(--de-toem-toolkits-tlk-css-table-symbol-font);content: var(--de-toem-toolkits-tlk-css-table-checked-content); }
 
 .tlktable .rows  {padding:1px;}
 .tlktable .row {padding:1px;}
@@ -437,32 +516,43 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
 .tlktable .row.dropafter  {border-bottom: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 .tlktable .row.dropbefore  {border-top: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 
-.tlktable .cell  {overflow: hidden;}
-.tlktable .lead  {overflow: hidden;}
+.tlktable .row .cell  {overflow: hidden;}
+.tlktable .row .lead  {overflow: hidden;}
+.tlktable .row .check { overflow: hidden;font: var(--de-toem-toolkits-tlk-css-table-symbol-font); }
+.tlktable .row .check.checked::before { content: var(--de-toem-toolkits-tlk-css-table-checked-content); }
+.tlktable .row .check.unchecked::before { content: var(--de-toem-toolkits-tlk-css-table-unchecked-content); }
+.tlktable .row .check.intermediate::before { content: var(--de-toem-toolkits-tlk-css-table-intermediate-content); }
+.tlktable .row .expand {overflow: hidden; font: var(--de-toem-toolkits-tlk-css-table-symbol-font); }
+.tlktable .row .expand.expanded::before { content: var(--de-toem-toolkits-tlk-css-table-expanded-content); }
+.tlktable .row .expand.collapsed::before { content: var(--de-toem-toolkits-tlk-css-table-collapsed-content); }
 
 .tlktable .row.invalid {filter: blur(4px);}
 .tlktable .row.requested {filter: blur(2px);}
 
+/**********************************************************************************
+* ctlkcomposite
+**********************************************************************************/
+
 .ctlkcomposite {overflow:hidden;}
-
-
 .ctlkcomposite.plottree .tree  { overflow:auto;}
 .ctlkcomposite.plottree .plot  {overflow:auto;}
 
-.tlkdrag {color:  var(--de-toem-toolkits-tlk-css-list-selection-foreground);background-color: var(--de-toem-toolkits-tlk-css-list-selection-background);border: 1px solid var(--de-toem-toolkits-tlk-css-general-focus-border);}
+/**********************************************************************************
+* parts
+**********************************************************************************/
 
-
-
-/* part specific */
 .tlkcomposite.tools  {position:absolute;top:0px;right:0px;width:30px;height:100%;/*transition: width .2s linear 1s;*/}
 .tlkcomposite.tools:hover  {/*width:25px;transition: width 0s linear 0s;*/}
 .tlkcomposite.tools .tlktoolbar {display:flex;flex-direction:column; justify-content: flex-start;}
 .tlkcomposite.tools .tlkbutton {background-color: var(--de-toem-toolkits-tlk-css-toolbar-background);}
-.tlkcomposite.tools .tlkbutton::before {font: var(--de-toem-toolkits-tlk-css-tree-expanded-font);content:"\ea7c";}
+.tlkcomposite.tools .tlkbutton::before {font: var(--de-toem-toolkits-tlk-css-tree-symbol-font);content:"\ea7c";}
 .tlkcomposite.tools .tlkbutton:hover {background-color: var(--de-toem-toolkits-tlk-css-panel-hover-background);}
 
 .tlkcomposite.part  {position:absolute;top:0px;left:0px;width:calc(100% - 30px);height:100%;}
 
+/**********************************************************************************
+* overlay scroll
+**********************************************************************************/
 
 @media screen and (-webkit-min-device-pixel-ratio:0)
   and (min-resolution:.001dpcm) {
@@ -476,929 +566,3 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
     .ctlkcomposite.plottree .plot  {overflow:overlay;}
 }
 
-
-/*
-
-
---vscode-font-family: system-ui, "Ubuntu", "Droid Sans", sans-serif;
-    --vscode-font-weight: normal;
-    --vscode-font-size: 13px;
-    --vscode-editor-font-family: "Droid Sans Mono", "monospace", monospace, "Droid Sans Fallback";
-    --vscode-editor-font-weight: normal;
-    --vscode-editor-font-size: 14px;
-    --vscode-foreground: #cccccc;
-    --vscode-errorForeground: #f48771;
-    --vscode-descriptionForeground: rgba(204, 204, 204, 0.7);
-    --vscode-icon-foreground: #c5c5c5;
-    --vscode-focusBorder: #007fd4;
-    --vscode-textSeparator-foreground: rgba(255, 255, 255, 0.18);
-    --vscode-textLink-foreground: #3794ff;
-    --vscode-textLink-activeForeground: #3794ff;
-    --vscode-textPreformat-foreground: #d7ba7d;
-    --vscode-textBlockQuote-background: rgba(127, 127, 127, 0.1);
-    --vscode-textBlockQuote-border: rgba(0, 122, 204, 0.5);
-    --vscode-textCodeBlock-background: rgba(10, 10, 10, 0.4);
-    --vscode-widget-shadow: rgba(0, 0, 0, 0.36);
-    --vscode-input-background: #3c3c3c;
-    --vscode-input-foreground: #cccccc;
-    --vscode-inputOption-activeBorder: rgba(0, 122, 204, 0);
-    --vscode-inputOption-activeBackground: rgba(0, 127, 212, 0.4);
-    --vscode-inputOption-activeForeground: #ffffff;
-    --vscode-input-placeholderForeground: #a6a6a6;
-    --vscode-inputValidation-infoBackground: #063b49;
-    --vscode-inputValidation-infoBorder: #007acc;
-    --vscode-inputValidation-warningBackground: #352a05;
-    --vscode-inputValidation-warningBorder: #b89500;
-    --vscode-inputValidation-errorBackground: #5a1d1d;
-    --vscode-inputValidation-errorBorder: #be1100;
-    --vscode-dropdown-background: #3c3c3c;
-    --vscode-dropdown-foreground: #f0f0f0;
-    --vscode-dropdown-border: #3c3c3c;
-    --vscode-checkbox-background: #3c3c3c;
-    --vscode-checkbox-foreground: #f0f0f0;
-    --vscode-checkbox-border: #3c3c3c;
-    --vscode-button-foreground: #ffffff;
-    --vscode-button-background: #0e639c;
-    --vscode-button-hoverBackground: #1177bb;
-    --vscode-button-secondaryForeground: #ffffff;
-    --vscode-button-secondaryBackground: #3a3d41;
-    --vscode-button-secondaryHoverBackground: #45494e;
-    --vscode-badge-background: #4d4d4d;
-    --vscode-badge-foreground: #ffffff;
-    --vscode-scrollbar-shadow: #000000;
-    --vscode-scrollbarSlider-background: rgba(121, 121, 121, 0.4);
-    --vscode-scrollbarSlider-hoverBackground: rgba(100, 100, 100, 0.7);
-    --vscode-scrollbarSlider-activeBackground: rgba(191, 191, 191, 0.4);
-    --vscode-progressBar-background: #0e70c0;
-    --vscode-editorError-foreground: #f48771;
-    --vscode-editorWarning-foreground: #cca700;
-    --vscode-editorInfo-foreground: #75beff;
-    --vscode-editorHint-foreground: rgba(238, 238, 238, 0.7);
-    --vscode-sash-hoverBorder: #007fd4;
-    --vscode-editor-background: #1e1e1e;
-    --vscode-editor-foreground: #d4d4d4;
-    --vscode-editorWidget-background: #252526;
-    --vscode-editorWidget-foreground: #cccccc;
-    --vscode-editorWidget-border: #454545;
-    --vscode-quickInput-background: #252526;
-    --vscode-quickInput-foreground: #cccccc;
-    --vscode-quickInputTitle-background: rgba(255, 255, 255, 0.1);
-    --vscode-pickerGroup-foreground: #3794ff;
-    --vscode-pickerGroup-border: #3f3f46;
-    --vscode-keybindingLabel-background: rgba(128, 128, 128, 0.17);
-    --vscode-keybindingLabel-foreground: #cccccc;
-    --vscode-keybindingLabel-border: rgba(51, 51, 51, 0.6);
-    --vscode-keybindingLabel-bottomBorder: rgba(68, 68, 68, 0.6);
-    --vscode-editor-selectionBackground: #264f78;
-    --vscode-editor-inactiveSelectionBackground: #3a3d41;
-    --vscode-editor-selectionHighlightBackground: rgba(173, 214, 255, 0.15);
-    --vscode-editor-findMatchBackground: #515c6a;
-    --vscode-editor-findMatchHighlightBackground: rgba(234, 92, 0, 0.33);
-    --vscode-editor-findRangeHighlightBackground: rgba(58, 61, 65, 0.4);
-    --vscode-searchEditor-findMatchBackground: rgba(234, 92, 0, 0.22);
-    --vscode-editor-hoverHighlightBackground: rgba(38, 79, 120, 0.25);
-    --vscode-editorHoverWidget-background: #252526;
-    --vscode-editorHoverWidget-foreground: #cccccc;
-    --vscode-editorHoverWidget-border: #454545;
-    --vscode-editorHoverWidget-statusBarBackground: #2c2c2d;
-    --vscode-editorLink-activeForeground: #4e94ce;
-    --vscode-editorInlayHint-foreground: #252526;
-    --vscode-editorInlayHint-background: #cccccc;
-    --vscode-editorLightBulb-foreground: #ffcc00;
-    --vscode-editorLightBulbAutoFix-foreground: #75beff;
-    --vscode-diffEditor-insertedTextBackground: rgba(155, 185, 85, 0.2);
-    --vscode-diffEditor-removedTextBackground: rgba(255, 0, 0, 0.2);
-    --vscode-diffEditor-diagonalFill: rgba(204, 204, 204, 0.2);
-    --vscode-list-focusOutline: #007fd4;
-    --vscode-list-activeSelectionBackground: #094771;
-    --vscode-list-activeSelectionForeground: #ffffff;
-    --vscode-list-inactiveSelectionBackground: #37373d;
-    --vscode-list-hoverBackground: #2a2d2e;
-    --vscode-list-dropBackground: #383b3d;
-    --vscode-list-highlightForeground: #18a3ff;
-    --vscode-list-focusHighlightForeground: #18a3ff;
-    --vscode-list-invalidItemForeground: #b89500;
-    --vscode-list-errorForeground: #f88070;
-    --vscode-list-warningForeground: #cca700;
-    --vscode-listFilterWidget-background: #653723;
-    --vscode-listFilterWidget-outline: rgba(0, 0, 0, 0);
-    --vscode-listFilterWidget-noMatchesOutline: #be1100;
-    --vscode-list-filterMatchBackground: rgba(234, 92, 0, 0.33);
-    --vscode-tree-indentGuidesStroke: #585858;
-    --vscode-tree-tableColumnsBorder: rgba(204, 204, 204, 0.13);
-    --vscode-list-deemphasizedForeground: #8c8c8c;
-    --vscode-quickInputList-focusForeground: #ffffff;
-    --vscode-quickInputList-focusBackground: #094771;
-    --vscode-menu-foreground: #cccccc;
-    --vscode-menu-background: #252526;
-    --vscode-menu-selectionForeground: #ffffff;
-    --vscode-menu-selectionBackground: #094771;
-    --vscode-menu-separatorBackground: #bbbbbb;
-    --vscode-toolbar-hoverBackground: rgba(90, 93, 94, 0.31);
-    --vscode-toolbar-activeBackground: rgba(99, 102, 103, 0.31);
-    --vscode-editor-snippetTabstopHighlightBackground: rgba(124, 124, 124, 0.3);
-    --vscode-editor-snippetFinalTabstopHighlightBorder: #525252;
-    --vscode-breadcrumb-foreground: rgba(204, 204, 204, 0.8);
-    --vscode-breadcrumb-background: #1e1e1e;
-    --vscode-breadcrumb-focusForeground: #e0e0e0;
-    --vscode-breadcrumb-activeSelectionForeground: #e0e0e0;
-    --vscode-breadcrumbPicker-background: #252526;
-    --vscode-merge-currentHeaderBackground: rgba(64, 200, 174, 0.5);
-    --vscode-merge-currentContentBackground: rgba(64, 200, 174, 0.2);
-    --vscode-merge-incomingHeaderBackground: rgba(64, 166, 255, 0.5);
-    --vscode-merge-incomingContentBackground: rgba(64, 166, 255, 0.2);
-    --vscode-merge-commonHeaderBackground: rgba(96, 96, 96, 0.4);
-    --vscode-merge-commonContentBackground: rgba(96, 96, 96, 0.16);
-    --vscode-editorOverviewRuler-currentContentForeground: rgba(64, 200, 174, 0.5);
-    --vscode-editorOverviewRuler-incomingContentForeground: rgba(64, 166, 255, 0.5);
-    --vscode-editorOverviewRuler-commonContentForeground: rgba(96, 96, 96, 0.4);
-    --vscode-editorOverviewRuler-findMatchForeground: rgba(209, 134, 22, 0.49);
-    --vscode-editorOverviewRuler-selectionHighlightForeground: rgba(160, 160, 160, 0.8);
-    --vscode-minimap-findMatchHighlight: #d18616;
-    --vscode-minimap-selectionHighlight: #264f78;
-    --vscode-minimap-errorHighlight: rgba(255, 18, 18, 0.7);
-    --vscode-minimap-warningHighlight: #cca700;
-    --vscode-minimapSlider-background: rgba(121, 121, 121, 0.2);
-    --vscode-minimapSlider-hoverBackground: rgba(100, 100, 100, 0.35);
-    --vscode-minimapSlider-activeBackground: rgba(191, 191, 191, 0.2);
-    --vscode-problemsErrorIcon-foreground: #f48771;
-    --vscode-problemsWarningIcon-foreground: #cca700;
-    --vscode-problemsInfoIcon-foreground: #75beff;
-    --vscode-charts-foreground: #cccccc;
-    --vscode-charts-lines: rgba(204, 204, 204, 0.5);
-    --vscode-charts-red: #f48771;
-    --vscode-charts-blue: #75beff;
-    --vscode-charts-yellow: #cca700;
-    --vscode-charts-orange: #d18616;
-    --vscode-charts-green: #89d185;
-    --vscode-charts-purple: #b180d7;
-    --vscode-editor-lineHighlightBorder: #282828;
-    --vscode-editor-rangeHighlightBackground: rgba(255, 255, 255, 0.04);
-    --vscode-editor-symbolHighlightBackground: rgba(234, 92, 0, 0.33);
-    --vscode-editorCursor-foreground: #aeafad;
-    --vscode-editorWhitespace-foreground: rgba(227, 228, 226, 0.16);
-    --vscode-editorIndentGuide-background: #404040;
-    --vscode-editorIndentGuide-activeBackground: #707070;
-    --vscode-editorLineNumber-foreground: #858585;
-    --vscode-editorActiveLineNumber-foreground: #c6c6c6;
-    --vscode-editorLineNumber-activeForeground: #c6c6c6;
-    --vscode-editorRuler-foreground: #5a5a5a;
-    --vscode-editorCodeLens-foreground: #999999;
-    --vscode-editorBracketMatch-background: rgba(0, 100, 0, 0.1);
-    --vscode-editorBracketMatch-border: #888888;
-    --vscode-editorOverviewRuler-border: rgba(127, 127, 127, 0.3);
-    --vscode-editorGutter-background: #1e1e1e;
-    --vscode-editorUnnecessaryCode-opacity: rgba(0, 0, 0, 0.67);
-    --vscode-editorGhostText-foreground: rgba(255, 255, 255, 0.34);
-    --vscode-editorOverviewRuler-rangeHighlightForeground: rgba(0, 122, 204, 0.6);
-    --vscode-editorOverviewRuler-errorForeground: rgba(255, 18, 18, 0.7);
-    --vscode-editorOverviewRuler-warningForeground: #cca700;
-    --vscode-editorOverviewRuler-infoForeground: #75beff;
-    --vscode-symbolIcon-arrayForeground: #cccccc;
-    --vscode-symbolIcon-booleanForeground: #cccccc;
-    --vscode-symbolIcon-classForeground: #ee9d28;
-    --vscode-symbolIcon-colorForeground: #cccccc;
-    --vscode-symbolIcon-constantForeground: #cccccc;
-    --vscode-symbolIcon-constructorForeground: #b180d7;
-    --vscode-symbolIcon-enumeratorForeground: #ee9d28;
-    --vscode-symbolIcon-enumeratorMemberForeground: #75beff;
-    --vscode-symbolIcon-eventForeground: #ee9d28;
-    --vscode-symbolIcon-fieldForeground: #75beff;
-    --vscode-symbolIcon-fileForeground: #cccccc;
-    --vscode-symbolIcon-folderForeground: #cccccc;
-    --vscode-symbolIcon-functionForeground: #b180d7;
-    --vscode-symbolIcon-interfaceForeground: #75beff;
-    --vscode-symbolIcon-keyForeground: #cccccc;
-    --vscode-symbolIcon-keywordForeground: #cccccc;
-    --vscode-symbolIcon-methodForeground: #b180d7;
-    --vscode-symbolIcon-moduleForeground: #cccccc;
-    --vscode-symbolIcon-namespaceForeground: #cccccc;
-    --vscode-symbolIcon-nullForeground: #cccccc;
-    --vscode-symbolIcon-numberForeground: #cccccc;
-    --vscode-symbolIcon-objectForeground: #cccccc;
-    --vscode-symbolIcon-operatorForeground: #cccccc;
-    --vscode-symbolIcon-packageForeground: #cccccc;
-    --vscode-symbolIcon-propertyForeground: #cccccc;
-    --vscode-symbolIcon-referenceForeground: #cccccc;
-    --vscode-symbolIcon-snippetForeground: #cccccc;
-    --vscode-symbolIcon-stringForeground: #cccccc;
-    --vscode-symbolIcon-structForeground: #cccccc;
-    --vscode-symbolIcon-textForeground: #cccccc;
-    --vscode-symbolIcon-typeParameterForeground: #cccccc;
-    --vscode-symbolIcon-unitForeground: #cccccc;
-    --vscode-symbolIcon-variableForeground: #75beff;
-    --vscode-editorOverviewRuler-bracketMatchForeground: #a0a0a0;
-    --vscode-editor-linkedEditingBackground: rgba(255, 0, 0, 0.3);
-    --vscode-editor-wordHighlightBackground: rgba(87, 87, 87, 0.72);
-    --vscode-editor-wordHighlightStrongBackground: rgba(0, 73, 114, 0.72);
-    --vscode-editorOverviewRuler-wordHighlightForeground: rgba(160, 160, 160, 0.8);
-    --vscode-editorOverviewRuler-wordHighlightStrongForeground: rgba(192, 160, 192, 0.8);
-    --vscode-editor-foldBackground: rgba(38, 79, 120, 0.3);
-    --vscode-editorGutter-foldingControlForeground: #c5c5c5;
-    --vscode-peekViewTitle-background: #1e1e1e;
-    --vscode-peekViewTitleLabel-foreground: #ffffff;
-    --vscode-peekViewTitleDescription-foreground: rgba(204, 204, 204, 0.7);
-    --vscode-peekView-border: #007acc;
-    --vscode-peekViewResult-background: #252526;
-    --vscode-peekViewResult-lineForeground: #bbbbbb;
-    --vscode-peekViewResult-fileForeground: #ffffff;
-    --vscode-peekViewResult-selectionBackground: rgba(51, 153, 255, 0.2);
-    --vscode-peekViewResult-selectionForeground: #ffffff;
-    --vscode-peekViewEditor-background: #001f33;
-    --vscode-peekViewEditorGutter-background: #001f33;
-    --vscode-peekViewResult-matchHighlightBackground: rgba(234, 92, 0, 0.3);
-    --vscode-peekViewEditor-matchHighlightBackground: rgba(255, 143, 0, 0.6);
-    --vscode-editorMarkerNavigationError-background: #f48771;
-    --vscode-editorMarkerNavigationWarning-background: #cca700;
-    --vscode-editorMarkerNavigationInfo-background: #75beff;
-    --vscode-editorMarkerNavigation-background: #2d2d30;
-    --vscode-editorSuggestWidget-background: #252526;
-    --vscode-editorSuggestWidget-border: #454545;
-    --vscode-editorSuggestWidget-foreground: #d4d4d4;
-    --vscode-editorSuggestWidget-selectedForeground: #ffffff;
-    --vscode-editorSuggestWidget-selectedBackground: #094771;
-    --vscode-editorSuggestWidget-highlightForeground: #18a3ff;
-    --vscode-editorSuggestWidget-focusHighlightForeground: #18a3ff;
-    --vscode-tab-activeBackground: #1e1e1e;
-    --vscode-tab-unfocusedActiveBackground: #1e1e1e;
-    --vscode-tab-inactiveBackground: #2d2d2d;
-    --vscode-tab-unfocusedInactiveBackground: #2d2d2d;
-    --vscode-tab-activeForeground: #ffffff;
-    --vscode-tab-inactiveForeground: rgba(255, 255, 255, 0.5);
-    --vscode-tab-unfocusedActiveForeground: rgba(255, 255, 255, 0.5);
-    --vscode-tab-unfocusedInactiveForeground: rgba(255, 255, 255, 0.25);
-    --vscode-tab-border: #252526;
-    --vscode-tab-lastPinnedBorder: rgba(204, 204, 204, 0.2);
-    --vscode-tab-activeModifiedBorder: #3399cc;
-    --vscode-tab-inactiveModifiedBorder: rgba(51, 153, 204, 0.5);
-    --vscode-tab-unfocusedActiveModifiedBorder: rgba(51, 153, 204, 0.5);
-    --vscode-tab-unfocusedInactiveModifiedBorder: rgba(51, 153, 204, 0.25);
-    --vscode-editorPane-background: #1e1e1e;
-    --vscode-editorGroupHeader-tabsBackground: #252526;
-    --vscode-editorGroupHeader-noTabsBackground: #1e1e1e;
-    --vscode-editorGroup-border: #444444;
-    --vscode-editorGroup-dropBackground: rgba(83, 89, 93, 0.5);
-    --vscode-panel-background: #1e1e1e;
-    --vscode-panel-border: rgba(128, 128, 128, 0.35);
-    --vscode-panelTitle-activeForeground: #e7e7e7;
-    --vscode-panelTitle-inactiveForeground: rgba(231, 231, 231, 0.6);
-    --vscode-panelTitle-activeBorder: #e7e7e7;
-    --vscode-panel-dropBorder: #e7e7e7;
-    --vscode-panelSection-dropBackground: rgba(83, 89, 93, 0.5);
-    --vscode-panelSectionHeader-background: rgba(128, 128, 128, 0.2);
-    --vscode-panelSection-border: rgba(128, 128, 128, 0.35);
-    --vscode-banner-background: #094771;
-    --vscode-banner-foreground: #ffffff;
-    --vscode-banner-iconForeground: #75beff;
-    --vscode-statusBar-foreground: #ffffff;
-    --vscode-statusBar-noFolderForeground: #ffffff;
-    --vscode-statusBar-background: #007acc;
-    --vscode-statusBar-noFolderBackground: #68217a;
-    --vscode-statusBarItem-activeBackground: rgba(255, 255, 255, 0.18);
-    --vscode-statusBarItem-hoverBackground: rgba(255, 255, 255, 0.12);
-    --vscode-statusBarItem-prominentForeground: #ffffff;
-    --vscode-statusBarItem-prominentBackground: rgba(0, 0, 0, 0.5);
-    --vscode-statusBarItem-prominentHoverBackground: rgba(0, 0, 0, 0.3);
-    --vscode-statusBarItem-errorBackground: #c72e0f;
-    --vscode-statusBarItem-errorForeground: #ffffff;
-    --vscode-activityBar-background: #333333;
-    --vscode-activityBar-foreground: #ffffff;
-    --vscode-activityBar-inactiveForeground: rgba(255, 255, 255, 0.4);
-    --vscode-activityBar-activeBorder: #ffffff;
-    --vscode-activityBar-dropBorder: #ffffff;
-    --vscode-activityBarBadge-background: #007acc;
-    --vscode-activityBarBadge-foreground: #ffffff;
-    --vscode-statusBarItem-remoteBackground: #16825d;
-    --vscode-statusBarItem-remoteForeground: #ffffff;
-    --vscode-extensionBadge-remoteBackground: #007acc;
-    --vscode-extensionBadge-remoteForeground: #ffffff;
-    --vscode-sideBar-background: #252526;
-    --vscode-sideBarTitle-foreground: #bbbbbb;
-    --vscode-sideBar-dropBackground: rgba(83, 89, 93, 0.5);
-    --vscode-sideBarSectionHeader-background: rgba(0, 0, 0, 0);
-    --vscode-sideBarSectionHeader-border: rgba(204, 204, 204, 0.2);
-    --vscode-titleBar-activeForeground: #cccccc;
-    --vscode-titleBar-inactiveForeground: rgba(204, 204, 204, 0.6);
-    --vscode-titleBar-activeBackground: #3c3c3c;
-    --vscode-titleBar-inactiveBackground: rgba(60, 60, 60, 0.6);
-    --vscode-menubar-selectionForeground: #cccccc;
-    --vscode-menubar-selectionBackground: rgba(255, 255, 255, 0.1);
-    --vscode-notifications-foreground: #cccccc;
-    --vscode-notifications-background: #252526;
-    --vscode-notificationLink-foreground: #3794ff;
-    --vscode-notificationCenterHeader-background: #303031;
-    --vscode-notifications-border: #303031;
-    --vscode-notificationsErrorIcon-foreground: #f48771;
-    --vscode-notificationsWarningIcon-foreground: #cca700;
-    --vscode-notificationsInfoIcon-foreground: #75beff;
-    --vscode-editorGutter-commentRangeForeground: #c5c5c5;
-    --vscode-debugToolBar-background: #333333;
-    --vscode-debugIcon-startForeground: #89d185;
-    --vscode-settings-headerForeground: #e7e7e7;
-    --vscode-settings-modifiedItemIndicator: #0c7d9d;
-    --vscode-settings-dropdownBackground: #3c3c3c;
-    --vscode-settings-dropdownForeground: #f0f0f0;
-    --vscode-settings-dropdownBorder: #3c3c3c;
-    --vscode-settings-dropdownListBorder: #454545;
-    --vscode-settings-checkboxBackground: #3c3c3c;
-    --vscode-settings-checkboxForeground: #f0f0f0;
-    --vscode-settings-checkboxBorder: #3c3c3c;
-    --vscode-settings-textInputBackground: #3c3c3c;
-    --vscode-settings-textInputForeground: #cccccc;
-    --vscode-settings-numberInputBackground: #3c3c3c;
-    --vscode-settings-numberInputForeground: #cccccc;
-    --vscode-settings-focusedRowBackground: rgba(128, 128, 128, 0.14);
-    --vscode-notebook-rowHoverBackground: rgba(128, 128, 128, 0.07);
-    --vscode-notebook-focusedRowBorder: rgba(255, 255, 255, 0.12);
-    --vscode-terminal-foreground: #cccccc;
-    --vscode-terminal-selectionBackground: rgba(255, 255, 255, 0.25);
-    --vscode-terminal-border: rgba(128, 128, 128, 0.35);
-    --vscode-terminal-dropBackground: rgba(83, 89, 93, 0.5);
-    --vscode-testing-iconFailed: #f14c4c;
-    --vscode-testing-iconErrored: #f14c4c;
-    --vscode-testing-iconPassed: #73c991;
-    --vscode-testing-runAction: #73c991;
-    --vscode-testing-iconQueued: #cca700;
-    --vscode-testing-iconUnset: #848484;
-    --vscode-testing-iconSkipped: #848484;
-    --vscode-testing-peekBorder: #f48771;
-    --vscode-testing-message\.error\.decorationForeground: #f48771;
-    --vscode-testing-message\.error\.lineBackground: rgba(255, 0, 0, 0.2);
-    --vscode-testing-message\.warning\.decorationForeground: #cca700;
-    --vscode-testing-message\.warning\.lineBackground: rgba(255, 208, 0, 0.2);
-    --vscode-testing-message\.info\.decorationForeground: #75beff;
-    --vscode-testing-message\.info\.lineBackground: rgba(0, 127, 255, 0.2);
-    --vscode-testing-message\.hint\.decorationForeground: rgba(238, 238, 238, 0.7);
-    --vscode-welcomePage-tileBackground: #252526;
-    --vscode-welcomePage-tileHoverBackground: #2c2c2d;
-    --vscode-welcomePage-tileShadow\.: rgba(0, 0, 0, 0.36);
-    --vscode-welcomePage-progress\.background: #3c3c3c;
-    --vscode-welcomePage-progress\.foreground: #3794ff;
-    --vscode-statusBar-debuggingBackground: #cc6633;
-    --vscode-statusBar-debuggingForeground: #ffffff;
-    --vscode-debugExceptionWidget-border: #a31515;
-    --vscode-debugExceptionWidget-background: #420b0d;
-    --vscode-editorGutter-modifiedBackground: #0c7d9d;
-    --vscode-editorGutter-addedBackground: #587c0c;
-    --vscode-editorGutter-deletedBackground: #94151b;
-    --vscode-minimapGutter-modifiedBackground: #0c7d9d;
-    --vscode-minimapGutter-addedBackground: #587c0c;
-    --vscode-minimapGutter-deletedBackground: #94151b;
-    --vscode-editorOverviewRuler-modifiedForeground: rgba(12, 125, 157, 0.6);
-    --vscode-editorOverviewRuler-addedForeground: rgba(88, 124, 12, 0.6);
-    --vscode-editorOverviewRuler-deletedForeground: rgba(148, 21, 27, 0.6);
-    --vscode-notebook-cellBorderColor: #37373d;
-    --vscode-notebook-focusedEditorBorder: #007fd4;
-    --vscode-notebookStatusSuccessIcon-foreground: #89d185;
-    --vscode-notebookStatusErrorIcon-foreground: #f48771;
-    --vscode-notebookStatusRunningIcon-foreground: #cccccc;
-    --vscode-notebook-outputContainerBackgroundColor: #37373d;
-    --vscode-notebook-cellToolbarSeparator: rgba(128, 128, 128, 0.35);
-    --vscode-notebook-selectedCellBackground: #37373d;
-    --vscode-notebook-selectedCellBorder: #37373d;
-    --vscode-notebook-focusedCellBorder: #007fd4;
-    --vscode-notebook-inactiveFocusedCellBorder: #37373d;
-    --vscode-notebook-cellStatusBarItemHoverBackground: rgba(255, 255, 255, 0.15);
-    --vscode-notebook-cellInsertionIndicator: #007fd4;
-    --vscode-notebookScrollbarSlider-background: rgba(121, 121, 121, 0.4);
-    --vscode-notebookScrollbarSlider-hoverBackground: rgba(100, 100, 100, 0.7);
-    --vscode-notebookScrollbarSlider-activeBackground: rgba(191, 191, 191, 0.4);
-    --vscode-notebook-symbolHighlightBackground: rgba(255, 255, 255, 0.04);
-    --vscode-editor-stackFrameHighlightBackground: rgba(255, 255, 0, 0.2);
-    --vscode-editor-focusedStackFrameHighlightBackground: rgba(122, 189, 122, 0.3);
-    --vscode-debugIcon-breakpointForeground: #e51400;
-    --vscode-debugIcon-breakpointDisabledForeground: #848484;
-    --vscode-debugIcon-breakpointUnverifiedForeground: #848484;
-    --vscode-debugIcon-breakpointCurrentStackframeForeground: #ffcc00;
-    --vscode-debugIcon-breakpointStackframeForeground: #89d185;
-    --vscode-editor-inlineValuesForeground: rgba(255, 255, 255, 0.5);
-    --vscode-editor-inlineValuesBackground: rgba(255, 200, 0, 0.2);
-    --vscode-ports-iconRunningProcessForeground: #369432;
-    --vscode-scm-providerBorder: #454545;
-    --vscode-debugTokenExpression-name: #c586c0;
-    --vscode-debugTokenExpression-value: rgba(204, 204, 204, 0.6);
-    --vscode-debugTokenExpression-string: #ce9178;
-    --vscode-debugTokenExpression-boolean: #4e94ce;
-    --vscode-debugTokenExpression-number: #b5cea8;
-    --vscode-debugTokenExpression-error: #f48771;
-    --vscode-debugView-exceptionLabelForeground: #cccccc;
-    --vscode-debugView-exceptionLabelBackground: #6c2022;
-    --vscode-debugView-stateLabelForeground: #cccccc;
-    --vscode-debugView-stateLabelBackground: rgba(136, 136, 136, 0.27);
-    --vscode-debugView-valueChangedHighlight: #569cd6;
-    --vscode-debugConsole-infoForeground: #75beff;
-    --vscode-debugConsole-warningForeground: #cca700;
-    --vscode-debugConsole-errorForeground: #f48771;
-    --vscode-debugConsole-sourceForeground: #cccccc;
-    --vscode-debugConsoleInputIcon-foreground: #cccccc;
-    --vscode-debugIcon-pauseForeground: #75beff;
-    --vscode-debugIcon-stopForeground: #f48771;
-    --vscode-debugIcon-disconnectForeground: #f48771;
-    --vscode-debugIcon-restartForeground: #89d185;
-    --vscode-debugIcon-stepOverForeground: #75beff;
-    --vscode-debugIcon-stepIntoForeground: #75beff;
-    --vscode-debugIcon-stepOutForeground: #75beff;
-    --vscode-debugIcon-continueForeground: #75beff;
-    --vscode-debugIcon-stepBackForeground: #75beff;
-    --vscode-extensionButton-prominentBackground: #0e639c;
-    --vscode-extensionButton-prominentForeground: #ffffff;
-    --vscode-extensionButton-prominentHoverBackground: #1177bb;
-    --vscode-extensionIcon-starForeground: #ff8e00;
-    --vscode-terminal-ansiBlack: #000000;
-    --vscode-terminal-ansiRed: #cd3131;
-    --vscode-terminal-ansiGreen: #0dbc79;
-    --vscode-terminal-ansiYellow: #e5e510;
-    --vscode-terminal-ansiBlue: #2472c8;
-    --vscode-terminal-ansiMagenta: #bc3fbc;
-    --vscode-terminal-ansiCyan: #11a8cd;
-    --vscode-terminal-ansiWhite: #e5e5e5;
-    --vscode-terminal-ansiBrightBlack: #666666;
-    --vscode-terminal-ansiBrightRed: #f14c4c;
-    --vscode-terminal-ansiBrightGreen: #23d18b;
-    --vscode-terminal-ansiBrightYellow: #f5f543;
-    --vscode-terminal-ansiBrightBlue: #3b8eea;
-    --vscode-terminal-ansiBrightMagenta: #d670d6;
-    --vscode-terminal-ansiBrightCyan: #29b8db;
-    --vscode-terminal-ansiBrightWhite: #e5e5e5;
-    --vscode-gitDecoration-addedResourceForeground: #81b88b;
-    --vscode-gitDecoration-modifiedResourceForeground: #e2c08d;
-    --vscode-gitDecoration-deletedResourceForeground: #c74e39;
-    --vscode-gitDecoration-renamedResourceForeground: #73c991;
-    --vscode-gitDecoration-untrackedResourceForeground: #73c991;
-    --vscode-gitDecoration-ignoredResourceForeground: #8c8c8c;
-    --vscode-gitDecoration-stageModifiedResourceForeground: #e2c08d;
-    --vscode-gitDecoration-stageDeletedResourceForeground: #c74e39;
-    --vscode-gitDecoration-conflictingResourceForeground: #e4676b;
-    --vscode-gitDecoration-submoduleResourceForeground: #8db9e2;
-
-
-
-
-.codicon-add:before { content: "\ea60" }
-.codicon-plus:before { content: "\ea60" }
-.codicon-gist-new:before { content: "\ea60" }
-.codicon-repo-create:before { content: "\ea60" }
-.codicon-lightbulb:before { content: "\ea61" }
-.codicon-light-bulb:before { content: "\ea61" }
-.codicon-repo:before { content: "\ea62" }
-.codicon-repo-delete:before { content: "\ea62" }
-.codicon-gist-fork:before { content: "\ea63" }
-.codicon-repo-forked:before { content: "\ea63" }
-.codicon-git-pull-request:before { content: "\ea64" }
-.codicon-git-pull-request-abandoned:before { content: "\ea64" }
-.codicon-record-keys:before { content: "\ea65" }
-.codicon-keyboard:before { content: "\ea65" }
-.codicon-tag:before { content: "\ea66" }
-.codicon-tag-add:before { content: "\ea66" }
-.codicon-tag-remove:before { content: "\ea66" }
-.codicon-person:before { content: "\ea67" }
-.codicon-person-follow:before { content: "\ea67" }
-.codicon-person-outline:before { content: "\ea67" }
-.codicon-person-filled:before { content: "\ea67" }
-.codicon-git-branch:before { content: "\ea68" }
-.codicon-git-branch-create:before { content: "\ea68" }
-.codicon-git-branch-delete:before { content: "\ea68" }
-.codicon-source-control:before { content: "\ea68" }
-.codicon-mirror:before { content: "\ea69" }
-.codicon-mirror-public:before { content: "\ea69" }
-.codicon-star:before { content: "\ea6a" }
-.codicon-star-add:before { content: "\ea6a" }
-.codicon-star-delete:before { content: "\ea6a" }
-.codicon-star-empty:before { content: "\ea6a" }
-.codicon-comment:before { content: "\ea6b" }
-.codicon-comment-add:before { content: "\ea6b" }
-.codicon-alert:before { content: "\ea6c" }
-.codicon-warning:before { content: "\ea6c" }
-.codicon-search:before { content: "\ea6d" }
-.codicon-search-save:before { content: "\ea6d" }
-.codicon-log-out:before { content: "\ea6e" }
-.codicon-sign-out:before { content: "\ea6e" }
-.codicon-log-in:before { content: "\ea6f" }
-.codicon-sign-in:before { content: "\ea6f" }
-.codicon-eye:before { content: "\ea70" }
-.codicon-eye-unwatch:before { content: "\ea70" }
-.codicon-eye-watch:before { content: "\ea70" }
-.codicon-circle-filled:before { content: "\ea71" }
-.codicon-primitive-dot:before { content: "\ea71" }
-.codicon-close-dirty:before { content: "\ea71" }
-.codicon-debug-breakpoint:before { content: "\ea71" }
-.codicon-debug-breakpoint-disabled:before { content: "\ea71" }
-.codicon-debug-hint:before { content: "\ea71" }
-.codicon-primitive-square:before { content: "\ea72" }
-.codicon-edit:before { content: "\ea73" }
-.codicon-pencil:before { content: "\ea73" }
-.codicon-info:before { content: "\ea74" }
-.codicon-issue-opened:before { content: "\ea74" }
-.codicon-gist-private:before { content: "\ea75" }
-.codicon-git-fork-private:before { content: "\ea75" }
-.codicon-lock:before { content: "\ea75" }
-.codicon-mirror-private:before { content: "\ea75" }
-.codicon-close:before { content: "\ea76" }
-.codicon-remove-close:before { content: "\ea76" }
-.codicon-x:before { content: "\ea76" }
-.codicon-repo-sync:before { content: "\ea77" }
-.codicon-sync:before { content: "\ea77" }
-.codicon-clone:before { content: "\ea78" }
-.codicon-desktop-download:before { content: "\ea78" }
-.codicon-beaker:before { content: "\ea79" }
-.codicon-microscope:before { content: "\ea79" }
-.codicon-vm:before { content: "\ea7a" }
-.codicon-device-desktop:before { content: "\ea7a" }
-.codicon-file:before { content: "\ea7b" }
-.codicon-file-text:before { content: "\ea7b" }
-.codicon-more:before { content: "\ea7c" }
-.codicon-ellipsis:before { content: "\ea7c" }
-.codicon-kebab-horizontal:before { content: "\ea7c" }
-.codicon-mail-reply:before { content: "\ea7d" }
-.codicon-reply:before { content: "\ea7d" }
-.codicon-organization:before { content: "\ea7e" }
-.codicon-organization-filled:before { content: "\ea7e" }
-.codicon-organization-outline:before { content: "\ea7e" }
-.codicon-new-file:before { content: "\ea7f" }
-.codicon-file-add:before { content: "\ea7f" }
-.codicon-new-folder:before { content: "\ea80" }
-.codicon-file-directory-create:before { content: "\ea80" }
-.codicon-trash:before { content: "\ea81" }
-.codicon-trashcan:before { content: "\ea81" }
-.codicon-history:before { content: "\ea82" }
-.codicon-clock:before { content: "\ea82" }
-.codicon-folder:before { content: "\ea83" }
-.codicon-file-directory:before { content: "\ea83" }
-.codicon-symbol-folder:before { content: "\ea83" }
-.codicon-logo-github:before { content: "\ea84" }
-.codicon-mark-github:before { content: "\ea84" }
-.codicon-github:before { content: "\ea84" }
-.codicon-terminal:before { content: "\ea85" }
-.codicon-console:before { content: "\ea85" }
-.codicon-repl:before { content: "\ea85" }
-.codicon-zap:before { content: "\ea86" }
-.codicon-symbol-event:before { content: "\ea86" }
-.codicon-error:before { content: "\ea87" }
-.codicon-stop:before { content: "\ea87" }
-.codicon-variable:before { content: "\ea88" }
-.codicon-symbol-variable:before { content: "\ea88" }
-.codicon-array:before { content: "\ea8a" }
-.codicon-symbol-array:before { content: "\ea8a" }
-.codicon-symbol-module:before { content: "\ea8b" }
-.codicon-symbol-package:before { content: "\ea8b" }
-.codicon-symbol-namespace:before { content: "\ea8b" }
-.codicon-symbol-object:before { content: "\ea8b" }
-.codicon-symbol-method:before { content: "\ea8c" }
-.codicon-symbol-function:before { content: "\ea8c" }
-.codicon-symbol-constructor:before { content: "\ea8c" }
-.codicon-symbol-boolean:before { content: "\ea8f" }
-.codicon-symbol-null:before { content: "\ea8f" }
-.codicon-symbol-numeric:before { content: "\ea90" }
-.codicon-symbol-number:before { content: "\ea90" }
-.codicon-symbol-structure:before { content: "\ea91" }
-.codicon-symbol-struct:before { content: "\ea91" }
-.codicon-symbol-parameter:before { content: "\ea92" }
-.codicon-symbol-type-parameter:before { content: "\ea92" }
-.codicon-symbol-key:before { content: "\ea93" }
-.codicon-symbol-text:before { content: "\ea93" }
-.codicon-symbol-reference:before { content: "\ea94" }
-.codicon-go-to-file:before { content: "\ea94" }
-.codicon-symbol-enum:before { content: "\ea95" }
-.codicon-symbol-value:before { content: "\ea95" }
-.codicon-symbol-ruler:before { content: "\ea96" }
-.codicon-symbol-unit:before { content: "\ea96" }
-.codicon-activate-breakpoints:before { content: "\ea97" }
-.codicon-archive:before { content: "\ea98" }
-.codicon-arrow-both:before { content: "\ea99" }
-.codicon-arrow-down:before { content: "\ea9a" }
-.codicon-arrow-left:before { content: "\ea9b" }
-.codicon-arrow-right:before { content: "\ea9c" }
-.codicon-arrow-small-down:before { content: "\ea9d" }
-.codicon-arrow-small-left:before { content: "\ea9e" }
-.codicon-arrow-small-right:before { content: "\ea9f" }
-.codicon-arrow-small-up:before { content: "\eaa0" }
-.codicon-arrow-up:before { content: "\eaa1" }
-.codicon-bell:before { content: "\eaa2" }
-.codicon-bold:before { content: "\eaa3" }
-.codicon-book:before { content: "\eaa4" }
-.codicon-bookmark:before { content: "\eaa5" }
-.codicon-debug-breakpoint-conditional-unverified:before { content: "\eaa6" }
-.codicon-debug-breakpoint-conditional:before { content: "\eaa7" }
-.codicon-debug-breakpoint-conditional-disabled:before { content: "\eaa7" }
-.codicon-debug-breakpoint-data-unverified:before { content: "\eaa8" }
-.codicon-debug-breakpoint-data:before { content: "\eaa9" }
-.codicon-debug-breakpoint-data-disabled:before { content: "\eaa9" }
-.codicon-debug-breakpoint-log-unverified:before { content: "\eaaa" }
-.codicon-debug-breakpoint-log:before { content: "\eaab" }
-.codicon-debug-breakpoint-log-disabled:before { content: "\eaab" }
-.codicon-briefcase:before { content: "\eaac" }
-.codicon-broadcast:before { content: "\eaad" }
-.codicon-browser:before { content: "\eaae" }
-.codicon-bug:before { content: "\eaaf" }
-.codicon-calendar:before { content: "\eab0" }
-.codicon-case-sensitive:before { content: "\eab1" }
-.codicon-check:before { content: "\eab2" }
-.codicon-checklist:before { content: "\eab3" }
-.codicon-chevron-down:before { content: "\eab4" }
-.codicon-chevron-left:before { content: "\eab5" }
-.codicon-chevron-right:before { content: "\eab6" }
-.codicon-chevron-up:before { content: "\eab7" }
-.codicon-chrome-close:before { content: "\eab8" }
-.codicon-chrome-maximize:before { content: "\eab9" }
-.codicon-chrome-minimize:before { content: "\eaba" }
-.codicon-chrome-restore:before { content: "\eabb" }
-.codicon-circle-outline:before { content: "\eabc" }
-.codicon-debug-breakpoint-unverified:before { content: "\eabc" }
-.codicon-circle-slash:before { content: "\eabd" }
-.codicon-circuit-board:before { content: "\eabe" }
-.codicon-clear-all:before { content: "\eabf" }
-.codicon-clippy:before { content: "\eac0" }
-.codicon-close-all:before { content: "\eac1" }
-.codicon-cloud-download:before { content: "\eac2" }
-.codicon-cloud-upload:before { content: "\eac3" }
-.codicon-code:before { content: "\eac4" }
-.codicon-collapse-all:before { content: "\eac5" }
-.codicon-color-mode:before { content: "\eac6" }
-.codicon-comment-discussion:before { content: "\eac7" }
-.codicon-credit-card:before { content: "\eac9" }
-.codicon-dash:before { content: "\eacc" }
-.codicon-dashboard:before { content: "\eacd" }
-.codicon-database:before { content: "\eace" }
-.codicon-debug-continue:before { content: "\eacf" }
-.codicon-debug-disconnect:before { content: "\ead0" }
-.codicon-debug-pause:before { content: "\ead1" }
-.codicon-debug-restart:before { content: "\ead2" }
-.codicon-debug-start:before { content: "\ead3" }
-.codicon-debug-step-into:before { content: "\ead4" }
-.codicon-debug-step-out:before { content: "\ead5" }
-.codicon-debug-step-over:before { content: "\ead6" }
-.codicon-debug-stop:before { content: "\ead7" }
-.codicon-debug:before { content: "\ead8" }
-.codicon-device-camera-video:before { content: "\ead9" }
-.codicon-device-camera:before { content: "\eada" }
-.codicon-device-mobile:before { content: "\eadb" }
-.codicon-diff-added:before { content: "\eadc" }
-.codicon-diff-ignored:before { content: "\eadd" }
-.codicon-diff-modified:before { content: "\eade" }
-.codicon-diff-removed:before { content: "\eadf" }
-.codicon-diff-renamed:before { content: "\eae0" }
-.codicon-diff:before { content: "\eae1" }
-.codicon-discard:before { content: "\eae2" }
-.codicon-editor-layout:before { content: "\eae3" }
-.codicon-empty-window:before { content: "\eae4" }
-.codicon-exclude:before { content: "\eae5" }
-.codicon-extensions:before { content: "\eae6" }
-.codicon-eye-closed:before { content: "\eae7" }
-.codicon-file-binary:before { content: "\eae8" }
-.codicon-file-code:before { content: "\eae9" }
-.codicon-file-media:before { content: "\eaea" }
-.codicon-file-pdf:before { content: "\eaeb" }
-.codicon-file-submodule:before { content: "\eaec" }
-.codicon-file-symlink-directory:before { content: "\eaed" }
-.codicon-file-symlink-file:before { content: "\eaee" }
-.codicon-file-zip:before { content: "\eaef" }
-.codicon-files:before { content: "\eaf0" }
-.codicon-filter:before { content: "\eaf1" }
-.codicon-flame:before { content: "\eaf2" }
-.codicon-fold-down:before { content: "\eaf3" }
-.codicon-fold-up:before { content: "\eaf4" }
-.codicon-fold:before { content: "\eaf5" }
-.codicon-folder-active:before { content: "\eaf6" }
-.codicon-folder-opened:before { content: "\eaf7" }
-.codicon-gear:before { content: "\eaf8" }
-.codicon-gift:before { content: "\eaf9" }
-.codicon-gist-secret:before { content: "\eafa" }
-.codicon-gist:before { content: "\eafb" }
-.codicon-git-commit:before { content: "\eafc" }
-.codicon-git-compare:before { content: "\eafd" }
-.codicon-compare-changes:before { content: "\eafd" }
-.codicon-git-merge:before { content: "\eafe" }
-.codicon-github-action:before { content: "\eaff" }
-.codicon-github-alt:before { content: "\eb00" }
-.codicon-globe:before { content: "\eb01" }
-.codicon-grabber:before { content: "\eb02" }
-.codicon-graph:before { content: "\eb03" }
-.codicon-gripper:before { content: "\eb04" }
-.codicon-heart:before { content: "\eb05" }
-.codicon-home:before { content: "\eb06" }
-.codicon-horizontal-rule:before { content: "\eb07" }
-.codicon-hubot:before { content: "\eb08" }
-.codicon-inbox:before { content: "\eb09" }
-.codicon-issue-reopened:before { content: "\eb0b" }
-.codicon-issues:before { content: "\eb0c" }
-.codicon-italic:before { content: "\eb0d" }
-.codicon-jersey:before { content: "\eb0e" }
-.codicon-json:before { content: "\eb0f" }
-.codicon-kebab-vertical:before { content: "\eb10" }
-.codicon-key:before { content: "\eb11" }
-.codicon-law:before { content: "\eb12" }
-.codicon-lightbulb-autofix:before { content: "\eb13" }
-.codicon-link-external:before { content: "\eb14" }
-.codicon-link:before { content: "\eb15" }
-.codicon-list-ordered:before { content: "\eb16" }
-.codicon-list-unordered:before { content: "\eb17" }
-.codicon-live-share:before { content: "\eb18" }
-.codicon-loading:before { content: "\eb19" }
-.codicon-location:before { content: "\eb1a" }
-.codicon-mail-read:before { content: "\eb1b" }
-.codicon-mail:before { content: "\eb1c" }
-.codicon-markdown:before { content: "\eb1d" }
-.codicon-megaphone:before { content: "\eb1e" }
-.codicon-mention:before { content: "\eb1f" }
-.codicon-milestone:before { content: "\eb20" }
-.codicon-mortar-board:before { content: "\eb21" }
-.codicon-move:before { content: "\eb22" }
-.codicon-multiple-windows:before { content: "\eb23" }
-.codicon-mute:before { content: "\eb24" }
-.codicon-no-newline:before { content: "\eb25" }
-.codicon-note:before { content: "\eb26" }
-.codicon-octoface:before { content: "\eb27" }
-.codicon-open-preview:before { content: "\eb28" }
-.codicon-package:before { content: "\eb29" }
-.codicon-paintcan:before { content: "\eb2a" }
-.codicon-pin:before { content: "\eb2b" }
-.codicon-play:before { content: "\eb2c" }
-.codicon-run:before { content: "\eb2c" }
-.codicon-plug:before { content: "\eb2d" }
-.codicon-preserve-case:before { content: "\eb2e" }
-.codicon-preview:before { content: "\eb2f" }
-.codicon-project:before { content: "\eb30" }
-.codicon-pulse:before { content: "\eb31" }
-.codicon-question:before { content: "\eb32" }
-.codicon-quote:before { content: "\eb33" }
-.codicon-radio-tower:before { content: "\eb34" }
-.codicon-reactions:before { content: "\eb35" }
-.codicon-references:before { content: "\eb36" }
-.codicon-refresh:before { content: "\eb37" }
-.codicon-regex:before { content: "\eb38" }
-.codicon-remote-explorer:before { content: "\eb39" }
-.codicon-remote:before { content: "\eb3a" }
-.codicon-remove:before { content: "\eb3b" }
-.codicon-replace-all:before { content: "\eb3c" }
-.codicon-replace:before { content: "\eb3d" }
-.codicon-repo-clone:before { content: "\eb3e" }
-.codicon-repo-force-push:before { content: "\eb3f" }
-.codicon-repo-pull:before { content: "\eb40" }
-.codicon-repo-push:before { content: "\eb41" }
-.codicon-report:before { content: "\eb42" }
-.codicon-request-changes:before { content: "\eb43" }
-.codicon-rocket:before { content: "\eb44" }
-.codicon-root-folder-opened:before { content: "\eb45" }
-.codicon-root-folder:before { content: "\eb46" }
-.codicon-rss:before { content: "\eb47" }
-.codicon-ruby:before { content: "\eb48" }
-.codicon-save-all:before { content: "\eb49" }
-.codicon-save-as:before { content: "\eb4a" }
-.codicon-save:before { content: "\eb4b" }
-.codicon-screen-full:before { content: "\eb4c" }
-.codicon-screen-normal:before { content: "\eb4d" }
-.codicon-search-stop:before { content: "\eb4e" }
-.codicon-server:before { content: "\eb50" }
-.codicon-settings-gear:before { content: "\eb51" }
-.codicon-settings:before { content: "\eb52" }
-.codicon-shield:before { content: "\eb53" }
-.codicon-smiley:before { content: "\eb54" }
-.codicon-sort-precedence:before { content: "\eb55" }
-.codicon-split-horizontal:before { content: "\eb56" }
-.codicon-split-vertical:before { content: "\eb57" }
-.codicon-squirrel:before { content: "\eb58" }
-.codicon-star-full:before { content: "\eb59" }
-.codicon-star-half:before { content: "\eb5a" }
-.codicon-symbol-class:before { content: "\eb5b" }
-.codicon-symbol-color:before { content: "\eb5c" }
-.codicon-symbol-constant:before { content: "\eb5d" }
-.codicon-symbol-enum-member:before { content: "\eb5e" }
-.codicon-symbol-field:before { content: "\eb5f" }
-.codicon-symbol-file:before { content: "\eb60" }
-.codicon-symbol-interface:before { content: "\eb61" }
-.codicon-symbol-keyword:before { content: "\eb62" }
-.codicon-symbol-misc:before { content: "\eb63" }
-.codicon-symbol-operator:before { content: "\eb64" }
-.codicon-symbol-property:before { content: "\eb65" }
-.codicon-wrench:before { content: "\eb65" }
-.codicon-wrench-subaction:before { content: "\eb65" }
-.codicon-symbol-snippet:before { content: "\eb66" }
-.codicon-tasklist:before { content: "\eb67" }
-.codicon-telescope:before { content: "\eb68" }
-.codicon-text-size:before { content: "\eb69" }
-.codicon-three-bars:before { content: "\eb6a" }
-.codicon-thumbsdown:before { content: "\eb6b" }
-.codicon-thumbsup:before { content: "\eb6c" }
-.codicon-tools:before { content: "\eb6d" }
-.codicon-triangle-down:before { content: "\eb6e" }
-.codicon-triangle-left:before { content: "\eb6f" }
-.codicon-triangle-right:before { content: "\eb70" }
-.codicon-triangle-up:before { content: "\eb71" }
-.codicon-twitter:before { content: "\eb72" }
-.codicon-unfold:before { content: "\eb73" }
-.codicon-unlock:before { content: "\eb74" }
-.codicon-unmute:before { content: "\eb75" }
-.codicon-unverified:before { content: "\eb76" }
-.codicon-verified:before { content: "\eb77" }
-.codicon-versions:before { content: "\eb78" }
-.codicon-vm-active:before { content: "\eb79" }
-.codicon-vm-outline:before { content: "\eb7a" }
-.codicon-vm-running:before { content: "\eb7b" }
-.codicon-watch:before { content: "\eb7c" }
-.codicon-whitespace:before { content: "\eb7d" }
-.codicon-whole-word:before { content: "\eb7e" }
-.codicon-window:before { content: "\eb7f" }
-.codicon-word-wrap:before { content: "\eb80" }
-.codicon-zoom-in:before { content: "\eb81" }
-.codicon-zoom-out:before { content: "\eb82" }
-.codicon-list-filter:before { content: "\eb83" }
-.codicon-list-flat:before { content: "\eb84" }
-.codicon-list-selection:before { content: "\eb85" }
-.codicon-selection:before { content: "\eb85" }
-.codicon-list-tree:before { content: "\eb86" }
-.codicon-debug-breakpoint-function-unverified:before { content: "\eb87" }
-.codicon-debug-breakpoint-function:before { content: "\eb88" }
-.codicon-debug-breakpoint-function-disabled:before { content: "\eb88" }
-.codicon-debug-stackframe-active:before { content: "\eb89" }
-.codicon-debug-stackframe-dot:before { content: "\eb8a" }
-.codicon-debug-stackframe:before { content: "\eb8b" }
-.codicon-debug-stackframe-focused:before { content: "\eb8b" }
-.codicon-debug-breakpoint-unsupported:before { content: "\eb8c" }
-.codicon-symbol-string:before { content: "\eb8d" }
-.codicon-debug-reverse-continue:before { content: "\eb8e" }
-.codicon-debug-step-back:before { content: "\eb8f" }
-.codicon-debug-restart-frame:before { content: "\eb90" }
-.codicon-debug-alt:before { content: "\eb91" }
-.codicon-call-incoming:before { content: "\eb92" }
-.codicon-call-outgoing:before { content: "\eb93" }
-.codicon-menu:before { content: "\eb94" }
-.codicon-expand-all:before { content: "\eb95" }
-.codicon-feedback:before { content: "\eb96" }
-.codicon-group-by-ref-type:before { content: "\eb97" }
-.codicon-ungroup-by-ref-type:before { content: "\eb98" }
-.codicon-account:before { content: "\eb99" }
-.codicon-bell-dot:before { content: "\eb9a" }
-.codicon-debug-console:before { content: "\eb9b" }
-.codicon-library:before { content: "\eb9c" }
-.codicon-output:before { content: "\eb9d" }
-.codicon-run-all:before { content: "\eb9e" }
-.codicon-sync-ignored:before { content: "\eb9f" }
-.codicon-pinned:before { content: "\eba0" }
-.codicon-github-inverted:before { content: "\eba1" }
-.codicon-server-process:before { content: "\eba2" }
-.codicon-server-environment:before { content: "\eba3" }
-.codicon-pass:before { content: "\eba4" }
-.codicon-issue-closed:before { content: "\eba4" }
-.codicon-stop-circle:before { content: "\eba5" }
-.codicon-play-circle:before { content: "\eba6" }
-.codicon-record:before { content: "\eba7" }
-.codicon-debug-alt-small:before { content: "\eba8" }
-.codicon-vm-connect:before { content: "\eba9" }
-.codicon-cloud:before { content: "\ebaa" }
-.codicon-merge:before { content: "\ebab" }
-.codicon-export:before { content: "\ebac" }
-.codicon-graph-left:before { content: "\ebad" }
-.codicon-magnet:before { content: "\ebae" }
-.codicon-notebook:before { content: "\ebaf" }
-.codicon-redo:before { content: "\ebb0" }
-.codicon-check-all:before { content: "\ebb1" }
-.codicon-pinned-dirty:before { content: "\ebb2" }
-.codicon-pass-filled:before { content: "\ebb3" }
-.codicon-circle-large-filled:before { content: "\ebb4" }
-.codicon-circle-large-outline:before { content: "\ebb5" }
-.codicon-combine:before { content: "\ebb6" }
-.codicon-gather:before { content: "\ebb6" }
-.codicon-table:before { content: "\ebb7" }
-.codicon-variable-group:before { content: "\ebb8" }
-.codicon-type-hierarchy:before { content: "\ebb9" }
-.codicon-type-hierarchy-sub:before { content: "\ebba" }
-.codicon-type-hierarchy-super:before { content: "\ebbb" }
-.codicon-git-pull-request-create:before { content: "\ebbc" }
-.codicon-run-above:before { content: "\ebbd" }
-.codicon-run-below:before { content: "\ebbe" }
-.codicon-notebook-template:before { content: "\ebbf" }
-.codicon-debug-rerun:before { content: "\ebc0" }
-.codicon-workspace-trusted:before { content: "\ebc1" }
-.codicon-workspace-untrusted:before { content: "\ebc2" }
-.codicon-workspace-unknown:before { content: "\ebc3" }
-.codicon-terminal-cmd:before { content: "\ebc4" }
-.codicon-terminal-debian:before { content: "\ebc5" }
-.codicon-terminal-linux:before { content: "\ebc6" }
-.codicon-terminal-powershell:before { content: "\ebc7" }
-.codicon-terminal-tmux:before { content: "\ebc8" }
-.codicon-terminal-ubuntu:before { content: "\ebc9" }
-.codicon-terminal-bash:before { content: "\ebca" }
-.codicon-arrow-swap:before { content: "\ebcb" }
-.codicon-copy:before { content: "\ebcc" }
-.codicon-person-add:before { content: "\ebcd" }
-.codicon-filter-filled:before { content: "\ebce" }
-.codicon-wand:before { content: "\ebcf" }
-.codicon-debug-line-by-line:before { content: "\ebd0" }
-.codicon-inspect:before { content: "\ebd1" }
-.codicon-layers:before { content: "\ebd2" }
-.codicon-layers-dot:before { content: "\ebd3" }
-.codicon-layers-active:before { content: "\ebd4" }
-.codicon-compass:before { content: "\ebd5" }
-.codicon-compass-dot:before { content: "\ebd6" }
-.codicon-compass-active:before { content: "\ebd7" }
-.codicon-azure:before { content: "\ebd8"
- }
-.codicon-issue-draft:before { content: "\ebd9" }
-.codicon-git-pull-request-closed:before { content: "\ebda" }
-.codicon-git-pull-request-draft:before { content: "\ebdb" }
-.codicon-debug-all:before { content: "\ebdc" }
-.codicon-debug-coverage:before { content: "\ebdd" }
-
-
-
-	*/
