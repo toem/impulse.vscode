@@ -8,7 +8,7 @@
 		"name": "Thomas Haber"
 	},
 	"license" : "SEE LICENSE IN LICENSE.md",
-	"version": "0.3.0",
+	"version": "0.3.2",
 	"engines": {
 		"vscode": "^1.50.0"
 	},
@@ -41,7 +41,8 @@
 		"onView:de.toem.impulse.parts.samples",
 		"onView:de.toem.impulse.parts.samples.2",
 		"onView:de.toem.impulse.parts.samples.3",
-		"onView:de.toem.impulse.parts.samples.4"
+		"onView:de.toem.impulse.parts.samples.4",
+		"onFileSystem:impulsePreferences"
 	],
 	"main": "./out/extension.js",
 	"contributes": {

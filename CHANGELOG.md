@@ -1,3 +1,12 @@
+## V0.3.3 Nov 7th, 2021
+- [BUG]  Fix missing templates
+- [IMPROVEMENT]  Add Text Cut/Paste
+- [IMPROVEMENT]  Script editor not working after restart
+
+## V0.3.1 Oct 30th, 2021
+- [BUG]  Auto preference save destroyed preferences
+- [FEATURE]  Added embedded features 
+
 ## V0.3.0 Oct 17th, 2021
 - [FEATURE]  Wallet editor 
 - [IMPROVEMENT] Support browser zoom 

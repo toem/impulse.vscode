@@ -62,13 +62,13 @@ export class ElementFS implements vscode.FileSystemProvider {
     link2DirectoryUri(link: string): vscode.Uri {
 
         var uri: vscode.Uri = vscode.Uri.parse(link);
-        return uri.with({ scheme: 'impulse.' + uri.scheme, query: '' });
+        return uri.with({ scheme: 'impulse' + uri.scheme, query: '' });
     }
 
     link2Uri(link: string): vscode.Uri {
 
         var uri: vscode.Uri = vscode.Uri.parse(link);
-        const duri = uri.with({ scheme: 'impulse.' + uri.scheme, query: '' });
+        const duri = uri.with({ scheme: 'impulse' + uri.scheme, query: '' });
         const query: querystring.ParsedUrlQuery = querystring.parse(uri.query);
         if (query.type == 'python')
             query.type = 'py';
@@ -80,7 +80,7 @@ export class ElementFS implements vscode.FileSystemProvider {
 
     uri2link(uri: vscode.Uri): string | undefined {
 
-        const scheme: string = uri.scheme.replace('impulse.', '');
+        const scheme: string = uri.scheme.replace('impulsePreferences', 'Preferences');
         const dirname = path.posix.dirname(uri.path);
         const basename = path.posix.basename(uri.path);
         const tidx = basename.lastIndexOf('.');
@@ -92,22 +92,49 @@ export class ElementFS implements vscode.FileSystemProvider {
         }
     }
 
-    assertFile(link: string, value: string): vscode.Uri {
-
-        const duri = this.link2DirectoryUri(link);
-        if (!this._lookup(duri, true))
-            this.createDirectoryPath(duri);
-
-        const furi = this.link2Uri(link);
-        this.writeFile(furi, new TextEncoder().encode(value), { create: true, overwrite: true, init: true });
-
-        return furi;
-    }
 
     // --- manage file metadata
 
-    stat(uri: vscode.Uri): vscode.FileStat {
-        return this._lookup(uri, false);
+    stat(uri: vscode.Uri): Thenable<vscode.FileStat> {
+        return new Promise<vscode.FileStat>((resolve, reject) => {
+
+			ideClient.request({ id: 0, op: "Stat",  s1: this.uri2link(uri) }, (response) => {
+				if (response.t1){
+                    
+                    // allready existing
+                    let result = this._lookup(uri, false);
+                    if (result){
+                        resolve(result);
+                        return;
+                    }
+
+                    // parent
+                    const duri = uri.with({ path: path.posix.dirname(uri.path) });
+                    let parent = this._lookup(duri, true);
+                    if (!parent)
+                        this.createDirectoryPath(duri);
+                    parent = this._lookupAsDirectory(duri, false);
+                    if (!parent)
+                        throw vscode.FileSystemError.FileNotADirectory(uri);
+                    if (parent instanceof File) 
+                        throw vscode.FileSystemError.FileIsADirectory(uri);
+
+                    // file
+                    const basename = path.posix.basename(uri.path);
+                    let entry = parent.entries.get(basename);
+                    if (!entry){
+                        entry = new File(basename);
+                        parent.entries.set(basename, entry);
+                    }
+                    if (entry instanceof Directory) 
+                        throw vscode.FileSystemError.FileIsADirectory(uri);
+
+					resolve(this._lookup(uri, false));
+
+                }else
+					throw vscode.FileSystemError.FileNotFound(uri);
+			});
+		});
     }
 
     readDirectory(uri: vscode.Uri): [string, vscode.FileType][] {
@@ -121,15 +148,44 @@ export class ElementFS implements vscode.FileSystemProvider {
 
     // --- manage file contents
 
-    readFile(uri: vscode.Uri): Uint8Array {
-        const data = this._lookupAsFile(uri, false).data;
-        if (data) {
-            return data;
-        }
-        throw vscode.FileSystemError.FileNotFound();
+    readFile(uri: vscode.Uri): Thenable<Uint8Array> {
+        return new Promise<Uint8Array>((resolve, reject) => {
+			ideClient.request({ id: 0, op: "Get",  s1: this.uri2link(uri) }, (response) => {
+				if (response.s1){
+
+                    // parent
+                    const duri = uri.with({ path: path.posix.dirname(uri.path) });
+                    let parent = this._lookup(duri, true);
+                    if (!parent)
+                        this.createDirectoryPath(duri);
+                    parent = this._lookupAsDirectory(duri, false);
+                    if (!parent)
+                        throw vscode.FileSystemError.FileNotADirectory(uri);
+                    if (parent instanceof File) 
+                        throw vscode.FileSystemError.FileIsADirectory(uri);
+
+                    // file
+                    const basename = path.posix.basename(uri.path);
+                    let entry = parent.entries.get(basename);
+                    if (!entry){
+                        entry = new File(basename);
+                        parent.entries.set(basename, entry);
+                    }
+                    if (entry instanceof Directory) 
+                        throw vscode.FileSystemError.FileIsADirectory(uri);
+
+                    entry.data = new TextEncoder().encode(response.s1);  
+					resolve(entry.data);
+
+                }else
+					throw vscode.FileSystemError.FileNotFound(uri);
+			});
+		});
+
+        //throw vscode.FileSystemError.FileNotFound();
     }
 
-    writeFile(uri: vscode.Uri, content: Uint8Array, options: { create: boolean, overwrite: boolean, init?: boolean }): void {
+    writeFile(uri: vscode.Uri, content: Uint8Array, options: { create: boolean, overwrite: boolean}): void {
         const basename = path.posix.basename(uri.path);
         const parent = this._lookupParentDirectory(uri);
         let entry = parent.entries.get(basename);
@@ -153,10 +209,7 @@ export class ElementFS implements vscode.FileSystemProvider {
 
         this._fireSoon({ type: vscode.FileChangeType.Changed, uri });
 
-        if (!options.init)
-            ideClient.send( { id: 0, op: 'Set', s0: this.uri2link(uri), s1: new TextDecoder('utf-8').decode(content) });
-
-
+        ideClient.send( { id: 0, op: 'Set', s0: this.uri2link(uri), s1: new TextDecoder('utf-8').decode(content) });
     }
 
     // --- manage files/folders

@@ -23,7 +23,7 @@ export class Endpoint {
 	private nextRequestId = 1;
 	private requests : Map<number, (response: any) => void> = new Map();
 
-	protected request(message: any, listener: ((response: any) => void) | null) {
+	public request(message: any, listener: ((response: any) => void) | null) {
 
 		var requestId = 0;
 		if (listener) {
@@ -68,7 +68,7 @@ export class AbstractPart  extends Endpoint {
 			const jsonArray = JSON.parse(message);
 			for (let i = 0; i < jsonArray.length; i++) {
 				var jsonObject = jsonArray[i];
-				if (jsonObject.id == -11 || jsonObject.id == 0)
+				if (jsonObject.id == -11 || jsonObject.id == -12 || jsonObject.id == 0)
 					this.handle(jsonObject);
 			}
 			webview.postMessage(jsonArray);
@@ -93,6 +93,8 @@ export class AbstractPart  extends Endpoint {
 		super.handle(message);
 			if (message.id == -11 && message.op != "Response")
 				ideClient.handleIde(this, message);
+			if (message.id == -12 && message.op != "Response")
+				ideClient.handleClipboard(this, message);
 	}
 }
 

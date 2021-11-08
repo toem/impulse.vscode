@@ -4,6 +4,7 @@ import * as WebSocket from 'ws';
 import { EditPartProvider } from './editorPart';
 import { ViewPartProvider } from './viewPart';
 import { ElementFS, elementFSInstance } from './elementFsProvider';
+import { Scripting } from './scripting';
 import { Endpoint } from './abstractPart';
 
 var backendIdeUri: vscode.Uri;
@@ -14,6 +15,7 @@ export var ideClient: IdeClient;
 export function activate(context: vscode.ExtensionContext) {
 
 	const name = context.extension.packageJSON.name;
+	
 
 	// editors	
 	if (context.extension.packageJSON.contributes && context.extension.packageJSON.contributes.customEditors)
@@ -29,7 +31,10 @@ export function activate(context: vscode.ExtensionContext) {
 					context.subscriptions.push(ViewPartProvider.register(context, view.id));
 
 	// element fs
-	context.subscriptions.push(ElementFS.register(context, name + '.Preferences'));
+	context.subscriptions.push(ElementFS.register(context, name + 'Preferences'));
+
+	// Scripting
+	Scripting.register(context, name + 'Preferences');
 
 	// Configuation
 	const config = vscode.workspace.getConfiguration(name);
@@ -119,6 +124,7 @@ function connect(context: vscode.ExtensionContext) {
 export function deactivate() {
 
 	if (ideClient) ideClient.disconnect();
+	console.log('Disconnect');
 	//if (process)
 	//process.
 }
@@ -245,7 +251,7 @@ class IdeClient extends Endpoint {
 
 					case "TextEditor": {
 
-						var uri: vscode.Uri = message.s1 ? elementFSInstance.assertFile(message.s0, message.s1) : vscode.Uri.parse(message.s0);
+						var uri: vscode.Uri = elementFSInstance.link2Uri(message.s0);
 						vscode.window.showTextDocument(uri, {}).then((ret) => {
 							ret
 						});
@@ -281,6 +287,19 @@ class IdeClient extends Endpoint {
 				}
 			}
 
+		}
+	}
+	public handleClipboard(endpoint: Endpoint, message: any) {
+
+		switch (message.id) {
+			case -12: {
+				switch (message.op) {
+					case "Text": {
+						vscode.env.clipboard.writeText(message.s0);
+					}
+						break;
+				}
+			}
 		}
 	}
 }
