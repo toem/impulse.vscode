@@ -218,7 +218,7 @@ flxresult handleReqItems(flxbyte command, flxid controlId, flxid messageId, flxi
 		// domain base
 		flxdomain start = fstReaderGetStartTime(fstObject);
 		flxdomain end = fstReaderGetEndTime(fstObject);
-		flxtext domainBase = 0;
+		flxtext domainBase = "ns";
 		signed char timescale = fstReaderGetTimescale(fstObject);
 		switch (timescale) {
 		case 2:

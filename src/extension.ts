@@ -6,16 +6,15 @@ import { ViewPartProvider } from './viewPart';
 import { ElementFS, elementFSInstance } from './elementFsProvider';
 import { Scripting } from './scripting';
 import { Endpoint } from './abstractPart';
+import { Connection } from './connection';
 
-var backendIdeUri: vscode.Uri;
-export var backendPartsUri: vscode.Uri;
 var backendProcess: any;
 export var ideClient: IdeClient;
 
 export function activate(context: vscode.ExtensionContext) {
 
 	const name = context.extension.packageJSON.name;
-	
+
 
 	// editors	
 	if (context.extension.packageJSON.contributes && context.extension.packageJSON.contributes.customEditors)
@@ -47,12 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
 	var host: string = 'localhost';
 
 	// get free port
-	var port: number = (typeof cport === "string") ? parseInt(cport) : 8001;
-
-	// create uris
-	backendIdeUri = vscode.Uri.parse('ws://' + host + ':' + port + '/ide');
-	backendPartsUri = vscode.Uri.parse('ws://' + host + ':' + port + '/parts');
-
+	var port: number = (typeof cport === "string") ? parseInt(cport) : 0;
 
 	// start server
 	if (true) {
@@ -76,11 +70,12 @@ export function activate(context: vscode.ExtensionContext) {
 		const serverPath = vscode.Uri.file(path.join(context.extensionPath, name));
 		const osgi = vscode.Uri.file(
 			path.join(context.extensionPath, name, 'org.eclipse.osgi_3.16.200.v20210226-1447.jar'));
-		const cmd = cjava + ' -Dport=' + port + bundles + ' -jar  "' + osgi.fsPath + '"';
+		const cmd = cjava + (port > 0 ? ' -Dport=' + port : '') + bundles + ' -jar  "' + osgi.fsPath + '"';
 		console.log('cmd: ' + cmd);
 
 		// process	
 		const cp = require('child_process')
+		let gotPort = false;
 		backendProcess = cp.exec(cmd, {
 			cdw: serverPath.fsPath
 		}, (error: Error, stdout: any, stderr: any) => {
@@ -90,35 +85,51 @@ export function activate(context: vscode.ExtensionContext) {
 				});
 			}
 		});
-		backendProcess.stdout.on('data', (data: any) => {
+		backendProcess.stdout.on('data', (data: string) => {
+			if (!gotPort) {
+				let index = data.indexOf('Server started at:');
+				if (index >= 0) {
+					let port = parseInt(data.substring(index + 18));
+
+					Connection.openAll(host, port);
+					gotPort = true;
+				}
+			}
 			console.log(data);
 		});
 		backendProcess.stderr.on('data', (data: any) => {
 			console.log(data);
 		});
+	} else {
+		port = 5055;
+		Connection.openAll(host, port);
 	}
 
-	connect(context);
-}
+	ideClient = new IdeClient(new Connection('ide'));
+	ideClient.send({ id: 0, op: 'init', s0: context.storageUri?.toString(), s1: context.globalStorageUri.toString() });
 
-function connect(context: vscode.ExtensionContext) {
-	// json connection
-	var established = false;
-	var socket = new WebSocket(backendIdeUri.toString());
-	socket.on('open', () => {
-		established = true;
-		console.log('IDE connection established with the server.');
-		setInterval(() => { socket.send("ping") }, 1000);
-		ideClient = new IdeClient(socket);
-		ideClient.send({ id: 0, op: 'init', s0: context.storageUri?.toString(), s1: context.globalStorageUri.toString() });
-	});
-	socket.on('error', () => {
-		if (!established) {
-			console.log('Not found - trying again');
-			connect(context);
-		} else
-			console.log('WebSocket error:');
-	})
+	// commands
+
+	// merge
+	context.subscriptions.push(vscode.commands.registerCommand("de.toem.impulse.commands.merge", (focus: any, selection: vscode.Uri[]) => {
+
+		var name: string = '';
+		selection.forEach((uri, n) => {
+				name += (n > 0 ? '+' : '') + path.basename(uri.path);
+		});
+		vscode.commands.executeCommand('vscode.openWith', vscode.Uri.parse('merge:' + name + '?' + selection), 'de.toem.impulse.editor.records');
+	}));
+
+	// diff
+	context.subscriptions.push(vscode.commands.registerCommand("de.toem.impulse.commands.diff", (focus: any, selection: vscode.Uri[]) => {
+
+		var name: string = '';
+		selection.forEach((uri, n) => {
+			if (n < 2)
+				name += (n > 0 ? '<>' : '') + path.basename(uri.path);
+		});
+		vscode.commands.executeCommand('vscode.openWith', vscode.Uri.parse('diff:' + name + '?' + selection), 'de.toem.impulse.editor.records');
+	}));
 }
 
 export function deactivate() {
@@ -135,10 +146,10 @@ class IdeClient extends Endpoint {
 	private progressMessages = new Map<number, any>();
 
 	public constructor(
-		socket: WebSocket
+		connection: Connection
 	) {
-		super(socket);
-		socket.on('message', (message: string) => {
+		super(connection);
+		connection.onMessage((message: string) => {
 			const obj = JSON.parse(message);
 			for (let i = 0; i < obj.length; i++) {
 				this.handle(obj[i]);

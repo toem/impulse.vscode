@@ -1,3 +1,10 @@
+## V0.3.5 Dec 28th, 2021
+- [BUG]  Drop area wrong in plot tree
+- [IMPROVEMENT]  Add random server port usage
+- [IMPROVEMENT]  Improved synchronisation of grouped samples
+- [IMPROVEMENT]  Improved relation visibility
+- [FEATURE]  Added  merge/compare 
+
 ## V0.3.3 Nov 7th, 2021
 - [BUG]  Fix missing templates
 - [IMPROVEMENT]  Add Text Cut/Paste

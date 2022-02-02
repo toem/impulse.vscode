@@ -1,27 +1,26 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
-import * as WebSocket from 'ws';
 import { getNonce } from './util';
-import { backendPartsUri } from './extension';
 import { ideClient } from './extension';
+import { Connection } from './connection';
 
 export class Endpoint {
 
 	public constructor(
-		protected readonly socket: WebSocket
+		protected readonly connection: Connection
 	) {
 	}
 
 	public send(message: any) {
-		if (this.socket)
+		if (this.connection)
 			if (Array.isArray(message))
-				this.socket.send(JSON.stringify(message));
+				this.connection.send(JSON.stringify(message));
 			else
-				this.socket.send("[" + JSON.stringify(message) + "]")
+				this.connection.send("[" + JSON.stringify(message) + "]")
 	}
 
 	private nextRequestId = 1;
-	private requests : Map<number, (response: any) => void> = new Map();
+	private requests: Map<number, (response: any) => void> = new Map();
 
 	public request(message: any, listener: ((response: any) => void) | null) {
 
@@ -46,33 +45,38 @@ export class Endpoint {
 	}
 
 	public disconnect() {
-		this.socket.close;
+		this.connection.close;
 	}
 }
 
-export class AbstractPart  extends Endpoint {
+export class AbstractPart extends Endpoint {
 
 	public static parts: AbstractPart[] = [];
+	private ready: boolean = false;
 
 	public constructor(
 		private readonly provider: AbstractPartProvider,
 		private readonly webview: vscode.Webview,
-		socket: WebSocket
+		connection: Connection
 	) {
-		super(socket);
+		super(connection);
 
 		webview.onDidReceiveMessage(message => {
-			socket.send("[" + JSON.stringify(message) + "]")
+			if (!this.ready && message.id == 0 && message.op == 'ready') {
+				connection.onMessage((message: string) => {
+					const jsonArray = JSON.parse(message);
+					for (let i = 0; i < jsonArray.length; i++) {
+						var jsonObject = jsonArray[i];
+						if (jsonObject.id == -11 || jsonObject.id == -12 || jsonObject.id == 0)
+							this.handle(jsonObject);
+					}
+					webview.postMessage(jsonArray);
+				});
+				this.ready = true;
+			} else
+				connection.send("[" + JSON.stringify(message) + "]")
 		})
-		socket.on('message', (message: string) => {
-			const jsonArray = JSON.parse(message);
-			for (let i = 0; i < jsonArray.length; i++) {
-				var jsonObject = jsonArray[i];
-				if (jsonObject.id == -11 || jsonObject.id == -12 || jsonObject.id == 0)
-					this.handle(jsonObject);
-			}
-			webview.postMessage(jsonArray);
-		});
+
 	}
 
 	public static add(part: AbstractPart) {
@@ -91,10 +95,10 @@ export class AbstractPart  extends Endpoint {
 	protected handle(message: any) {
 
 		super.handle(message);
-			if (message.id == -11 && message.op != "Response")
-				ideClient.handleIde(this, message);
-			if (message.id == -12 && message.op != "Response")
-				ideClient.handleClipboard(this, message);
+		if (message.id == -11 && message.op != "Response")
+			ideClient.handleIde(this, message);
+		if (message.id == -12 && message.op != "Response")
+			ideClient.handleClipboard(this, message);
 	}
 }
 
@@ -180,26 +184,6 @@ export class AbstractPartProvider {
 				<script nonce="${nonce}" src="${chartUri}"></script>
 			</body>
 			</html>`;
-	}
-
-	protected connect(webview: vscode.Webview, listener: ((client: WebSocket) => void)) {
-
-		// json connection
-		var client = new WebSocket(backendPartsUri.toString());
-		var established = false;
-		client.on('open', () => {
-			established = true;
-			console.log('Part connection established with the server.');
-			setInterval(() => { client.send("ping") }, 1000);
-			listener(client);
-		});
-		client.on('error', () => {
-			if (!established) {
-				console.log('Not found - trying again');
-				this.connect(webview, listener);
-			} else
-				console.log('WebSocket error:');
-		})
 	}
 }
 

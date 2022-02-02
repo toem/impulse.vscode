@@ -240,6 +240,8 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
   --de-toem-toolkits-tlk-css-table-intermediate-content: "\eb84";
   --de-toem-toolkits-tlk-css-table-symbol-font: var(--de-toem-toolkits-tlk-css-general-remixicon-font);
 
+  --de-toem-toolkits-tlk-css-tooltip-foreground: var(--vscode-panelTitle-activeForeground);
+  --de-toem-toolkits-tlk-css-tooltip-background: var(--vscode-panel-background);
 }
 
 /**********************************************************************************
@@ -480,6 +482,7 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
 .tlktree  .row.dropon  {border: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 .tlktree  .row.dropafter  {border-bottom: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 .tlktree  .row.dropbefore  {border-top: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
+.tlktree  .row .label  {overflow: hidden; white-space: nowrap;}
 
 /**********************************************************************************
 * tlktable
@@ -490,8 +493,8 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
 
 .tlktable  .header {padding:1px;}
 .tlktable  .header {color:  var(--de-toem-toolkits-tlk-css-header-foreground);}
-.tlktable  .header > div { background-color: var(--de-toem-toolkits-tlk-css-header-background);}
-.tlktable  .header .cell { display: flex; flex-direction: row;align-content:flex-end;overflow:hidden;height:20px;}
+.tlktable  .header > div { background-color: var(--de-toem-toolkits-tlk-css-header-background);overflow:hidden;white-space: nowrap;}
+.tlktable  .header .cell { display: flex; flex-direction: row;align-content:flex-end;}
 .tlktable  .header .cell.sort-up::after { content: var(--de-toem-toolkits-tlk-css-header-sortup-content); font: var(--de-toem-toolkits-tlk-css-header-symbol-font);}
 .tlktable  .header .cell.sort-down::after { content: var(--de-toem-toolkits-tlk-css-header-sortdown-content); font: var(--de-toem-toolkits-tlk-css-header-symbol-font);}
 .tlktable  .header .filter  {display: flex; flex-direction: row;overflow:hidden;}
@@ -516,13 +519,14 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
 .tlktable .row.dropafter  {border-bottom: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 .tlktable .row.dropbefore  {border-top: 1px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 
-.tlktable .row .cell  {overflow: hidden;}
-.tlktable .row .lead  {overflow: hidden;}
-.tlktable .row .check { overflow: hidden;font: var(--de-toem-toolkits-tlk-css-table-symbol-font); }
+.tlktable .row > div { overflow:hidden;white-space: nowrap;}
+.tlktable .row .cell  {}
+.tlktable .row .lead  {}
+.tlktable .row .check {font: var(--de-toem-toolkits-tlk-css-table-symbol-font); }
 .tlktable .row .check.checked::before { content: var(--de-toem-toolkits-tlk-css-table-checked-content); }
-.tlktable .row .check.unchecked::before { content: var(--de-toem-toolkits-tlk-css-table-unchecked-content); }
+.tlktable .row .check.clear::before { content: var(--de-toem-toolkits-tlk-css-table-unchecked-content); }
 .tlktable .row .check.intermediate::before { content: var(--de-toem-toolkits-tlk-css-table-intermediate-content); }
-.tlktable .row .expand {overflow: hidden; font: var(--de-toem-toolkits-tlk-css-table-symbol-font); }
+.tlktable .row .expand {font: var(--de-toem-toolkits-tlk-css-table-symbol-font); }
 .tlktable .row .expand.expanded::before { content: var(--de-toem-toolkits-tlk-css-table-expanded-content); }
 .tlktable .row .expand.collapsed::before { content: var(--de-toem-toolkits-tlk-css-table-collapsed-content); }
 
@@ -566,3 +570,39 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
     .ctlkcomposite.plottree .plot  {overflow:overlay;}
 }
 
+.tlktooltip {z-index: 5; position: fixed;font-size:0.9em;display: inline-block;padding: 3px 6px;border-radius: 2px;background: var(--de-toem-toolkits-tlk-css-tooltip-background);color: var(--de-toem-toolkits-tlk-css-tooltip-foreground);transition: opacity  0s linear 1s;
+}
+
+/*
+[title]:before {
+  opacity: 0;
+content: "";
+}
+[title]:hover::before {
+  z-index: 5;
+content: attr(title);
+position: fixed;
+transform:translate(50px,50px);
+display: inline-block;
+padding: 3px 6px;
+border-radius: 2px;
+background: #000;
+color: #fff;
+font-size: 12px;
+font-family: sans-serif;
+white-space: nowrap;
+opacity: 1;
+transition: opacity  0s linear 1s;
+
+}
+[title]:hover::after {
+content: '';
+position: absolute;
+bottom: -10px;
+left: 8px;
+display: inline-block;
+color: #fff;
+border: 8px solid transparent;	
+border-bottom: 8px solid #000;
+}
+*/

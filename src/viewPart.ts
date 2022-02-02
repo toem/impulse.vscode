@@ -1,19 +1,18 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
-import WebSocket = require('ws');
 import { AbstractPartProvider } from './abstractPart';
 import { AbstractPart } from './abstractPart';
 import { getNonce } from './util';
-
+import { Connection } from './connection';
 
 class ViewPart extends AbstractPart {
 
 	public constructor(
 		provider: AbstractPartProvider,
 		private readonly webviewView: vscode.WebviewView,
-		socket: WebSocket
+		connection: Connection
 	) {
-		super(provider, webviewView.webview, socket);
+		super(provider, webviewView.webview, connection);
 
 		// request the part
 		this.send({ id: 0, op: "init", s0: provider.id, s1: "" });
@@ -74,23 +73,7 @@ export class ViewPartProvider extends AbstractPartProvider implements vscode.Web
 		// setup html
 		webview.html = this.getHtmlForWebview(webview, vscode.Uri.file(''));
 
-		// ready and connect state
-		var ready: boolean = false;
-		var client: WebSocket | undefined;
-
-		// wait for webview ready 
-		var readyListener: vscode.Disposable = webview.onDidReceiveMessage(message => {
-			readyListener.dispose();
-			ready = true;
-			if (client && ready)
-				new ViewPart(this, webviewView, client);
-		})
-
-		// wait for connection ready to impulse server
-		this.connect(webview, (result) => {
-			client = result;
-			if (client && ready)
-				new ViewPart(this, webviewView, client);
-		});
+		// create part
+		new ViewPart(this, webviewView, new Connection("parts"));
 	}
 }

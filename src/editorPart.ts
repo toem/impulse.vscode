@@ -1,10 +1,10 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
-import WebSocket = require('ws');
 import { Disposable, disposeAll } from './dispose';
 import { getNonce } from './util';
 import { AbstractPartProvider } from './abstractPart';
 import { AbstractPart } from './abstractPart';
+import { Connection } from './connection';
 
 /**
 
@@ -26,13 +26,24 @@ class Document extends Disposable implements vscode.CustomDocument {
 		return new Document(uri);
 	}
 
-	private readonly _uri: vscode.Uri;
+
+	public readonly type: string | undefined;
+	public readonly content: vscode.Uri[] | undefined;
 
 	private constructor(
-		uri: vscode.Uri,
+		private readonly _uri: vscode.Uri
+
 	) {
 		super();
-		this._uri = uri;
+
+		if (_uri.scheme == 'merge' || _uri.scheme == 'diff') {
+			this.type = _uri.scheme;
+			var uris: string[] = _uri.query.split(',');
+			this.content = [];
+			uris.forEach((uri, n) => {
+				this.content?.push(vscode.Uri.parse(uri));
+			});
+		}
 	}
 
 	public get uri() { return this._uri; }
@@ -89,13 +100,22 @@ class EditorPart extends AbstractPart {
 	public constructor(
 		private readonly editprovider: EditPartProvider,
 		private readonly webviewPanel: vscode.WebviewPanel,
-		socket: WebSocket,
+		connection: Connection,
 		private readonly document: Document
 	) {
-		super(editprovider, webviewPanel.webview, socket);
+		super(editprovider, webviewPanel.webview, connection);
 
 		// request the part
-		this.send({ id: 0, op: "init", s0: editprovider.id, s1: document.uri.toString() });
+		var request: any = { id: 0, op: "init", s0: editprovider.id };
+		if (document.type && document.content) {
+			request.s1 = document.type;
+			document.content.forEach((uri, n) => {
+					request['s' + (n + 2)] = uri.scheme + ':' + uri.path;
+			});
+		} else {
+			request.s2 = document.uri.scheme + ':' + document.uri.path
+		}
+		this.send(request);
 
 		// close connection on dispose
 		webviewPanel.onDidDispose(e => {
@@ -229,6 +249,7 @@ export class EditPartProvider extends AbstractPartProvider implements vscode.Cus
 		return document;
 	}
 
+
 	async resolveCustomEditor(
 		document: Document,
 		webviewPanel: vscode.WebviewPanel,
@@ -245,25 +266,8 @@ export class EditPartProvider extends AbstractPartProvider implements vscode.Cus
 		// setup html
 		webview.html = this.getHtmlForWebview(webview, document.uri);
 
-		// ready and connect state
-		var ready: boolean = false;
-		var socket: WebSocket | undefined;
-
-		// wait for webview ready 
-		var readyListener: vscode.Disposable = webview.onDidReceiveMessage(message => {
-			readyListener.dispose();
-			ready = true;
-			if (socket && ready)
-				new EditorPart(this, webviewPanel, socket, document);
-		})
-
-		// wait for connection ready to impulse server
-		this.connect(webview, (result) => {
-			socket = result;
-			if (socket && ready)
-				new EditorPart(this, webviewPanel, socket, document);
-		});
-
+		// create part
+		new EditorPart(this, webviewPanel, new Connection("parts"), document);
 	}
 
 

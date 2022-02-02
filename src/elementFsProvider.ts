@@ -62,13 +62,13 @@ export class ElementFS implements vscode.FileSystemProvider {
     link2DirectoryUri(link: string): vscode.Uri {
 
         var uri: vscode.Uri = vscode.Uri.parse(link);
-        return uri.with({ scheme: 'impulse' + uri.scheme, query: '' });
+        return uri.with({ scheme: 'elementFs' + uri.scheme, query: '' });
     }
 
     link2Uri(link: string): vscode.Uri {
 
         var uri: vscode.Uri = vscode.Uri.parse(link);
-        const duri = uri.with({ scheme: 'impulse' + uri.scheme, query: '' });
+        const duri = uri.with({ scheme: 'elementFs' + uri.scheme, query: '' });
         const query: querystring.ParsedUrlQuery = querystring.parse(uri.query);
         if (query.type == 'python')
             query.type = 'py';
@@ -80,7 +80,7 @@ export class ElementFS implements vscode.FileSystemProvider {
 
     uri2link(uri: vscode.Uri): string | undefined {
 
-        const scheme: string = uri.scheme.replace('impulsePreferences', 'Preferences');
+        const scheme: string = uri.scheme.replace('elementFs', '');
         const dirname = path.posix.dirname(uri.path);
         const basename = path.posix.basename(uri.path);
         const tidx = basename.lastIndexOf('.');
