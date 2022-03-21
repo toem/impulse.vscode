@@ -3,9 +3,9 @@ import * as vscode from 'vscode';
 import * as WebSocket from 'ws';
 import { EditPartProvider } from './editorPart';
 import { ViewPartProvider } from './viewPart';
-import { ElementFS, elementFSInstance } from './elementFsProvider';
+import { ElementFS } from './elementFs';
 import { Scripting } from './scripting';
-import { Endpoint } from './abstractPart';
+import { Endpoint, AbstractPart } from './abstractPart';
 import { Connection } from './connection';
 
 var backendProcess: any;
@@ -13,8 +13,10 @@ export var ideClient: IdeClient;
 
 export function activate(context: vscode.ExtensionContext) {
 
-	const name = context.extension.packageJSON.name;
+	console.log('activate');
 
+	// name
+	const name = context.extension.packageJSON.name;
 
 	// editors	
 	if (context.extension.packageJSON.contributes && context.extension.packageJSON.contributes.customEditors)
@@ -30,10 +32,12 @@ export function activate(context: vscode.ExtensionContext) {
 					context.subscriptions.push(ViewPartProvider.register(context, view.id));
 
 	// element fs
-	context.subscriptions.push(ElementFS.register(context, name + 'Preferences'));
+	context.subscriptions.push(ElementFS.register(context, name+"Fs"));
+	ElementFS.addDirectory('Preferences','Preferences://de.toem.impulse.base');
+
 
 	// Scripting
-	Scripting.register(context, name + 'Preferences');
+	Scripting.register(context,  name+"Fs");
 
 	// Configuation
 	const config = vscode.workspace.getConfiguration(name);
@@ -41,6 +45,8 @@ export function activate(context: vscode.ExtensionContext) {
 	// retrieve values
 	const cjava = config.get('java');
 	const cport = config.get('port');
+	const cxdebugger  = config.get('xdebugger');
+	const cpreferences= config.get('preferences');
 
 	// get host
 	var host: string = 'localhost';
@@ -66,11 +72,13 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		}
 
+		// -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:8888,server=y,suspend=n
+
 		// command
 		const serverPath = vscode.Uri.file(path.join(context.extensionPath, name));
 		const osgi = vscode.Uri.file(
 			path.join(context.extensionPath, name, 'org.eclipse.osgi_3.16.200.v20210226-1447.jar'));
-		const cmd = cjava + (port > 0 ? ' -Dport=' + port : '') + bundles + ' -jar  "' + osgi.fsPath + '"';
+		const cmd = cjava + (cxdebugger == true ? ' -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:8888,server=y,suspend=n' : '') +  (port > 0 ? ' -Dport=' + port : '') + bundles + ' -jar  "' + osgi.fsPath + '"';
 		console.log('cmd: ' + cmd);
 
 		// process	
@@ -105,8 +113,9 @@ export function activate(context: vscode.ExtensionContext) {
 		Connection.openAll(host, port);
 	}
 
+	// start IDE connection
 	ideClient = new IdeClient(new Connection('ide'));
-	ideClient.send({ id: 0, op: 'init', s0: context.storageUri?.toString(), s1: context.globalStorageUri.toString() });
+	ideClient.send({ id: 0, op: 'init', s0: (cpreferences=='Workspace' ? context.storageUri?.toString():context.globalStorageUri.toString())+'/preferences/', s1: context.globalStorageUri.toString()+"/globalPreferences/" });
 
 	// commands
 
@@ -130,14 +139,42 @@ export function activate(context: vscode.ExtensionContext) {
 		});
 		vscode.commands.executeCommand('vscode.openWith', vscode.Uri.parse('diff:' + name + '?' + selection), 'de.toem.impulse.editor.records');
 	}));
+
+
+		// preference Fs open
+		context.subscriptions.push(vscode.commands.registerCommand("de.toem.impulse.commands.preferenceFs.open", (focus: any, selection: vscode.Uri[]) => {
+
+			vscode.workspace.updateWorkspaceFolders(0, 0, { uri: vscode.Uri.parse(ElementFS.scheme+':/'), name: ElementFS.scheme });
+			//vscode.commands.executeCommand('workbench.action.reloadWindow');
+
+		}));
+
+/*
+		context.subscriptions.push(vs.commands.registerCommand("_dart.reloadExtension", (_) => {
+			deactivate();
+			for (const sub of context.subscriptions) {
+				try {
+					sub.dispose();
+				} catch (e) {
+					console.error(e);
+				}
+			}
+			activate(context);
+		}));
+		*/
+
+		console.log('activated');
 }
+
 
 export function deactivate() {
 
-	if (ideClient) ideClient.disconnect();
-	console.log('Disconnect');
-	//if (process)
-	//process.
+	console.log('deactivate');
+	
+	if (ideClient)
+		ideClient.disconnect();
+
+	console.log('deactivated');
 }
 
 class IdeClient extends Endpoint {
@@ -161,8 +198,12 @@ class IdeClient extends Endpoint {
 	protected handle(message: any) {
 
 		super.handle(message);
-		if (message.op != "Response")
+		if (message.id == -11 && message.op != "#")
 			this.handleIde(this, message);
+		if (message.id == -12 && message.op != "#")
+		this.handleClipboard(this, message);
+		if (message.id == ElementFS.ENDPOINT_ID && message.op != "#")
+			ElementFS.instance.handle(this, message);
 	}
 
 	public handleIde(endpoint: Endpoint, message: any) {
@@ -262,7 +303,7 @@ class IdeClient extends Endpoint {
 
 					case "TextEditor": {
 
-						var uri: vscode.Uri = elementFSInstance.link2Uri(message.s0);
+						var uri: vscode.Uri = ElementFS.link2Uri(message.s0);
 						vscode.window.showTextDocument(uri, {}).then((ret) => {
 							ret
 						});

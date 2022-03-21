@@ -15,9 +15,10 @@ class ViewPart extends AbstractPart {
 		super(provider, webviewView.webview, connection);
 
 		// request the part
-		this.send({ id: 0, op: "init", s0: provider.id, s1: "" });
+		this.init = { id: 0, op: "init", s0: provider.id, s1: "" };
+		this.send(this.init);
 
-
+		
 		// close connection on dispose
 		webviewView.onDidDispose(e => {
 			this.disconnect();

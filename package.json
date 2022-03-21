@@ -8,9 +8,9 @@
 		"name": "Thomas Haber"
 	},
 	"license": "SEE LICENSE IN LICENSE.md",
-	"version": "0.3.5",
+	"version": "0.3.6",
 	"engines": {
-		"vscode": "^1.47.0"
+		"vscode": "^1.60.0"
 	},
 	"icon": "images/impulse.png",
 	"categories": [
@@ -50,8 +50,8 @@
 		"onView:de.toem.impulse.parts.samples.2",
 		"onView:de.toem.impulse.parts.samples.3",
 		"onView:de.toem.impulse.parts.samples.4",
-		"onFileSystem:elementFsPreferences",
-		"onFileSystem:elementFsGlobalPreferences",
+		"onView:de.toem.impulse.parts.sample",
+		"onFileSystem:impulseFs",
 		"onCommand:de.toem.impulse.commands.open-multiple"
 	],
 	"main": "./out/extension.js",
@@ -142,13 +142,19 @@
 				"command": "de.toem.impulse.commands.merge",
 				"title": "Merge Selected with Signal Viewer",
 				"enablement": "",
-				"category": ""
+				"category": "impulse"
 			},
 			{
 				"command": "de.toem.impulse.commands.diff",
 				"title": "Compare Selected with Signal Viewer",
 				"enablement": "",
-				"category": ""
+				"category": "impulse"
+			},
+			{
+				"command": "de.toem.impulse.commands.preferenceFs.open",
+				"title": "Open preference FS folder",
+				"enablement": "",
+				"category": "impulse"
 			}
 		],
 		"menus": {
@@ -183,6 +189,23 @@
 						"type": "string",
 						"default": "0",
 						"description": "Communication port for the impulse backend. Changes only take effect after a restart. Select 0 for random port."
+					},
+					"impulse.xdebugger": {
+						"type": "boolean",
+						"default": false,
+						"description": "Enable java extension debugging."
+					},
+					"impulse.preferences": {
+						"type": "string",
+						"default": "User",
+						"enum": [
+							"User",
+							"Workspace"
+						],
+						"enumDescriptions": [
+							"Stores impulse preferences in user area",
+							"Stores impulse preferences in workspace area"
+						]
 					}
 				}
 			}
@@ -202,7 +225,7 @@
 		"@typescript-eslint/parser": "^3.0.2",
 		"eslint": "^7.1.0",
 		"typescript": "^4.0.2",
-		"@types/vscode": "^1.47.0",
+		"@types/vscode": "^1.60.0",
 		"@types/ws": "^6.0.0"
 	},
 	"impulseBundles": [

@@ -1,3 +1,9 @@
+## V0.3.6 Mar 20th, 2022
+- [IMPROVEMENT]  Improved Scripted Reader
+- [IMPROVEMENT]  Added Script completion/Hover
+- [IMPROVEMENT]  Improved SCV Reader
+- [IMPROVEMENT]  Improved script FS
+
 ## V0.3.5 Dec 28th, 2021
 - [BUG]  Drop area wrong in plot tree
 - [IMPROVEMENT]  Add random server port usage

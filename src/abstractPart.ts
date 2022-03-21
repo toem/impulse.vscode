@@ -35,7 +35,7 @@ export class Endpoint {
 
 	protected handle(message: any) {
 
-		if (message.op == "Response") {
+		if (message.op == "#") {
 			const listener = this.requests.get(message.i0);
 			if (listener != null) {
 				this.requests.delete(message.i0);
@@ -53,6 +53,7 @@ export class AbstractPart extends Endpoint {
 
 	public static parts: AbstractPart[] = [];
 	private ready: boolean = false;
+	protected init : any;
 
 	public constructor(
 		private readonly provider: AbstractPartProvider,
@@ -72,6 +73,10 @@ export class AbstractPart extends Endpoint {
 					}
 					webview.postMessage(jsonArray);
 				});
+				this.ready = true;
+			} else  if (this.ready && message.id == 0 && message.op == 'ready') {
+				this.connection.reopen();
+				this.send(this.init);
 				this.ready = true;
 			} else
 				connection.send("[" + JSON.stringify(message) + "]")
@@ -95,11 +100,27 @@ export class AbstractPart extends Endpoint {
 	protected handle(message: any) {
 
 		super.handle(message);
-		if (message.id == -11 && message.op != "Response")
+		if (message.id == -11 && message.op != "#")
 			ideClient.handleIde(this, message);
-		if (message.id == -12 && message.op != "Response")
+		if (message.id == -12 && message.op != "#")
 			ideClient.handleClipboard(this, message);
 	}
+
+	/*
+	public static resetAll() {
+
+		AbstractPart.parts.forEach((p, index) => {
+			p.reset();
+		});
+	}
+
+	public reset() {
+		if (this.webview)
+		this.webview.postMessage({id:0,op:'reset'});
+		if (this.connection)
+		this.connection.reset();		
+	}
+	*/
 }
 
 export class AbstractPartProvider {
@@ -107,7 +128,9 @@ export class AbstractPartProvider {
 	constructor(
 		protected readonly context: vscode.ExtensionContext,
 		public readonly id: string
-	) { }
+	) { 
+
+	}
 
 	//#endregion
 

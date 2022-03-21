@@ -106,16 +106,16 @@ class EditorPart extends AbstractPart {
 		super(editprovider, webviewPanel.webview, connection);
 
 		// request the part
-		var request: any = { id: 0, op: "init", s0: editprovider.id };
+		this.init  = { id: 0, op: "init", s0: editprovider.id };
 		if (document.type && document.content) {
-			request.s1 = document.type;
+			this.init.s1 = document.type;
 			document.content.forEach((uri, n) => {
-					request['s' + (n + 2)] = uri.scheme + ':' + uri.path;
+				this.init['s' + (n + 2)] = uri.scheme + ':' + uri.path;
 			});
 		} else {
-			request.s2 = document.uri.scheme + ':' + document.uri.path
+			this.init.s2 = document.uri.scheme + ':' + document.uri.path
 		}
-		this.send(request);
+		this.send(this.init);
 
 		// close connection on dispose
 		webviewPanel.onDidDispose(e => {
@@ -146,7 +146,7 @@ class EditorPart extends AbstractPart {
 	protected handle(message: any) {
 
 		super.handle(message);
-		if (message.id == 0 && message.op != "Response")
+		if (message.id == 0 && message.op != "#")
 			switch (message.op) {
 				case "Dirty": {
 					if (message.t0)

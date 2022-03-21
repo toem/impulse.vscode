@@ -29,6 +29,22 @@ export class Connection {
         });
     }
 
+    /*
+    public reset(){
+        if (this.socket)
+        this.socket.close();
+        this.socket = null;
+
+    }
+*/
+    public reopen(){
+        if (this.socket)
+            this.socket.close();
+        this.socket = null;
+        if (Connection.host)
+            this.open(Connection.host, Connection.port);
+    }
+
     public open(host: string, port: number) {
 
         // uri
@@ -50,10 +66,15 @@ export class Connection {
 
             // react on messages
             socket.on('message', (message: string) => {
+                //console.log(socket.url,message);
+                try{
                 if (this.listener)
                     this.listener.call(this, message);
                 else
                     this.inbuffer.push(message);
+                }catch(any){
+
+                }
             });
 
             // set the socket
