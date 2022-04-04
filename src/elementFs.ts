@@ -393,7 +393,7 @@ export class ElementFS implements vscode.FileSystemProvider {
         console.log("readFile", uri);
         return new Promise<Uint8Array>((resolve, reject) => {
             ideClient.request({ id:ElementFS. ENDPOINT_ID, op: "Read", s1: ElementFS.uri2link(uri) }, (response) => {
-                if (response.s1) {
+                if (response.i1 != NONE) {
 
                     // parent
                     const duri = uri.with({ path: path.posix.dirname(uri.path) });
@@ -418,7 +418,7 @@ export class ElementFS implements vscode.FileSystemProvider {
                         reject(vscode.FileSystemError.FileIsADirectory(uri));
                         return;
                     }
-                    let data = new TextEncoder().encode(response.s1);
+                    let data = new TextEncoder().encode(response.s2);
                     entry.set(data);
                     resolve(data);
 

@@ -37,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 	// Scripting
-	Scripting.register(context,  name+"Fs");
+	Scripting.register(context, (uri)=> uri.scheme == name+"Fs" || uri.path.toLowerCase().endsWith(".recjs"));
 
 	// Configuation
 	const config = vscode.workspace.getConfiguration(name);

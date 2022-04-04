@@ -329,8 +329,16 @@ div {grid-row-gap: 2px;grid-column-gap: 2px;}
 .tlktabfolder.bottom > .header {display:flex;flex-direction:row; order:2; }
 .tlktabfolder.bottom > .container  {flex: 1 1 auto;min-height:0;} 
 
+.tlktabfolder.left  {display:flex;flex-direction:row; }
+.tlktabfolder.left > .header {display:flex;flex-direction:column;  }
+.tlktabfolder.left > .container  {flex: 1 1 auto;min-height:0;} 
+
+.tlktabfolder.right  {display:flex;flex-direction:row; }
+.tlktabfolder.right > .header {display:flex;flex-direction:column; order:2; }
+.tlktabfolder.right > .container  {flex: 1 1 auto;min-height:0;} 
+
 .tlktabfolder > .header > .button {padding:5px 5px 5px 5px;}
-.tlktabfolder > .header > .button .image {font-size:2em;}
+.tlktabfolder > .header > .button .image {font-size:1.2em;}
 .tlktabfolder > .header > .button  {user-select: none; color: var(--de-toem-toolkits-tlk-css-tabfolder-foreground); background-color: var(--de-toem-toolkits-tlk-css-tabfolder-background);}
 .tlktabfolder > .header > .button.selected {color: var(--de-toem-toolkits-tlk-css-tabfolder-selected-foreground); background-color: var(--de-toem-toolkits-tlk-css-tabfolder-selected-background);}
 .tlktabfolder > .header > .button:is(:hover,:focus) {background-color: var(--de-toem-toolkits-tlk-css-tabfolder-hover-background);}

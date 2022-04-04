@@ -1,3 +1,8 @@
+## V0.3.7 Apr 3rd, 2022
+- [IMPROVEMENT]  Improved Scripted Producer
+- [IMPROVEMENT]  Improved Scirpted Reader
+- [IMPROVEMENT]  Improved Content assist
+
 ## V0.3.6 Mar 20th, 2022
 - [IMPROVEMENT]  Improved Scripted Reader
 - [IMPROVEMENT]  Added Script completion/Hover

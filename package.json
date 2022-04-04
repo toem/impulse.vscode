@@ -8,7 +8,7 @@
 		"name": "Thomas Haber"
 	},
 	"license": "SEE LICENSE IN LICENSE.md",
-	"version": "0.3.6",
+	"version": "0.3.7",
 	"engines": {
 		"vscode": "^1.60.0"
 	},
@@ -110,30 +110,30 @@
 				{
 					"type": "webview",
 					"id": "de.toem.impulse.parts.samples",
-					"name": "1"
+					"name": "Sample Table 1"
 				},
 				{
 					"type": "webview",
 					"id": "de.toem.impulse.parts.samples.2",
-					"name": "2",
+					"name": "Sample Table 2",
 					"visibility": "hidden"
 				},
 				{
 					"type": "webview",
 					"id": "de.toem.impulse.parts.samples.3",
-					"name": "3",
+					"name": "Sample Table 3",
 					"visibility": "hidden"
 				},
 				{
 					"type": "webview",
 					"id": "de.toem.impulse.parts.samples.4",
-					"name": "4",
+					"name": "Sample Table 4",
 					"visibility": "hidden"
 				},
 				{
 					"type": "webview",
 					"id": "de.toem.impulse.parts.sample",
-					"name": "Inspector"
+					"name": "Sample Inspector"
 				}
 			]
 		},

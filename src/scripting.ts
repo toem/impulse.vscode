@@ -9,12 +9,12 @@ export class Scripting {
 
     public static ENDPOINT_ID = -16;
 
-    static register(context: vscode.ExtensionContext, scheme: string) {
+    static register(context: vscode.ExtensionContext, isvalid:(uri:vscode.Uri)=>boolean) {
 
         context.subscriptions.push(vscode.languages.registerCompletionItemProvider('javascript', {
             provideCompletionItems(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken):
                 Thenable<vscode.CompletionItem[]> {
-                if (document.uri.scheme == scheme)
+                if (isvalid(document.uri))
                     return new Promise<vscode.CompletionItem[]>((resolve, reject) => {
 
 
@@ -56,7 +56,7 @@ export class Scripting {
         context.subscriptions.push(vscode.languages.registerHoverProvider('javascript', {
             provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken):
                 Thenable<vscode.Hover> {
-                if (document.uri.scheme == scheme)
+                if (isvalid(document.uri))
                     return new Promise<vscode.Hover>((resolve, reject) => {
 
                         ideClient.request({ id: Scripting.ENDPOINT_ID, op: "Info", s1: ElementFS.uri2link(document.uri), i2: document.offsetAt(position), s3: document.getText() }, (response) => {
