@@ -1,0 +1,1 @@
+/home/thomas/Workspaces/impulse/de.toem.impulse.base/src/de/toem/impulse/samples/IReadableSamples.java

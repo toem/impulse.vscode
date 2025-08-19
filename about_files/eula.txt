@@ -1,0 +1,217 @@
+
+impulse End User License - ENGLISH TRANSLATION - FOR INFORMATION PURPOSES ONLY
+Version 09.07.2025
+
+With this license, the licensor grants you the right to use the software "impulse" under the following conditions.  
+impulse is a tool for event and waveform visualization and analysis (simulation, traces, logs), which helps engineers understand and debug complex semiconductor and multicore software systems. The licensee acknowledges that the software is neither suitable for validating systems nor for determining whether a system is error-free, defective, or meets specific requirements. Dedicated validation systems should be used for this purpose.  
+Impulse only provides indications of errors. The actual error correction must be carried out by the user themselves.
+
+1. Definitions
+
+3rd Party Extension:      The use for external extension of impulse, based on approved interfaces.  
+Concurrent User:          In the Concurrent User model, the number of people who can use the software simultaneously is limited. This right of use may be exercised simultaneously by a maximum of the number of persons specified in the license key.  
+Research and Teaching:    Use by a school, university, academic or other educational institution or teachers, pupils, and students for educational purposes. Research and teaching does not include use within (university) administration or when use is for profit.  
+Commercial Use:           Use in the exercise of a commercial or independent professional activity.  
+Named User:               A Named User license applies to defined and registered users by name. The acquisition of the software authorizes the simultaneous use of the software exclusively by the persons named in the license key.  
+Non-Commercial Use:       Use for own internal private use for non-business purposes.  
+Software:                 The software "impulse" including all further developments, excluding all extensions not provided under this license (e.g., free extensions under the Eclipse Public License or 3rd Party Extension).
+
+Licensor: toem GmbH - Managing Director: Alexandra Haber-Pieper - Local Court of Wuppertal HRB 27587 - Lützowstrasse 166 - D-42653 Solingen - Phone: +49 (0) 212 64297 25 - Fax: +49 (0) 212 64297 13
+
+2. License
+
+2.1 Subject to the provisions regarding the permissible purpose of use of the impulse software, the licensor grants you a non-exclusive and limited license to use the software in object code for the permissible purpose of use during the agreed period of use. The use is - even with commercial licenses - limited to internal purposes. The software may not be made available to third parties or made publicly accessible.
+
+2.2 The functional scope of the license as well as the type, scope, and duration of the right of use are determined by the assigned license key.
+
+2.3 Licenses are generally issued according to the Named User model. A replacement of the Named User within the licensee's organization must be requested from the licensor. The licensor will not unreasonably refuse such replacement.  
+In exceptional cases, a Concurrent User model can be agreed upon in the license key.  
+The licenses are subject to a fee, non-transferable, and limited in time, unless otherwise agreed in writing or specified in the license key.
+
+2.4 Functionalities that are not part of the assigned license key are locked or only limited usable in the software and can be acquired as part of a license extension.
+
+2.5 The costs are determined by the licensor's current price list.
+
+3. Liability
+
+3.1 For software provided free of charge, the licensor is only liable for intent and gross negligence. In case of defects, only for fraudulent concealment.
+
+3.2 For licenses subject to a fee, the following liability provisions apply:
+
+The licensor is liable to the licensee without limitation in cases of intent or gross negligence or in case of injury to life, body, or health, in the event of assuming a guarantee or within the scope of the Product Liability Act.
+
+Otherwise, the licensor is only liable to the extent that a material contractual obligation has been breached. In these cases, liability is limited to compensation for foreseeable, typically occurring damage. Material contractual obligations are obligations that the contract imposes on the licensor according to its content for achieving the purpose of the contract, the fulfillment of which enables the proper execution of the contract in the first place, and on the compliance with which the licensee may regularly rely.
+
+The licensor's strict liability for damages (§ 536a of the German Civil Code) for defects existing at the time of contract conclusion is excluded.
+
+3.3 The licensee is obliged, as a material contractual obligation, to regularly back up their data at application-adequate intervals and thus ensure that they can be restored with reasonable effort. In particular, the licensee will make a complete backup of all system and application data of the affected systems immediately before each use of the software. The backups are to be stored in such a way that the backed-up data can be restored at any time.
+
+4. Free Uses
+
+The licensee is entitled to make a copy of the software for backup or documentation purposes. Reproductions of the software that serve proper data backup are part of the intended use. The backup copy must be deleted at the end of the term.
+
+The licensee may not modify, edit or decompile the software. Decompilation of the software is exceptionally permissible only if the licensor has not provided the necessary data and/or information after written request with a reasonable deadline to establish interoperability with other hardware and software.
+
+The software may contain parts in source code that are made available to the licensee to make adjustments or changes for their own use cases. These source code parts may be used and adapted exclusively for this purpose. No further rights to these source codes are granted to the licensee unless the source codes themselves contain additional notices or licenses that grant more extensive rights.
+
+5. Further Developments
+
+The licensor reserves the right to further develop the software.
+
+Such further development can be done through updates or upgrades. Upgrades are recognizable by a change in the version number of the software either in the first or second decimal place of the software version number (e.g., from version 2.0 to 3.0 or 2.0 to 2.1) and contain extended or modified functionality.
+
+5.1 Updates are made available to the licensee by providing them for download. The licensee can then download and install the updates themselves. Installation of the provided updates is expressly recommended.
+
+The usage rights for the updates are subject to the license terms of the main license according to section 2.
+
+5.2 The licensor provides software upgrades as needed. The licensee can then download and install the upgrades themselves. This gives them a new version of the software. The new version may contain new functionalities of the software or change or remove existing functionalities.
+
+Before using a new upgrade, the licensee must therefore check the new version for their requirements. There is no obligation to switch to the new version.
+
+5.3 Additionally, the licensor provides the licensee with pre- or intermediate releases as beta stage upgrades for testing purposes before the official release. These pre- or intermediate releases are provided to the licensee free of charge outside the regular license. Commercial use of the pre- or intermediate releases is not permitted.
+
+6. End of Right of Use for the Contractual Items
+
+If the usage period of a license ends, the licensee may no longer use the license. Use of the corresponding modules or commercial use is then no longer permitted. Such use must be discontinued immediately and constitutes a license violation.
+For further use, a new license key must be acquired. An expired license key does not renew automatically.
+
+7. Contract Language
+
+This license agreement is drafted in German. An English version is provided for orientation. In case of contradictions between the English and German versions, the German version takes precedence.
+
+8. Data Protection
+
+8.1 Processing of Personal Data
+
+Personal data provided by the licensee within the scope of the license grant are stored in the software (license key). The licensor confirms that the software itself does not collect, store, process, or transfer any personal data within the meaning of the General Data Protection Regulation or the Federal Data Protection Act. Any data exchange within the scope of the intended use is limited to information on operational functionality (e.g., system commands, configuration settings).
+
+8.2 Integration with 3rd Party IDE
+
+The software works as an integration within a 3rd party development environment (IDE). This IDE may be responsible for data exchange between client and server components, including possible interactions with 3rd party services. The licensor has no control over and no responsibility for any data collection, processing, or transmission performed by the IDE or its affiliated 3rd party providers. The licensee is responsible for ensuring that all data entered, uploaded, or transmitted via the IDE (or through the use of the software within the IDE) complies with applicable data protection laws. The licensor recommends that users do not transmit personal data via the software unless there is an appropriate legal basis and protective measures.
+
+8.3 Security of Data Transmission
+
+The licensor implements appropriate technical and organizational measures to secure the non-personal data transmitted by the software. However, data transmissions initiated or managed by the IDE or 3rd party providers are outside the control and responsibility of the licensor.
+
+9. 3rd Party Extensions
+
+The software contains interfaces to support 3rd party extensions. 3rd party extensions require a certificate from the respective provider approved by the licensor for interoperability with the software. 3rd party extensions without a corresponding certificate are not supported. The certificates must contain at least information about the respective extension, in particular the name of the provider or provider company, required license keys, support channels, and repositories.
+
+The certificates verify exclusively the license compatibility of the software with the 3rd party extension. The certificates do not make any statement about the interoperability of the extension with the software. The licensor assumes no warranty or liability for 3rd party extensions and is not responsible for their functionality, security, or resulting damages. The use of extensions is at your own risk.
+
+3rd party extensions may be subject to their own terms of use from the respective providers. The licensor recommends checking these conditions before use.
+
+10. Final Provisions
+
+10.1 If the licensee acts as a merchant, legal entity under public law, or special fund under public law with registered office in the territory of the Federal Republic of Germany, the exclusive place of jurisdiction for all disputes arising from this contract is the licensor's place of business. If the licensee has its registered office outside the territory of the Federal Republic of Germany, the licensor's place of business is the exclusive place of jurisdiction for all disputes arising from this contract if the contract or claims from the contract can be attributed to the licensee's professional or commercial activity. In the aforementioned cases, however, the licensor is in any case entitled to appeal to the court at the licensee's place of business.
+
+10.2 The law of the Federal Republic of Germany applies to all legal relationships between the parties, excluding the laws on the international sale of movable goods. For consumers, this choice of law applies only to the extent that the protection granted is not withdrawn by mandatory provisions of the law of the state in which the consumer has their habitual residence.
+
+
+impulse Endbenutzer Lizenz - GERMAN VERSION (ORIGINAL)
+Version 09.07.2025
+
+Der Lizenzgeber gewährt Ihnen mit dieser Lizenz das Recht, die Software „impulse“ im Rahmen der nachfolgenden Bedingungen zu nutzen.  
+impulse ist ein Hilfsmittel zur Ereignis- und Wellenformvisualisierung und -analyse (Simulation, Traces, Logs), welche Ingenieure unterstützt, komplexe Halbleiter- und Multicore-Softwaresysteme zu verstehen und zu debuggen. Der Lizenznehmer erkennt an, dass die Software weder zur Validierung von Systemen noch zur Feststellung, ob ein System fehlerfrei, fehlerbehaftet ist oder bestimmten Anforderungen genügt, geeignet ist. Hierzu sind dedizierte Validierungssysteme zu verwenden.  
+Impulse gibt lediglich Hinweise auf Fehler. Die eigentliche Fehlerbeseitigung hat durch den Nutzer selbst zu erfolgen.
+
+1. Definitionen
+
+3rd Party Erweiterung:      Die Nutzung zur externen Erweiterung von impulse, basierend auf freigegebenen Schnittstellen.  
+Concurrent User:            Beim Concurrent User Modell ist die Anzahl der Personen, die die Software gleichzeitig benutzen können, limitiert. Dieses Nutzungsrecht darf gleichzeitig von maximal der im Lizenzschlüssel genannten Anzahl von Personen ausgeübt werden.  
+Forschung und Lehre:        Nutzung durch eine Schule, Hochschule, akademische oder andere Schulungseinrichtung bzw. Lehrende, Schüler und Studenten im Rahmen der Ausbildung. Nicht unter Forschung und Lehre fällt die Nutzung Rahmen der (Hoch)Schulverwaltung oder wenn die Nutzung einer Gewinnerzielungsabsicht folgt.  
+Kommerzielle Nutzung:       Eine Nutzung in Ausübung einer gewerblichen oder selbständigen beruflichen Tätigkeit  
+Named User:                 Eine Named User Lizenz gilt für definierte und namentlich registrierte Nutzer. Der Erwerb der Software berechtigt zur gleichzeitigen Nutzung der Software ausschließlich durch die im Lizenzschlüssel namentlich aufgeführten Personen.  
+Nicht-Kommerzielle Nutzung: Nutzung zur eigenen internen privaten Nutzung für nicht geschäftliche Zwecke.  
+Software:                   Die Software „impulse“ einschließlich aller Weiterentwicklungen, exklusive aller Erweiterungen die nicht unter dieser Lizenz zur Verfügung gestellt werden (z.B. freie Erweiterungen unter der Eclipse Public License oder 3rd Party Erweiterung).
+
+Lizenzgeber: toem GmbH - Geschäftsführer: Alexandra Haber-Pieper - Amtsgericht Wuppertal HRB 27587 - Lützowstrasse 166 - D-42653 Solingen - Fon: +49 (0) 212 64297 25 - Fax: +49 (0) 212 64297 13
+
+2. Lizenz
+
+2.1 Vorbehaltlich der Bestimmungen über den zulässigen Nutzungszweck der impulse Software gewährt Ihnen der Lizenzgeber eine nicht ausschließliche und eingeschränkte Lizenz zur Nutzung der Software im Objekt Code für den zulässigen Nutzungszweck während der vereinbarten Nutzungsdauer. Die Nutzung ist – auch bei kommerziellen Lizenzen – auf interne Zwecke beschränkt. Die Software darf Dritten nicht zur Verfügung gestellt oder öffentlich zugänglich gemacht werden.
+
+2.2 Der funktionale Umfang der Lizenz sowie die Art, Umfang und Dauer des Nutzungsrechts ergeben sich jeweils aus dem zugeteilten Lizenzschlüssel.
+
+2.3 Lizenzen werden grundsätzlich nach dem Named User Modell vergeben. Ein Austausch des Named Users innerhalb der Organisation des Lizenznehmers ist bei dem Lizenzgeber zu beantragen. Dieser wird den Austausch nicht unbillig verweigern.  
+Im Lizenzschlüssel kann ausnahmsweise ein Concurrent User Modell vereinbart sein.  
+Die Lizenzen sind kostenpflichtig, nicht übertragbar und zeitlich begrenzt, wenn schriftlich nichts anderes vereinbart ist oder sich aus dem Lizenzschlüssel ergibt.
+
+2.4 Funktionalitäten, die nicht Teil des zugeteilten Lizenzschlüssels sind, sind in der Software gesperrt oder nur eingeschränkt nutzbar und können im Rahmen einer Lizenzerweiterung erworben werden.
+
+2.5 Die Kosten ergeben sich aus der jeweils gültigen Preisliste des Lizenzgebers.
+
+3. Haftung
+
+3.1 Der Lizenzgeber haftet bei kostenfrei überlassener Software nur für Vorsatz und grobe Fahrlässigkeit. Im Falle von Mängeln, nur bei einem arglistigen Verschweigen.
+
+3.2 Bei kostenpflichtigen Lizenzen gilt folgende Haftungsregelung:
+
+Der Lizenzgeber haftet dem Lizenznehmer bei Vorsatz oder grober Fahrlässigkeit oder im Fall der Verletzung des Lebens, des Körpers oder der Gesundheit, bei der Übernahme einer Garantie oder im Anwendungsbereich des Produkthaftungsgesetzes unbeschränkt.
+
+Im Übrigen haftet der Lizenzgeber nur, soweit eine wesentliche Vertragspflicht verletzt wurde. In diesen Fällen ist die Haftung auf den Ersatz des vorhersehbaren, typischerweise eintretenden Schaden beschränkt. Wesentliche Vertragspflichten sind Pflichten, die der Vertrag dem Lizenzgeber nach seinem Inhalt zur Erreichung des Vertragszwecks auferlegt, deren Erfüllung die ordnungsgemäße Durchführung des Vertrags überhaupt erst ermöglicht und auf deren Einhaltung der Lizenznehmer regelmäßig vertrauen darf.
+
+Die verschuldensunabhängige Haftung des Lizenzgebers auf Schadensersatz (§ 536 a BGB) für bei Vertragsschluss vorhandene Mängel ist ausgeschlossen.
+
+3.3 Dem Lizenznehmer obliegt es als wesentliche Vertragspflicht, seine Daten in anwendungsadäquaten Intervallen regelmäßig zu sichern und damit zu gewährleisten, dass diese mit vertretbarem Aufwand wieder hergestellt werden können. Er wird insbesondere unmittelbar vor jeder Nutzung der Software eine vollständige Datensicherung sämtlicher System- und Anwendungsdaten der betroffenen Systeme vornehmen. Die Datensicherungen sind so zu verwahren, dass eine jederzeitige Wiederherstellung der gesicherten Daten möglich ist.
+
+4. Freie Nutzungen
+
+Der Lizenznehmer ist berechtigt, von der Software eine Kopie zu Sicherungszwecken oder Dokumentationszwecken herzustellen. Die einer ordnungsgemäßen Datensicherung dienenden Vervielfältigungen der Software sind Teil des bestimmungsgemäßen Gebrauchs. Die Sicherungskopie ist nach Ende der Laufzeit zu löschen.
+
+Der Lizenznehmer darf die Software weder verändern noch bearbeiten oder dekompilieren. Eine Dekompilierung der Software ist nur dann ausnahmsweise zulässig, wenn der Lizenzgeber nach schriftlicher Aufforderung mit angemessener Frist nicht die notwendigen Daten und/oder Informationen zur Verfügung gestellt hat, um Interoperabilität mit anderer Hard- und Software herzustellen.
+
+Die Software kann Teile im Quelltext enthalten, die dem Lizenznehmer zur Verfügung gestellt werden, um Anpassungen oder Änderungen für eigene Anwendungsfälle vorzunehmen. Diese Quelltextteile dürfen ausschließlich zu diesem Zweck genutzt und angepasst werden. Weitere Rechte an diesen Quelltexten werden dem Lizenznehmer nicht eingeräumt, es sei denn, in den Quelltexten selbst sind zusätzliche Hinweise oder Lizenzen enthalten, die weitergehende Rechte gewähren.
+
+5. Weiterentwicklungen
+
+Der Lizenzgeber behält es sich vor, die Software weiterzuentwickeln.
+
+Eine solche Weiterentwicklung kann durch Updates oder Upgrades erfolgen. Upgrades sind an einer Änderung der Versionsnummer der Software entweder in der ersten oder der zweiten Dezimalstelle der Softwareversionsnummer erkennbar (z.B. von Version 2.0 auf 3.0 oder 2.0 auf 2.1) und enthalten erweiterte oder geänderte Funktionalität.
+
+5.1 Updates werden dem Lizenznehmer durch eine Bereitstellung zum Download zur Verfügung gestellt. Der Lizenznehmer kann die Updates dann herunterladen und selbst installieren. Eine Installation der bereitgestellten Updates wird ausdrücklich empfohlen.
+
+Die Nutzungsrechte an den Updates unterliegen den Lizenzbestimmungen der Hauptlizenz nach Ziffer 2.
+
+5.2 Upgrades der Software stellt der Lizenzgeber bei Bedarf zur Verfügung. Der Lizenznehmer kann die Upgrades dann herunterladen und selbst installieren. Er erhält damit eine neue Version der Software. Die neue Version kann neue Funktionalitäten der Software enthalten oder vorhandene Funktionalitäten ändern oder entfernen.
+
+Vor Ingebrauchnahme eines neuen Upgrades hat der Lizenznehmer daher die neue Version auf seine Anforderungen hin zu überprüfen. Ein Zwang zum Wechsel auf die neue Version besteht nicht.
+
+5.3 Zusätzlich stellt der Lizenzgeber dem Lizenznehmer vor der offiziellen Freigabe Vor- bzw. Zwischenreleases als Upgrades im Beta Stadium zu Testzwecken zur Verfügung. Diese Vor- bzw. Zwischenreleases werden dem Lizenznehmer kostenfrei außerhalb der regulären Lizenz zur Verfügung gestellt. Eine kommerzielle Nutzung der Vor- bzw. Zwischenreleases ist nicht erlaubt.
+
+6. Ende des Nutzungsrechts an den Vertragsgegenständen
+
+Endet die Nutzungsdauer einer Lizenz, darf der Lizenznehmer die Lizenz nicht mehr nutzen. Eine Nutzung der entsprechenden Module bzw. eine kommerzielle Nutzung ist dann nicht mehr zulässig. Eine derartige Nutzung ist unverzüglich einzustellen und stellt sodann einen Lizenzverstoß dar.  
+Für eine weitere Nutzung ist ein neuer Lizenzschlüssel zu erwerben. Ein ausgelaufener Lizenzschlüssel verlängert sich nicht automatisch.
+
+7. Vertragssprache
+
+Dieser Lizenzvertrag ist in deutscher Sprache abgefasst. Als Orientierung ist eine englische Fassung beigefügt. Bei Widersprüchen zwischen der englischen und der deutschen Fassung geht die deutsche Fassung vor.
+
+8. Datenschutz
+
+8.1 Verarbeitung personenbezogener Daten
+
+Von dem Lizenznehmer im Rahmen der Lizenzgewährung angegebene personenbezogene Daten werden in der Software (Lizenzschlüssel) abgelegt. Der Lizenzgeber bestätigt, dass die Software selbst keine personenbezogenen Daten im Sinne der Datenschutzgrundverordnung bzw. des Bundesdatenschutzgesetzes sammelt, speichert, verarbeitet oder überträgt. Jeglicher Datenaustausch im Rahmen der bestimmungsgemäßen Nutzung ist beschränkt, auf Informationen zur Betriebsfunktionalität (z. B. Systembefehle, Konfigurationseinstellungen).
+
+8.2 Integration mit 3rd Party -IDE
+
+Die Software arbeitet als Integration innerhalb einer 3rd Party -Entwicklungsumgebung (IDE). Diese IDE kann für den Datenaustausch zwischen Client- und Serverkomponenten verantwortlich sein, einschließlich möglicher Interaktionen mit 3rd Party-Diensten. Der Lizenzgeber hat keine Kontrolle über und keine Verantwortung für jegliche Datenerhebung, -verarbeitung oder -übertragung, die durch die IDE oder ihre verbundenen 3rd Party-Anbieter erfolgt. Der Lizenznehmer ist dafür verantwortlich, sicherzustellen, dass alle über die IDE eingegebenen, hochgeladenen oder übertragenen Daten (oder durch die Nutzung der Software innerhalb der IDE) den geltenden Datenschutzgesetzen entsprechen. Der Lizenzgeber empfiehlt den Benutzern, keine personenbezogenen Daten über die Software zu übertragen, es sei denn, es liegen eine geeignete Rechtsgrundlage und Schutzmaßnahmen vor.
+
+8.3 Sicherheit der Datenübertragung
+
+Der Lizenzgeber implementiert angemessene technische und organisatorische Maßnahmen, um die von der Software übertragenen nicht personenbezogenen Daten zu sichern. Datenübertragungen, die von der IDE oder 3rd Party-Anbietern initiiert oder verwaltet werden, liegen jedoch außerhalb der Kontrolle und Verantwortung des Lizenzgebers.
+
+9. 3rd Party Erweiterungen
+
+Die Software enthält Schnittstellen zur Unterstützung von 3rd Party Erweiterungen. 3rd Party Erweiterungen benötigen zur Interoperabilität mit der Software ein von dem Lizenzgeber freigegebenes Zertifikat des jeweiligen Anbieters. 3rd Party Erweiterungen ohne entsprechendes Zertifikat werden nicht unterstützt. Die Zertifikate müssen mindestens Informationen über die jeweilige Erweiterung, insbesondere den Namen des Anbieters bzw. der Anbieterfirma, erforderliche Lizenzschlüssel, Support-Kanäle und Repositories enthalten.
+
+Die Zertifikate verifizieren ausschließlich die Lizenz-Kompatibilität der Software mit der 3rd Party Erweiterung. Die Zertifikate stellen keine Aussage zur Interoperabilität der Erweiterung mit der Software dar. Der Lizenzgeber übernimmt keine Gewährleistung oder Haftung für 3rd Party Erweiterungen und ist nicht verantwortlich für deren Funktionalität, Sicherheit oder daraus resultierende Schäden. Die Nutzung von Erweiterungen erfolgt auf eigenes Risiko.
+
+3rd Party Erweiterungen können eigenen Nutzungsbedingungen der jeweiligen Anbieter unterliegen. Der Lizenzgeber empfiehlt, diese Bedingungen vor der Nutzung zu prüfen.
+
+10. Schlussvorschriften
+
+10.1 Handelt der Lizenznehmer als Kaufmann, juristische Person des öffentlichen Rechts oder öffentlich-rechtliches Sondervermögen mit Sitz im Hoheitsgebiet der Bundesrepublik Deutschland, ist ausschließlicher Gerichtsstand für alle Streitigkeiten aus diesem Vertrag der Geschäftssitz des Lizenzgebers. Hat der Lizenznehmer seinen Sitz außerhalb des Hoheitsgebiets der Bundesrepublik Deutschland, so ist der Geschäftssitz des Lizenzgebers ausschließlicher Gerichtsstand für alle Streitigkeiten aus diesem Vertrag, wenn der Vertrag oder Ansprüche aus dem Vertrag der beruflichen oder gewerblichen Tätigkeit des Lizenznehmers zugerechnet werden können. Der Lizenzgeber ist in den vorstehenden Fällen jedoch in jedem Fall berechtigt, das Gericht am Sitz des Lizenznehmers anzurufen.
+
+10.2 Für sämtliche Rechtsbeziehungen der Parteien gilt das Recht der Bundesrepublik Deutschland unter Ausschluss der Gesetze über den internationalen Kauf beweglicher Waren. Bei Verbrauchern gilt diese Rechtswahl nur insoweit, als nicht der gewährte Schutz durch zwingende Bestimmungen des Rechts des Staates, in dem der Verbraucher seinen gewöhnlichen Aufenthalt hat, entzogen wird.

@@ -1,0 +1,34 @@
+
+@font-face {
+	font-family: "toemicon";
+	font-display: swap;
+	src: url("./toemicon.ttf?0762acdc90576dc15604cba91a2a2bdc") format("truetype");
+}
+
+[class^="ti-"], [class*=" ti-"]{
+	font: normal normal normal 16px/1 toemicon;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+/*---------------------
+ *  Icons
+ *-------------------*/
+
+.ti-signal-any:before { content: "\f101" }
+.ti-signal-binary:before { content: "\f102" }
+.ti-signal-event-array:before { content: "\f103" }
+.ti-signal-event:before { content: "\f104" }
+.ti-signal-float-array:before { content: "\f105" }
+.ti-signal-float:before { content: "\f106" }
+.ti-signal-integer-array:before { content: "\f107" }
+.ti-signal-integer:before { content: "\f108" }
+.ti-signal-logic-vector:before { content: "\f109" }
+.ti-signal-logic:before { content: "\f10a" }
+.ti-signal-proxy:before { content: "\f10b" }
+.ti-signal-struct:before { content: "\f10c" }
+.ti-signal-text-array:before { content: "\f10d" }
+.ti-signal-text:before { content: "\f10e" }

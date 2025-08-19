@@ -44,6 +44,10 @@ class Document extends Disposable implements vscode.CustomDocument {
 				this.content?.push(vscode.Uri.parse(uri));
 			});
 		}
+		if (_uri.scheme == 'pref') {
+			this.type = _uri.scheme;	
+			this.content = [];		
+		}
 	}
 
 	public get uri() { return this._uri; }
@@ -264,7 +268,7 @@ export class EditPartProvider extends AbstractPartProvider implements vscode.Cus
 		};
 
 		// setup html
-		webview.html = this.getHtmlForWebview(webview, document.uri);
+		webview.html = this.getHtmlForWebview(webview, this.id, document.uri);
 
 		// create part
 		new EditorPart(this, webviewPanel, new Connection("parts"), document);

@@ -15,7 +15,13 @@ class ViewPart extends AbstractPart {
 		super(provider, webviewView.webview, connection);
 
 		// request the part
-		this.init = { id: 0, op: "init", s0: provider.id, s1: "" };
+		var id = provider.id;
+		var descriptor = id
+		var midx = provider.id.indexOf('-');
+		if (midx >= 0){
+			descriptor = id.substring(0,midx);
+		}
+		this.init = { id: 0, op: "init", s0: descriptor, s1: id };
 		this.send(this.init);
 
 		
@@ -72,7 +78,7 @@ export class ViewPartProvider extends AbstractPartProvider implements vscode.Web
 		};
 
 		// setup html
-		webview.html = this.getHtmlForWebview(webview, vscode.Uri.file(''));
+		webview.html = this.getHtmlForWebview(webview, this.id,vscode.Uri.file(''));
 
 		// create part
 		new ViewPart(this, webviewView, new Connection("parts"));

@@ -6,14 +6,11 @@
  @font-face {
 	font-family: "codicon";
 	src: url("codicon.ttf") format("truetype");
+	font-display: swap;
 }
 
 [class^="codicon-"], [class*=" codicon-"]{
 	font: normal normal normal 16px/1 codicon;
-	display: block;
-	text-decoration: none;
-	text-rendering: auto;
-	text-align: center;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	user-select: none;

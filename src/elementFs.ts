@@ -22,13 +22,13 @@ export class AbstractFile implements vscode.FileStat {
     ctime: number;
     mtime: number;
     size: number;
-    permissions: vscode.FilePermission;
+    permissions: vscode.FilePermission|undefined;
 
     parent: Directory | undefined;
     name: string;
     hasstat: boolean;
 
-    constructor(name: string, type: vscode.FileType, parent: Directory | undefined) {
+    constructor(name: string, type: vscode.FileType, parent: Directory | undefined, readOnly:boolean) {
 
         this.type = type;
         this.ctime = Date.now();
@@ -37,6 +37,7 @@ export class AbstractFile implements vscode.FileStat {
         this.name = name;
         this.parent = parent;
         this.hasstat = false;
+        if (readOnly)
         this.permissions = vscode.FilePermission.Readonly;
 
         // add to parent directory
@@ -84,8 +85,8 @@ export class AbstractFile implements vscode.FileStat {
         }
     }
 
-    public isStatic() {
-        return !this.parent;
+    public isStatic() :boolean{
+        return !this.parent || this.parent.isStatic();
     }
 
     public hasStat() {
@@ -108,8 +109,7 @@ export class File extends AbstractFile {
     data?: Uint8Array;
 
     constructor(name: string, parent: Directory) {
-        super(name, vscode.FileType.File, parent);
-        this.permissions = 0;
+        super(name, vscode.FileType.File, parent,false);
     }
 
     public set(content: Uint8Array) {
@@ -119,11 +119,14 @@ export class File extends AbstractFile {
     }
 
     public stat(size: number) {
-        if (this.size != size) {
+        // Always bump mtime so VS Code knows to re-read even if size didn't change
+        const now = Date.now();
+        if (this.size !== size) {
             this.size = size;
-            this.data = undefined;
-            this.mtime = Date.now();
         }
+        // Content may have changed without size change; invalidate cached data
+        this.data = undefined;
+        this.mtime = now;
         this.hasstat = true;
     }
 }
@@ -134,7 +137,7 @@ export class Directory extends AbstractFile {
     entries: Map<string, File | Directory>;
 
     constructor(name: string, parent: Directory | undefined) {
-        super(name, vscode.FileType.Directory, parent);
+        super(name, vscode.FileType.Directory, parent,true);
         this.entries = new Map();
     }
 
@@ -175,7 +178,7 @@ export class ElementFS implements vscode.FileSystemProvider {
     public static ENDPOINT_ID = -15;
     public static instance:ElementFS;
     public static scheme: string;
-    private static contents: Map<string, string> =new Map();;  // link,name
+    private static contents: Map<string, string> =new Map();;  // impulse uri,name
     private root = new Directory('', undefined);
 
 
@@ -187,8 +190,8 @@ export class ElementFS implements vscode.FileSystemProvider {
         );
     }
 
-    static addDirectory(name: string, link: string) {
-        this.contents.set(link, name);
+    static addDirectory(name: string, impulseUri: string) {
+        this.contents.set(impulseUri, this.scheme + ':/' +name);
         new Directory(name, ElementFS.instance.root);
     }
 
@@ -201,9 +204,60 @@ export class ElementFS implements vscode.FileSystemProvider {
 
 
     // ========================================================================================================================
-    // Links
+    // Mapping 
     // ========================================================================================================================
 
+    static mapToFsUri(uri: string): vscode.Uri {
+
+        for (const content of ElementFS.contents) {
+            if (uri.startsWith(content[0])) {
+
+                var uri1: vscode.Uri = vscode.Uri.parse(content[1] + uri.substring(content[0].length));
+                const fragment =  uri1.fragment ? uri1.fragment.split("/"):undefined;
+                const uri2 = uri1.with({ query: '' ,fragment:'',path:path.posix.join(uri1.path, uri1.query, fragment ? path.basename(uri1.query)+'.'+fragment[0]+'.'+fragment[1]:"") });
+                return uri2;
+            }
+        }
+        return vscode.Uri.parse("");
+    }
+
+    static mapFromFsUri(uri: vscode.Uri): string | undefined {
+
+        for (const content of ElementFS.contents) {
+            if (uri.toString().startsWith(content[1])) {
+
+                var uri1: vscode.Uri = vscode.Uri.parse(content[0] + uri.toString().substring(content[1].length));
+                
+                // fragment
+                var fragment;
+                var fname = path.basename(uri1.path);
+                var langname = path.extname(fname);
+                fname = fname.substring(0,fname.length - langname.length);
+                var fieldname = path.extname(fname);
+                fname = fname.substring(0,fname.length - fieldname.length);
+                var dname = path.dirname(uri1.path);
+                var cname = path.basename(dname);
+                if (fname != "" && fieldname.length>1 && langname.length>1 &&  cname == fname ){
+                    fragment = fieldname.substring(1)+"/"+langname.substring(1)
+                }
+
+                // path
+                var splitted = dname.substring(1).split('/');
+                var elementname = splitted[1];
+                var elementpath = path.posix.join("/",splitted[0],splitted[1]);
+
+                // query
+                var query = dname.substring(elementpath.length+1);
+
+                var uri2 = uri1.with({query:query,fragment:fragment, path:elementpath});
+
+                return uri2.toString();
+
+            }
+        }
+        return "";
+    }
+/*
     static link2Uri(link: string): vscode.Uri {
 
         for (const content of ElementFS.contents) {
@@ -247,7 +301,7 @@ export class ElementFS implements vscode.FileSystemProvider {
         }
         return "";
     }
-
+*/
 
     // ========================================================================================================================
     // Stat
@@ -263,7 +317,7 @@ export class ElementFS implements vscode.FileSystemProvider {
 
         return new Promise<vscode.FileStat>((resolve, reject) => {
 
-            ideClient.request({ id:ElementFS.ENDPOINT_ID, op: "Stat", s1: ElementFS.uri2link(uri) }, (response) => {
+            ideClient.request({ id:ElementFS.ENDPOINT_ID, op: "Stat", s1: ElementFS.mapFromFsUri(uri) }, (response) => {
 
                 if (response.i1 && response.i1 != NONE) {
 
@@ -341,7 +395,7 @@ export class ElementFS implements vscode.FileSystemProvider {
         if (!entry.isStatic() && !entry.hasStat())
         return new Promise<[string, vscode.FileType][]>((resolve, reject) => {
 
-            ideClient.request({ id: ElementFS.ENDPOINT_ID, op: "Stat", s1: ElementFS.uri2link(uri) }, (response) => {
+            ideClient.request({ id: ElementFS.ENDPOINT_ID, op: "Stat", s1: ElementFS.mapFromFsUri(uri) }, (response) => {
 
                 if (response.i1 && response.i1 != NONE) {
 
@@ -392,7 +446,7 @@ export class ElementFS implements vscode.FileSystemProvider {
     readFile(uri: vscode.Uri): Thenable<Uint8Array> {
         console.log("readFile", uri);
         return new Promise<Uint8Array>((resolve, reject) => {
-            ideClient.request({ id:ElementFS. ENDPOINT_ID, op: "Read", s1: ElementFS.uri2link(uri) }, (response) => {
+            ideClient.request({ id:ElementFS. ENDPOINT_ID, op: "Read", s1: ElementFS.mapFromFsUri(uri) }, (response) => {
                 if (response.i1 != NONE) {
 
                     // parent
@@ -450,7 +504,7 @@ export class ElementFS implements vscode.FileSystemProvider {
         }
 
         file.set(content);
-        ideClient.send({ id: ElementFS.ENDPOINT_ID, op: 'Write', s1: ElementFS.uri2link(uri), s2: new TextDecoder('utf-8').decode(content) });
+        ideClient.send({ id: ElementFS.ENDPOINT_ID, op: 'Write', s1: ElementFS.mapFromFsUri(uri), s2: new TextDecoder('utf-8').decode(content) });
         this._fireSoon({ type: vscode.FileChangeType.Changed, uri });
     }
 
@@ -524,11 +578,12 @@ export class ElementFS implements vscode.FileSystemProvider {
 
     private _emitter = new vscode.EventEmitter<vscode.FileChangeEvent[]>();
     private _bufferedEvents: vscode.FileChangeEvent[] = [];
-    private _fireSoonHandle?: NodeJS.Timer;
+    private _fireSoonHandle?: NodeJS.Timeout;
 
     readonly onDidChangeFile: vscode.Event<vscode.FileChangeEvent[]> = this._emitter.event;
 
-    watch(_resource: vscode.Uri): vscode.Disposable {
+    // Align with current API: include options parameter
+    watch(_resource: vscode.Uri, _options: { recursive: boolean; excludes: string[] }): vscode.Disposable {
         // ignore, fires for all changes...
         return new vscode.Disposable(() => { });
     }
@@ -541,8 +596,10 @@ export class ElementFS implements vscode.FileSystemProvider {
         }
 
         this._fireSoonHandle = setTimeout(() => {
-            this._emitter.fire(this._bufferedEvents);
+            // Important: don't mutate the same array that listeners receive
+            const toFire = this._bufferedEvents.slice();
             this._bufferedEvents.length = 0;
+            this._emitter.fire(toFire);
         }, 5);
     }
 
@@ -555,9 +612,22 @@ export class ElementFS implements vscode.FileSystemProvider {
         switch (message.op) {
             case "Notify": {
                 const change: string = message.s0;
-                const uri: vscode.Uri = ElementFS.link2Uri(message.s1);
-                if (change == 'changed')
+                const uri: vscode.Uri = ElementFS.mapToFsUri(message.s1);
+                if (!uri || !uri.scheme) break;
+
+                if (change === 'changed') {
+                    // Invalidate cache and bump mtime immediately, so subsequent stat shows a change
+                    const entry = this.lookup(uri, true);
+                    if (entry instanceof File) {
+                        entry.data = undefined;
+                        entry.mtime = Date.now();
+                    }
                     this._fireSoon({ type: vscode.FileChangeType.Changed, uri });
+                } else if (change === 'created') {
+                    this._fireSoon({ type: vscode.FileChangeType.Created, uri });
+                } else if (change === 'deleted') {
+                    this._fireSoon({ type: vscode.FileChangeType.Deleted, uri });
+                }
             }
                 break;
         }

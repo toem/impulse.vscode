@@ -1,0 +1,41 @@
+		"commands": [
+            
+            {
+				"command": "de.toem.impulse.commands.merge",
+				"title": "Merge Selected with Signal Viewer",
+				"category": "impulse"
+			},
+			{
+				"command": "de.toem.impulse.commands.diff",
+				"title": "Compare Selected with Signal Viewer",
+				"category": "impulse"
+			},
+			{
+				"command": "de.toem.impulse.commands.preferenceFs.open",
+				"title": "Open preference FS folder",
+				"category": "impulse"
+			},
+
+
+		"menus": {
+			"explorer/context": [
+
+            	{
+					"when": "listMultiSelection",
+					"command": "de.toem.impulse.commands.merge",
+					"alt": "",
+					"group": "3_compare"
+				},
+				{
+					"when": "listMultiSelection",
+					"command": "de.toem.impulse.commands.diff",
+					"alt": "",
+					"group": "3_compare"
+				}
+
+,
+	"impulseBundles": [
+		"impulse/plugins/de.toem.impulse.extension.vp_3.0.1.jar",
+		"impulse/plugins/de.toem.impulse.extension.log_3.0.1.jar"
+	]
+

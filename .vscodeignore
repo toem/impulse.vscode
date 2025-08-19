@@ -1,5 +1,10 @@
 *.vsix
 .git/
 media/*dev*
-impulse/configuration/org.eclipse.osgi
+impulse/plugins/configuration/org.eclipse.osgi
+impulse/plugins/configuration/*.log
+impulse/**/*.java
 media/links
+.impulse/
+.vscode/
+scripts/

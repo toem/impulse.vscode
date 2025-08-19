@@ -1,0 +1,224 @@
+<!--974-->
+<h1>impulse for VScode</h1>
+<p><a href="https://toem.io/index.php/products/impulse"><strong>impulse</strong></a> is a powerful visualization and analysis workbench designed to help engineers understand, analyze, and debug complex semiconductor and multi-core software systems. It provides a seamless integration into IDE frameworks and supports a growing set of extensions, such as IoT, language IDEs, and reporting tools.</p>
+<p>With its client-server architecture, <strong>impulse</strong> divides workloads between signal-providing tasks (on a simulation or application server) and local analysis tools, ensuring efficient performance. Engineers can use their favorite web IDE to analyze logs, traces, and simulation data without transferring large amounts of data or relying on local tools.</p>
+<p><strong>impulse</strong>’s open extension mechanisms allow users to adapt it to their specific needs. Whether defining custom data formats, implementing acquisition interfaces, creating specialized diagrams, or integrating a 3D chart engine, <strong>impulse</strong> offers unparalleled flexibility. Its lightweight frontend and powerful Java backend enable the creation of high-performance, complex analysis applications.</p>
+<blockquote>
+## Beta Notice
+- This VS Code extension is a beta release with core features.
+- It may be unstable and contain defects.
+- Not intended for production use.
+- Back up important data and use with caution.
+- Do not rely on correct functioning or performance.
+</blockquote>
+<h2>Scope and Add-ons</h2>
+<ul>
+<li>
+Includes core features and VS Code integration only.
+</li>
+<li>
+Domain-specific use cases (e.g., EDA, RTOS) requiring additional readers, adaptors, processors, or diagrams are not included.
+</li>
+<li>
+These capabilities are delivered as separate companion extensions (available now or coming soon).
+</li>
+</ul>
+<h3>Add more features</h3>
+<ul>
+<li>
+Open the Extensions view in VS Code and search for "impulse".
+</li>
+<li>
+Install the desired companion extensions (for example, a VCD reader).
+</li>
+<li>
+Reload the window if the backend is already running.
+</li>
+<figure><img src="https://toem.io/wp-content/uploads/ss_record_viewer1.png" alt=""/></figure>
+</ul>
+<h2>Features</h2>
+<p>impulse offers a wide range of data formats and external interfaces through signal adaptors, providing a unified view of various data sources. Whether reading signals from log, wave, or trace files, or accessing live data streams, users can seamlessly integrate data from multiple channels. Signal adaptors allow direct connections to sources such as TCP streams, pipes, applications, external networks, serial interfaces, and data acquisition units. When dealing with multiple signal sources—such as log data from a serial interface and trace data over TCP—impulse can merge and synchronize them, ensuring accurate, comprehensive analysis across diverse systems and interfaces.</p>
+<h3>Data Integration</h3>
+<ul>
+<li>
+Supports log, wave, trace files, and live data streams.
+</li>
+<li>
+Enables connections to diverse data sources via signal adaptors including TCP streams, pipes, serial interfaces, and hardware.
+</li>
+<li>
+Synchronizes multiple signal sources for unified analysis.
+</li>
+</ul>
+<h3>Customizable Views</h3>
+<ul>
+<li>
+Create tailored views with structured navigation.
+</li>
+<li>
+Switch between views for efficient signal interpretation.
+</li>
+<li>
+Use diagrams to visualize signals across domains like time and frequency.
+</li>
+</ul>
+<h3>Signal Processing</h3>
+<ul>
+<li>
+Combine signals using mathematical operations.
+</li>
+<li>
+Decode data with protocol parsers.
+</li>
+<li>
+Generate reference signals and extract statistical insights.
+</li>
+</ul>
+<h3>Sample Tables</h3>
+<ul>
+<li>
+Tabular representation synchronized with viewers.
+</li>
+<li>
+Real-time updates for streaming data.
+</li>
+<li>
+Configurable columns for custom value representation.
+</li>
+</ul>
+<h3>Automation</h3>
+<ul>
+<li>
+Background processing of large datasets.
+</li>
+<li>
+Automatic conflict detection and pattern identification.
+</li>
+<li>
+Statistical extraction for performance insights.
+</li>
+<figure><img src="https://toem.io/wp-content/uploads/ss_record_viewer2.png" alt=""/></figure>
+</ul>
+<h2>Quick Start</h2>
+<ul>
+<li>
+Select a file to view.
+</li>
+<li>
+Use the context menus 'Open with' and select the impulse Viewer (You may select the impulse Viewer as the default option at this point).
+</li>
+<li>
+On activation, it may take a while (a few secs) to load the backend java server. The OS may ask you for approval.
+</li>
+<li>
+Create a new view.
+</li>
+<li>
+DnD signals into the view. 
+</li>
+<li>
+Have fun !
+</li>
+</ul>
+<h2>License</h2>
+<p><strong>Our guiding principle for this and all subsequent versions is:</strong></p>
+<ul>
+<li>
+Non-commercial use is free.
+</li>
+<li>
+Commercial use requires a commercial license key.
+</li>
+<li>
+This beta version does not require an license keys.
+</li>
+</ul>
+<p>see <a href="https://toem.io/index.php/pricing">Licensing options</a></p>
+<h2>Requirements</h2>
+<ul>
+<li>
+impulse requires a java Runtime environment (at least JRE8). For communication to the osgi impulse server, a socket interface is used.
+</li>
+<li>
+vscode >= 1.95.0
+</li>
+</ul>
+<h2>Documentation</h2>
+<p>Enter <a href="https://toem.io/index.php/resources">https://toem.io/index.php/resources</a> for more information about impulse.</p>
+<h2>Preferences</h2>
+<p>The <strong>Preferences</strong> section allows users to configure various aspects of the impulse extension to suit their needs. These include server settings, debugging options, and preference storage locations. Users can modify these settings through the VS Code settings interface or by directly editing the <code>settings.json</code> file. Below are some key preferences:</p>
+<ul>
+<li>
+<strong><code>impulse.java</code></strong>: Command to start the Java OSGi backend. Default: <code>"java -Xms128m -Xmx2048m"</code>.
+</li>
+<li>
+<strong><code>impulse.port</code></strong>: Communication port for the backend. Default: <code>"0"</code> (random port).
+</li>
+<li>
+<strong><code>impulse.xdebugger</code></strong>: Enables Java extension debugging. Default: <code>false</code>.
+</li>
+<li>
+<strong><code>impulse.preferences</code></strong>: Format for storing preferences. Default: <code>"XML"</code>.
+</li>
+</ul>
+<h3>Preference location and format</h3>
+<p>Impulse provides flexibility in storing preferences by allowing users to choose between different storage locations. These locations can be configured for various preference categories, such as serializers, adaptors, views, and more. The available storage options are:</p>
+<ul>
+<li>
+<strong>User</strong>: Stores preferences globally for all workspaces.
+</li>
+<li>
+<strong>Workspace</strong>: Stores preferences specific to the current workspace.
+</li>
+<li>
+<strong>Workspace Folder</strong>: Stores preferences in a folder named <code>./impulse</code> within the workspace.
+</li>
+</ul>
+<h3>Default Locations for Preference Categories</h3>
+<ul>
+<li>
+<strong>Serializers</strong>: Default: <code>User</code>
+</li>
+<li>
+<strong>Adaptors</strong>: Default: <code>User</code>
+</li>
+<li>
+<strong>Producers</strong>: Default: <code>User</code>
+</li>
+<li>
+<strong>Views</strong>: Default: <code>Workspace</code>
+</li>
+<li>
+<strong>Processors</strong>: Default: <code>User</code>
+</li>
+<li>
+<strong>Diagrams</strong>: Default: <code>User</code>
+</li>
+<li>
+<strong>Search</strong>: Default: <code>Workspace</code>
+</li>
+<li>
+<strong>Formatters</strong>: Default: <code>User</code>
+</li>
+<li>
+<strong>Templates</strong>: Default: <code>User</code>
+</li>
+<li>
+<strong>Licenses</strong>: Default: <code>User</code>
+</li>
+<li>
+<strong>Colors</strong>: Default: <code>User</code>
+</li>
+<li>
+<strong>Parts</strong>: Default: <code>Workspace</code>
+</li>
+<li>
+<strong>Commands</strong>: Default: <code>Workspace</code>
+</li>
+</ul>
+<p>To modify these preferences, use the <a href="command:de.toem.impulse.commands.preferences">impulse Preference editor</a>. Changes to some settings, such as the backend server configuration, may require a restart to take effect.</p>
+<h2>Sources</h2>
+<p>Find the source code of the vscode extension at <a href="https://github.com/toem/impulse.vscode/issues">https://github.com/toem/impulse.vscode</a>.</p>
+<h2>Issues and Proposals</h2>
+<p>Use <a href="https://github.com/toem/impulse.vscode/issues">https://github.com/toem/impulse.vscode/issues</a> for issues and proposals.</p>
+<p>You may use <a href="mailto:support@toem.de">support@toem.de</a> for further information.</p>

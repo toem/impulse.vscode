@@ -3,14 +3,14 @@
 	"displayName": "impulse",
 	"description": "impulse is a visualization and analysis workbench which helps engineers to comfortably understand and debug complex semiconductor and multi-core software systems.",
 	"publisher": "toem-de",
-	"homepage": "https://www.toem.de",
+	"homepage": "https://www.toem.io",
 	"author": {
 		"name": "Thomas Haber"
 	},
-	"license": "SEE LICENSE IN LICENSE.md",
-	"version": "0.3.7",
+	"license": "See LICENSE.md",
+	"version": "0.9.33",
 	"engines": {
-		"vscode": "^1.60.0"
+		"vscode": "^1.95.0"
 	},
 	"icon": "images/impulse.png",
 	"categories": [
@@ -26,7 +26,8 @@
 		"vcd",
 		"trace",
 		"logging",
-		"rt"
+		"rt",
+		"eda"
 	],
 	"galleryBanner": {
 		"color": "#F2F2F2",
@@ -44,40 +45,20 @@
 		"workspace"
 	],
 	"activationEvents": [
-		"onCustomEditor:de.toem.impulse.editor.records",
-		"onCustomEditor:de.toem.impulse.editor.wallet",
-		"onView:de.toem.impulse.parts.samples",
-		"onView:de.toem.impulse.parts.samples.2",
-		"onView:de.toem.impulse.parts.samples.3",
-		"onView:de.toem.impulse.parts.samples.4",
-		"onView:de.toem.impulse.parts.sample",
-		"onFileSystem:impulseFs",
-		"onCommand:de.toem.impulse.commands.open-multiple"
+		"onFileSystem:impulseFs"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"customEditors": [
 			{
-				"viewType": "de.toem.impulse.editor.records",
+				"viewType": "de.toem.impulse.editor.viewer",
 				"displayName": "Signal Viewer",
 				"selector": [
 					{
 						"filenamePattern": "*"
 					},
 					{
-						"filenamePattern": "*.vcd"
-					},
-					{
-						"filenamePattern": "*.recJs"
-					},
-					{
-						"filenamePattern": "*.trace"
-					},
-					{
-						"filenamePattern": "*.recML"
-					},
-					{
-						"filenamePattern": "*.recMZ"
+						"filenamePattern": "*.rec??"
 					}
 				],
 				"priority": "option"
@@ -87,10 +68,17 @@
 				"displayName": "Wallet Editor",
 				"selector": [
 					{
-						"filenamePattern": "*.walml"
-					},
+						"filenamePattern": "*.wal??"
+					}
+				],
+				"priority": "option"
+			},
+			{
+				"viewType": "de.toem.impulse.editor.preferences",
+				"displayName": "impulse Preferences",
+				"selector": [
 					{
-						"filenamePattern": "*.walmz"
+						"filenamePattern": "dummy"
 					}
 				],
 				"priority": "default"
@@ -109,103 +97,407 @@
 			"samples-container": [
 				{
 					"type": "webview",
-					"id": "de.toem.impulse.parts.samples",
-					"name": "Sample Table 1"
+					"id": "de.toem.impulse.parts.samples-1",
+					"name": "Sample Table 1",
+					"icon": "$(list-unordered)"
 				},
 				{
 					"type": "webview",
-					"id": "de.toem.impulse.parts.samples.2",
+					"id": "de.toem.impulse.parts.samples-2",
 					"name": "Sample Table 2",
-					"visibility": "hidden"
+					"visibility": "hidden",
+					"icon": "$(list-unordered)"
 				},
 				{
 					"type": "webview",
-					"id": "de.toem.impulse.parts.samples.3",
+					"id": "de.toem.impulse.parts.samples-3",
 					"name": "Sample Table 3",
-					"visibility": "hidden"
+					"visibility": "hidden",
+					"icon": "$(list-unordered)"
 				},
 				{
 					"type": "webview",
-					"id": "de.toem.impulse.parts.samples.4",
+					"id": "de.toem.impulse.parts.samples-4",
 					"name": "Sample Table 4",
-					"visibility": "hidden"
+					"visibility": "hidden",
+					"icon": "$(list-unordered)"
 				},
 				{
 					"type": "webview",
 					"id": "de.toem.impulse.parts.sample",
-					"name": "Sample Inspector"
+					"name": "Sample Inspector",
+					"icon": "$(list-tree)"
 				}
 			]
 		},
+		"languageModelTools": [
+			{
+				"name": "impulse_fetchSampleTable",
+				"tags": [
+					"samples",
+					"signal",
+					"impulse"
+				],
+				"toolReferenceName": "samples",
+				"displayName": "Sample Tables",
+				"modelDescription": "Reads information and sample data of a sample table. Returns information about the envolved signals, no of samples, selection and columns and returns the requested samples. ",
+				"userDescription": "Reads information and sample data of a sample table",
+				"canBeReferencedInPrompt": true,
+				"icon": "$(list-unordered)",
+				"inputSchema": {
+					"type": "object",
+					"properties": {
+						"pindex": {
+							"type": "number",
+							"description": "Index of a sample table , typically 1..4",
+							"default": 1
+						},
+						"range": {
+							"type": "string",
+							"description": "The range of samples to be read, e.g. '0-50'. If not given, a max number of  samples are fetched. The range is inclusive, i.e. the first and last sample are included in the result."
+						}
+					}
+				}
+			},
+			{
+				"name": "impulse_getHelp",
+				"tags": [
+					"manual",
+					"api",
+					"impulse"
+				],
+				"toolReferenceName": "impulse",
+				"displayName": "impulse Manual & API",
+				"modelDescription": "earch impulse documentation using natural language. Returns relevant content as markdown for manual pages or Java code for API references. For API questions, include class/method names in your query (e.g., RecordSet, SignalProcessor). For conceptual searches, use specific terminology from the impulse domain (signal visualization, trace analysis, etc.). The tool analyzes your query to find the most relevant documentation sections.",
+				"userDescription": "Read impulse manual and API documentation",
+				"canBeReferencedInPrompt": true,
+				"icon": "$(list-unordered)",
+				"inputSchema": {
+					"type": "object",
+					"properties": {
+						"query": {
+							"type": "string",
+							"description": "The query to search the documentation for. Should contain all relevant context. Should ideally be text and keywords that might appear in the documentation."
+						}
+					},
+					"required": [
+						"query"
+					]
+				}
+			},
+			{
+				"name": "impulse_getHelpContent",
+				"tags": [
+					"manual",
+					"api",
+					"impulse"
+				],
+				"toolReferenceName": "impulse",
+				"displayName": "impulse Manual & API",
+				"modelDescription": "Retrieve specific documentation content by document IDs. Use this after impulse_getHelp identifies relevant content. Returns full documentation text for the provided IDs. If no IDs are provided, returns a metadata index of all available documentation. Document IDs from impulse_getHelp can be passed directly to this tool to get complete documentation sections.",
+				"userDescription": "Read impulse manual and API documentation",
+				"canBeReferencedInPrompt": false,
+				"icon": "$(list-unordered)",
+				"inputSchema": {
+					"type": "object",
+					"properties": {
+						"docIDs": {
+							"type": "string",
+							"description": "The docIDs of the requested help content, sperated by comma."
+						}
+					}
+				}
+			}
+		],
 		"commands": [
 			{
-				"command": "de.toem.impulse.commands.merge",
-				"title": "Merge Selected with Signal Viewer",
-				"enablement": "",
+				"command": "de.toem.impulse.commands.preferences",
+				"title": "Open impulse Preferences Editor",
 				"category": "impulse"
 			},
 			{
-				"command": "de.toem.impulse.commands.diff",
-				"title": "Compare Selected with Signal Viewer",
-				"enablement": "",
-				"category": "impulse"
-			},
-			{
-				"command": "de.toem.impulse.commands.preferenceFs.open",
-				"title": "Open preference FS folder",
-				"enablement": "",
+				"command": "de.toem.impulse.commands.expression",
+				"title": "Executes an impulse expression file",
 				"category": "impulse"
 			}
 		],
 		"menus": {
 			"explorer/context": [
 				{
-					"when": "listMultiSelection",
-					"command": "de.toem.impulse.commands.merge",
-					"alt": "",
-					"group": "3_compare"
-				},
-				{
-					"when": "listMultiSelection",
-					"command": "de.toem.impulse.commands.diff",
-					"alt": "",
-					"group": "3_compare"
+					"command": "de.toem.impulse.commands.expression",
+					"title": "Run impulse Expression",
+					"category": "impulse",
+					"when": "explorerResourceIsFolder == false && resourceExtname == .jx"
 				}
 			]
 		},
+		"languages": [
+			{
+				"id": "jx",
+				"extensions": [
+					".recJx",
+					".recJX",
+					".jx"
+				],
+				"configuration": "./languages/jx.json"
+			}
+		],
+		"grammars": [
+			{
+				"language": "jx",
+				"scopeName": "source.jx",
+				"path": "./languages/jx-grammar.json"
+			}
+		],
 		"files.associations": {
 			"*.recJs": "javascript"
 		},
 		"configuration": [
 			{
-				"title": "impulse",
+				"title": "Server",
 				"properties": {
 					"impulse.java": {
+						"order": 0,
 						"type": "string",
 						"default": "java -Xms128m -Xmx2048m",
-						"description": "Command line to start the impulse java osgi backend. Changes only take effect after a restart. "
+						"description": "Command line to start the impulse java osgi backend. Changes only take effect after a restart. command:de.toem.impulse.commands.preferences "
 					},
 					"impulse.port": {
+						"order": 1,
 						"type": "string",
 						"default": "0",
 						"description": "Communication port for the impulse backend. Changes only take effect after a restart. Select 0 for random port."
 					},
 					"impulse.xdebugger": {
+						"order": 2,
 						"type": "boolean",
 						"default": false,
 						"description": "Enable java extension debugging."
-					},
+					}
+				}
+			},
+			{
+				"title": "Preferences",
+				"properties": {
 					"impulse.preferences": {
+						"order": 1,
+						"type": "string",
+						"default": "XML",
+						"enum": [
+							"XML"
+						],
+						"enumDescriptions": [
+							"Stores preferences as XML file"
+						],
+						"markdownDescription": "You can edit the location (user, workspace, workspace folder) for the various impulse preferences using the settings below (e.g. you may keep the serializer preferences per user and the views per workspace).\n\nTo modify the preferences use the [impulse Preference editor](command:de.toem.impulse.commands.preferences).\n\nUse this setting to change the preferences format."
+					},
+					"impulse.preferenceLocation.serializers": {
+						"order": 20,
 						"type": "string",
 						"default": "User",
 						"enum": [
 							"User",
-							"Workspace"
+							"Workspace",
+							"Workspace Folder"
 						],
 						"enumDescriptions": [
-							"Stores impulse preferences in user area",
-							"Stores impulse preferences in workspace area"
-						]
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the serializer preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.adaptors": {
+						"order": 21,
+						"type": "string",
+						"default": "User",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the adaptor preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.producers": {
+						"order": 22,
+						"type": "string",
+						"default": "User",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the producer preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.views": {
+						"order": 30,
+						"type": "string",
+						"default": "Workspace",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the view preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.processors": {
+						"order": 31,
+						"type": "string",
+						"default": "User",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the signal processor preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.diagrams": {
+						"order": 32,
+						"type": "string",
+						"default": "User",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the diagram preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.search": {
+						"order": 33,
+						"type": "string",
+						"default": "Workspace",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the search preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.formatters": {
+						"order": 41,
+						"type": "string",
+						"default": "User",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the formatter preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.templates": {
+						"order": 42,
+						"type": "string",
+						"default": "User",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the template preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.licenses": {
+						"order": 50,
+						"type": "string",
+						"default": "User",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the license preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.colors": {
+						"order": 43,
+						"type": "string",
+						"default": "User",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the color preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.parts": {
+						"order": 44,
+						"type": "string",
+						"default": "Workspace",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the part preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.commands": {
+						"order": 52,
+						"type": "string",
+						"default": "Workspace",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the command preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
 					}
 				}
 			}
@@ -221,18 +513,15 @@
 		"ws": "^6.2.2"
 	},
 	"devDependencies": {
-		"@typescript-eslint/eslint-plugin": "^3.0.2",
-		"@typescript-eslint/parser": "^3.0.2",
-		"eslint": "^7.1.0",
-		"typescript": "^4.0.2",
-		"@types/vscode": "^1.60.0",
-		"@types/ws": "^6.0.0"
+		"@types/vscode": "^1.95.0",
+		"@vscode/vsce": "^3.3.0",
+		"@types/ws": "^6.0.0",
+		"@eslint/js": "^9.13.0",
+		"@stylistic/eslint-plugin": "^2.9.0",
+		"@types/node": "^20",
+		"eslint": "^9.13.0",
+		"typescript": "^5.8.2",
+		"typescript-eslint": "^8.26.0"
 	},
-	"impulseBundles": [
-		"impulse/plugins/de.toem.impulse.extension.hdl_3.0.1",
-		"impulse/plugins/de.toem.impulse.extension.vp_3.0.1.jar",
-		"impulse/plugins/de.toem.impulse.extension.spice_3.0.1.jar",
-		"impulse/plugins/de.toem.impulse.extension.log_3.0.1.jar",
-		"impulse/plugins/de.toem.impulse.extension.embedded_3.0.1.jar"
-	]
+	"impulseBundles": []
 }

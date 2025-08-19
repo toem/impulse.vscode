@@ -22,6 +22,98 @@
 			"problemMatcher": [],
 			"label": "npm: install",
 			"detail": "install dependencies from package"
+		},
+		{
+			"label": "Fetch frontend",
+			"detail": "Fetch impulse frontend",
+			"type": "shell",       
+		   
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+			  "reveal": "always",
+			  "panel": "shared"
+			},
+			"promptOnClose": false,
+			"linux":{ "command": "./scripts/frontend_fetch"}
+		},{
+			"label": "Build backend",
+			"detail": "Build impulse backend",
+			"type": "shell",       
+		   
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+			  "reveal": "always",
+			  "panel": "shared"
+			},
+			"promptOnClose": false,
+			"linux":{ "command": " ./scripts/backend_build"}
+		},{
+			"label": "Build backend (debug)",
+			"detail": "Build impulse backend with debug options",
+			"type": "shell",       
+		   
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+			  "reveal": "always",
+			  "panel": "shared"
+			},
+			"promptOnClose": false,
+			"linux":{ "command": " ./scripts/backend_build -g"}
+		},{
+			"label": "Platform build",
+			"detail": "Extract version from CHANGELOG, update package.json, generate HTML docs and create the vsix",
+			"type": "shell",       
+		   
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+			  "reveal": "always",
+			  "panel": "shared"
+			},
+			"promptOnClose": false,
+			"linux":{ "command": "./scripts/platform_build"}
+		},{
+			"label": "Sync with local github repo",
+			"detail": "Sync with local github repo impulse.vscode",
+			"type": "shell",
+
+			"group": {
+				"kind": "build", 
+				"isDefault": true
+			},
+			"presentation": {
+			  "reveal": "always",
+			  "panel": "shared"
+			},
+			"promptOnClose": false,
+			"linux":{ "command": "./scripts/repo_sync"}
+		},
+		{
+			"label": "Commit&Push local github repo",
+			"detail": "Commit&Push local github repo impulse.vscode",
+			"type": "shell",
+
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+			  "reveal": "always",
+			  "panel": "shared"
+			},
+			"promptOnClose": false,
+			"linux":{ "command": "./scripts/repo_push"}
 		}
 	]
 }

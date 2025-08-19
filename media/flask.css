@@ -1,0 +1,73 @@
+.codeflask {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  .codeflask, .codeflask * {
+    box-sizing: border-box;
+  }
+  .codeflask__pre {
+    pointer-events: none;
+    z-index: 3;
+    overflow: hidden;
+  }
+  .codeflask__textarea {
+    background: none;
+    border: none;
+
+    z-index: 1;
+    resize: none;
+    -webkit-appearance: pre;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+  }
+
+  .codeflask__code {
+    display: block;
+    overflow: hidden;
+  }
+  .codeflask__flatten {
+    padding: 10px;
+    white-space: pre;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    margin: 0 !important;
+    outline: none;
+    text-align: left;
+  }
+  .codeflask__line-highlight {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.1);
+    z-index: 1;
+  }
+  .codeflask__lines {
+    padding: 10px 4px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    text-align: right;
+    color: #999;
+    z-index: 2;
+  }
+  .codeflask__lines__line {
+    display: block;
+  }
+  .codeflask.codeflask--has-line-numbers:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #eee;
+    z-index: 1;
+  }
+
+  

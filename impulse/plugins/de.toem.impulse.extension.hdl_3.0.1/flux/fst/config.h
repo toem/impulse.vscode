@@ -1,3 +1,0 @@
-#define HAVE_GETOPT_H 1
-#define PACKAGE_BUGREPORT
-#define WAVE_LOCALE_FIX
