@@ -20,7 +20,7 @@ export var debug: number;
 
 export function activate(context: vscode.ExtensionContext) {
 
-	debug = 0;  // 0 no: 1:front: 2 back 3: front & back  ; debug need to be set to 0 if its not.
+	debug =3;  // 0 no: 1:front: 2 back 3: front & back  ; debug need to be set to 0 if its not.
 	console.log('activate');
 
 	// name

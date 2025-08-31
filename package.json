@@ -8,11 +8,11 @@
 		"name": "Thomas Haber"
 	},
 	"license": "See LICENSE.md",
-	"version": "0.9.33",
+	"version": "0.9.34",
 	"engines": {
 		"vscode": "^1.95.0"
 	},
-	"icon": "images/impulse.png",
+	"icon": "images/lg_impulse.png",
 	"categories": [
 		"Visualization",
 		"Data Science",
