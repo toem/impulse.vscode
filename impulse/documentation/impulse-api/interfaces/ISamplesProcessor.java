@@ -1,8 +1,10 @@
 package de.toem.impulse.samples;
 
 import java.util.List;
+import java.util.Map;
 
 import de.toem.impulse.i18n.I18n;
+import de.toem.toolkits.pattern.element.ICell;
 import de.toem.toolkits.pattern.general.ISupports;
 import de.toem.toolkits.pattern.properties.PropertyModel;
 import de.toem.toolkits.pattern.threading.ICancelable;
@@ -48,31 +50,40 @@ public interface ISamplesProcessor extends IReadableSamples,IHierarchicalSamples
     // ========================================================================================================================
     // Support and Mode Constants  
     // ========================================================================================================================
-
-    /** Support flag indicating the processor can handle multiple input sources simultaneously */
-    static final int SUPPORT_MULTIPLE_INPUTS = 0x1;
     
     /** Support flag indicating the processor can perform main production operations */
-    static final int SUPPORT_MAIN_PROCESSING = 0x2;
+    static final int SUPPORT_MAIN_PROCESSING = 0x1;
     
     /** Support flag indicating the processor can perform slave production operations */
-    static final int SUPPORT_SLAVE_PROCESSING = 0x4;
+    static final int SUPPORT_SLAVE_PROCESSING = 0x2;
+
+    /** Support flag indicating the processor can perform main production operations */
+    static final int SUPPORT_OPTIONAL_MAIN_PROCESSING = 0x4;
+    
+    /** Support flag indicating the processor can perform slave production operations */
+    static final int SUPPORT_OPTIONAL_SLAVE_PROCESSING = 0x8;
+    
+    /** Support flag indicating the processor can handle multiple input sources simultaneously */
+    static final int SUPPORT_MULTIPLE_SOURCES = 0x10;
+    
+    /** Support flag indicating the processor can handle multiple input sources simultaneously */
+    static final int SUPPORT_AUTO_SOURCES = 0x20;
     
     /** Support flag indicating the processor can optimize for homogeneous signal processing */
-    static final int SUPPORT_HOMOGENEOUS = 0x8;
+    static final int SUPPORT_HOMOGENEOUS = 0x40;
     
     /** Processing mode: No specific processing mode active */
     static final int MODE_NONE = 0;
     
     /** Processing mode: Main production mode for generating primary output signals */
-    static final int MODE_MAIN_PROCESSING = 1;
+    static final int MODE_MAIN_PROCESSING = SUPPORT_MAIN_PROCESSING;
     
     /** Processing mode: Slave production mode for generating secondary or derived signals */
-    static final int MODE_SLAVE_PROCESSING = 2; 
+    static final int MODE_SLAVE_PROCESSING = SUPPORT_SLAVE_PROCESSING; 
     
     /** Processing mode: Combined main and slave production modes */
     static final int MODE_MAIN_SLAVE_PROCESSING = MODE_MAIN_PROCESSING | MODE_SLAVE_PROCESSING;
-
+    
     // ========================================================================================================================
     // Slave Processor Interfaces
     // ========================================================================================================================
@@ -197,7 +208,7 @@ public interface ISamplesProcessor extends IReadableSamples,IHierarchicalSamples
      * 
      * @return List of readable samples serving as input sources for this processor
      */
-    List<IReadableSamples> getSources();
+    Map<Object, IReadableSamples> getSources();
 
     /**
      * Returns the current processing mode of this processor.
@@ -247,7 +258,7 @@ public interface ISamplesProcessor extends IReadableSamples,IHierarchicalSamples
      * @param properties Array of property key-value pairs for processor configuration
      * @return 0 if no update required, 1 if monotonous update performed, -1 if update not possible
      */
-    int update(String configuration, String id, String name, String description, String tags, List<IReadableSamples> sources, String[][] properties);
+    int update(String configuration, String id, String name, String description, String tags, Map<Object, IReadableSamples> sources, String[][] properties, int mode);
 
     /**
      * Updates the processor with new input sources.
@@ -259,7 +270,7 @@ public interface ISamplesProcessor extends IReadableSamples,IHierarchicalSamples
      * @param sources New input sources for the processor (format depends on implementation)
      * @return 0 if no update required, 1 if monotonous update performed, -1 if update not possible
      */
-    int update(Object sources);
+    int update(Map<Object, IReadableSamples> sources);
 
     /**
      * Performs a general update operation on the processor.
