@@ -1,0 +1,115 @@
+*Create pages for all Diagrams below starting from no 27 :
+
+    public static String Diagram_Vector = "Vector Diagram";
+    public static String Diagram_Vector_IconId = "diagram-vector";
+        public static String Diagram_Vector_Description = "Displays vector signals, representing multi-bit or multi-channel data for analysis and visualization.";
+    public static String Diagram_Vector_HelpURL = null;
+
+    public static String Diagram_Image = "Image Diagram";
+    public static String Diagram_Image_IconId = "diagram-image";
+        public static String Diagram_Image_Description = "Renders image signals, enabling visualization of pixel or bitmap data within signal traces.";
+    public static String Diagram_Image_HelpURL = null;
+
+    public static String Diagram_Event = "Event Diagram";
+    public static String Diagram_Event_IconId = "diagram-event";
+        public static String Diagram_Event_Description = "Shows event signals, highlighting discrete events, triggers, or markers in signal data.";
+    public static String Diagram_Event_HelpURL = null;
+
+    public static String Diagram_Gantt = "Gantt Diagram";
+    public static String Diagram_Gantt_IconId = "diagram-gantt";
+        public static String Diagram_Gantt_Description = "Visualizes timing and scheduling of events or tasks, useful for protocol and transaction analysis.";
+    public static String Diagram_Gantt_HelpURL = null;
+
+    public static String Diagram_Line = "Line Diagram";
+    public static String Diagram_Line_IconId = "diagram-line";
+        public static String Diagram_Line_Description = "Displays continuous or sampled data as line plots, ideal for analog and time-series signals.";
+    public static String Diagram_Line_HelpURL = null;
+
+    public static String Diagram_Area = "Area Diagram";
+    public static String Diagram_Area_IconId = "diagram-area";
+        public static String Diagram_Area_Description = "Shows data as filled areas under curves, emphasizing magnitude and trends in signal data.";
+    public static String Diagram_Area_HelpURL = null;
+
+    public static String Diagram_Table = "Table Diagram";
+    public static String Diagram_Table_IconId = "diagram-table";
+        public static String Diagram_Table_Description = "Displays signal data in tabular format, supporting structured analysis and comparison of samples.";
+    public static String Diagram_Table_HelpURL = null;
+
+    public static String Diagram_BarChart = "BarChart Diagram";
+    public static String Diagram_BarChart_IconId = "ri-bar-chart-2-line";
+        public static String Diagram_BarChart_Description = "Visualizes categorical or grouped data as bars, useful for comparing values and distributions.";
+    public static String Diagram_BarChart_HelpURL = null;
+
+    public static String Diagram_PieChart = "PieChart Diagram";
+    public static String Diagram_PieChart_IconId = "ri-pie-chart-2-line";
+        public static String Diagram_PieChart_Description = "Displays proportions of categories as pie slices, ideal for visualizing relative distributions.";
+    public static String Diagram_PieChart_HelpURL = null;
+
+    public static String Diagram_LineChart = "LineChart Diagram";
+    public static String Diagram_LineChart_IconId = "ri-line-chart-line";
+        public static String Diagram_LineChart_Description = "Plots data points connected by lines, suitable for trends, time-series, and continuous signals.";
+    public static String Diagram_LineChart_HelpURL = null;
+
+    public static String Diagram_RadarChart = "RadarChart Diagram";
+    public static String Diagram_RadarChart_IconId = "ri-pie-chart-box-line";
+        public static String Diagram_RadarChart_Description = "Displays multivariate data on axes from a central point, useful for comparing multiple variables.";
+    public static String Diagram_RadarChart_HelpURL = null;
+
+
+*Use all properteis that might make sense. I will remove the ones that do not fit.
+
+    static final String PROP_ID_TAGS = "tags";
+    static final String PROP_ID_INTERPOLATED = "interpolated";
+    static final String PROP_ID_ANNOTATED = "annotated";
+    static final String PROP_ID_AXIS = "axis";
+    static final String PROP_ID_SCALE = "scale";
+    static final String PROP_ID_SCALE_FROM = "scaleFrom";
+    static final String PROP_ID_SCALE_TO = "scaleTo";
+    static final String PROP_ID_SCALE_TYPE = "scaleType";
+    static final String PROP_ID_RELATIONS = "relations";
+    static final String PROP_ID_LABELS = "labels";
+    static final String PROP_ID_MULTI_COLOR = "multiColor";
+    static final String PROP_ID_COLORS = "colors";
+    static final String PROP_ID_INCLUDE = "include";
+    static final String PROP_ID_EXCLUDE = "exclude";
+    static final String PROP_ID_GROUPS = "groups";
+    static final String PROP_ID_VALUE_FORMAT = "valueFormat";
+    static final String PROP_ID_COLUMN_VALUE_FORMAT = "columnValueFormat";
+
+    public static String[] VALUE_AXIS_OPTION_LABELS = new String[] { I18n.Axis_Linear, I18n.Axis_Log10 };
+    public Object[] VALUE_AXIS_OPTIONS = new Object[] { IValueAxis.AXIS_TYPE_LINEAR, IValueAxis.AXIS_TYPE_LOG10 };
+
+    static public PropertyModel getPropertyModel(boolean tags, boolean interpolated, boolean annotated, boolean axis, boolean relation,
+            boolean labels, boolean multiColor, boolean include, boolean groups, boolean format, boolean columnFormat) {
+        return new PropertyModel()
+
+                .addIf(tags, PROP_ID_TAGS, true, null, I18n.Diagram_Tags, null, I18n.Diagram_Tags_Description)
+                .addIf(interpolated, PROP_ID_INTERPOLATED, false, null, I18n.Diagram_Interpolated, null, I18n.Diagram_Interpolated_Description)
+                .addIf(annotated, PROP_ID_ANNOTATED, false, null, I18n.Diagram_Annotated, null, I18n.Diagram_Annotated_Description)
+
+                .addIf(axis, PROP_ID_AXIS, true, null, I18n.Diagram_DrawAxis, null, I18n.Diagram_DrawAxis_Description)
+                .addIf(axis, PROP_ID_SCALE, false, null, I18n.Diagram_Scale, null, I18n.Diagram_Scale_Description)
+                .addIf(axis, PROP_ID_SCALE_FROM, 0d, null, null, null, I18n.General_From, null, I18n.Diagram_Scale_Description)
+                .addIf(axis, PROP_ID_SCALE_TO, 1.0d, null, null, null, I18n.General_To, null, I18n.Diagram_Scale_Description)
+                .addIf(axis, PROP_ID_SCALE_TYPE, ValueAxis.AXIS_TYPE_LINEAR, VALUE_AXIS_OPTION_LABELS, null, null, I18n.General_Type, null,
+                        I18n.Diagram_Scale_Description)
+
+                .addIf(relation, PROP_ID_RELATIONS, false, null, I18n.Diagram_Relation, null, I18n.Diagram_Relation_Description)
+                .addIf(labels, PROP_ID_LABELS, false, null, I18n.Diagram_Labels, null, I18n.Diagram_Labels_Description)
+                .addIf(multiColor, PROP_ID_MULTI_COLOR, true, null, I18n.Diagram_Multicolor, null, I18n.Diagram_Multicolor_Description)
+                .addIf(multiColor, PROP_ID_COLORS, null, null, null, I18n.Diagram_Colors, null, I18n.Diagram_Multicolor_Description)
+                .addIf(include, PROP_ID_INCLUDE, null, null, null, I18n.Diagram_Include, null, I18n.Diagram_Include_Description)
+                .addIf(include, PROP_ID_EXCLUDE, null, null, null, I18n.Diagram_Exclude, null, I18n.Diagram_Exclude_Description)
+                .addIf(groups, PROP_ID_GROUPS, true, null, I18n.Diagram_Groups, null, I18n.Diagram_Groups_Description)
+
+                .addIf(format, PROP_ID_VALUE_FORMAT, ISample.FORMAT_DEFAULT, null, null, I18n.Diagram_ValueFormat, null,
+                        I18n.Diagram_ValueFormat_Description)
+                .addIf(columnFormat, PROP_ID_COLUMN_VALUE_FORMAT, ISample.FORMAT_DEFAULT, null, null, I18n.Diagram_ColumnValueFormat, null,
+                        I18n.Diagram_ColumnValueFormat_Description);
+    }
+    
+
+    *Dont touch Supporting.
+
+    *Use 26_logic-diagram.md as template.
+

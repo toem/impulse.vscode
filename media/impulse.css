@@ -911,7 +911,7 @@ html {
 .tlkcomposite.tools:hover  {/*width:25px;transition: width 0s linear 0s;*/}
 .tlkcomposite.tools .tlktoolbar {display:flex;flex-direction:column; justify-content: flex-start;}
 .tlkcomposite.tools .tlkbutton {background-color: var(--de-toem-toolkits-tlk-css-toolbar-background);}
-.tlkcomposite.tools .tlkbutton::before {font: var(--de-toem-toolkits-tlk-css-tree-symbol-font);content:"\ea7c";}
+/*.tlkcomposite.tools .tlkbutton::before {font: var(--de-toem-toolkits-tlk-css-tree-symbol-font);content:"\ea7c";}*/
 .tlkcomposite.tools .tlkbutton:hover {background-color: var(--de-toem-toolkits-tlk-css-panel-hover-background);}
 
 .tlkcomposite.part  {position:absolute;top:0px;left:0px;width:calc(100% - 30px);height:100%;}

@@ -8,15 +8,16 @@ import { ElementFS } from './elementFs';
 import { Assist } from './assist';
 import { Endpoint, AbstractPart } from './abstractPart';
 import { Connection } from './connection';
-import { LmDocTool,LmPartTool,LmChat } from './lmTools';
+import { LmDocTool, LmPartTool, LmChat } from './lmTools';
 
 var backendProcess: any;
 export var ideClient: IdeClient;
 var extensionName: string;
 var extensionPath: string;
-var extensionVersion:string;
-var extensionAbout:string;
+var extensionVersion: string;
+var extensionAbout: string;
 export var debug: number;
+var localHelp: boolean = true;
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -27,13 +28,13 @@ export function activate(context: vscode.ExtensionContext) {
 	extensionName = context.extension.packageJSON.name;
 	extensionPath = context.extensionPath;
 
-	var extensionAbout = fs.readFileSync( path.join(context.extensionPath, "LICENSE.html"), 'utf8');
-	
-	var platformVersion =  context.extension.packageJSON.veresultrsion;
-	var platfromImprint = fs.readFileSync( path.join(context.extensionPath, "IMPRINT.html"), 'utf8');
-	var platformReadme = fs.readFileSync( path.join(context.extensionPath, "README.html"), 'utf8');
-	var platformChangelog = fs.readFileSync( path.join(context.extensionPath, "CHANGELOG.html"), 'utf8');
-	
+	var extensionAbout = fs.readFileSync(path.join(context.extensionPath, "LICENSE.html"), 'utf8');
+
+	var platformVersion = context.extension.packageJSON.veresultrsion;
+	var platfromImprint = fs.readFileSync(path.join(context.extensionPath, "IMPRINT.html"), 'utf8');
+	var platformReadme = fs.readFileSync(path.join(context.extensionPath, "README.html"), 'utf8');
+	var platformChangelog = fs.readFileSync(path.join(context.extensionPath, "CHANGELOG.html"), 'utf8');
+
 	// editors	
 	if (context.extension.packageJSON.contributes && context.extension.packageJSON.contributes.customEditors)
 		for (let customEditor of context.extension.packageJSON.contributes.customEditors)
@@ -51,19 +52,19 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(ElementFS.register(context, extensionName + "Fs"));
 	ElementFS.addDirectory('global', 'prefs://global/de.toem.impulse.base');
 	ElementFS.addDirectory('local', 'prefs://local/de.toem.impulse.base');
-	ElementFS.addDirectory('ws', 'prefs://ws/de.toem.impulse.base');	
+	ElementFS.addDirectory('ws', 'prefs://ws/de.toem.impulse.base');
 
 	// Scripting
 	//Scripting.registerFor(context, "java,(uri) => uri.scheme == extensionName + "Fs" || uri.path.toLowerCase().endsWith(".recJs"));
-	Assist.registerFor(context,"java", (uri) => uri.scheme == extensionName + "Fs" && uri.path.toLowerCase().endsWith(".java") );
-	Assist.registerFor(context,"jx", (uri) => uri.path.toLowerCase().endsWith(".jx") || uri.path.toLowerCase().endsWith(".recjx"));
+	Assist.registerFor(context, "java", (uri) => uri.scheme == extensionName + "Fs" && uri.path.toLowerCase().endsWith(".java"));
+	Assist.registerFor(context, "jx", (uri) => uri.path.toLowerCase().endsWith(".jx") || uri.path.toLowerCase().endsWith(".recjx"));
 
 	// lm tools
-	LmPartTool.register(context, "impulse_fetchSampleTable","samples","de.toem.impulse.parts.samples-");
+	LmPartTool.register(context, "impulse_fetchSampleTable", "samples", "de.toem.impulse.parts.samples-");
 	//LmTools.register(context, "ask_sampleInspector","sample","de.toem.impulse.parts.sample");
 	//LmTools.register(context, "ask_viewer","viewer","de.toem.impulse.editor.records");
-	LmDocTool.register(context, extensionName + "_getHelp","query",extensionName+"/documentation");
-	LmDocTool.register(context, extensionName + "_getHelpContent","docIDs",extensionName+"/documentation");
+	LmDocTool.register(context, extensionName + "_getHelp", "query", extensionName + "/doc");
+	LmDocTool.register(context, extensionName + "_getHelpContent", "docIDs", extensionName + "/doc");
 
 	//LmChat.register(context, "chat_impulse","impulse","impulse/documentation");
 
@@ -74,15 +75,19 @@ export function activate(context: vscode.ExtensionContext) {
 		let affected = event.affectsConfiguration(extensionName);
 		if (affected) {
 			console.log('affected');
-
+			const config = vscode.workspace.getConfiguration(extensionName);
+			//const chelp = config.get('help');
+			//localHelp = (chelp == 'Local');
 		}
 	})
 
-	
+
 	// retrieve values
 	const cjava = config.get('java');
 	const cport = config.get('port');
 	const cxdebugger = config.get('xdebugger');
+	//const chelp = config.get('help');
+	//localHelp = (chelp == 'Local');
 
 	const options = [
 		"User",
@@ -104,19 +109,19 @@ export function activate(context: vscode.ExtensionContext) {
 	const cPreferenceLocationParts: any = options.indexOf(config.get('preferenceLocation.parts') || "");
 	const cPreferenceLocationCommands: any = options.indexOf(config.get('preferenceLocation.commands') || "");
 	const preferenceScopes = {
-		"de.toem.impulse.base/serializers": cPreferenceLocationSerializer, 
+		"de.toem.impulse.base/serializers": cPreferenceLocationSerializer,
 		"de.toem.impulse.base/adaptors": cPreferenceLocationAdaptors,
 		"de.toem.impulse.base/producers": cPreferenceLocationProducers,
-		"de.toem.impulse.base/views": cPreferenceLocationViews, 
+		"de.toem.impulse.base/views": cPreferenceLocationViews,
 		"de.toem.impulse.base/processors": cPreferenceLocationProcessors,
-		"de.toem.impulse.base/diagrams": cPreferenceLocationDiagrams, 
+		"de.toem.impulse.base/diagrams": cPreferenceLocationDiagrams,
 		"de.toem.impulse.base/search": cPreferenceLocationSearch,
 		"de.toem.impulse.base/formatters": cPreferenceLocationFormatters,
 
-		"de.toem.impulse.base/templates": cPreferenceLocationTemplates, 
-		"de.toem.impulse.base/licenses": cPreferenceLocationLicenses, 
-		"de.toem.impulse.base/colors": cPreferenceLocationColors, 
-		"de.toem.impulse.base/parts": cPreferenceLocationParts, 
+		"de.toem.impulse.base/templates": cPreferenceLocationTemplates,
+		"de.toem.impulse.base/licenses": cPreferenceLocationLicenses,
+		"de.toem.impulse.base/colors": cPreferenceLocationColors,
+		"de.toem.impulse.base/parts": cPreferenceLocationParts,
 		"de.toem.impulse.base/commands": cPreferenceLocationCommands
 	}
 
@@ -167,7 +172,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const cp = require('child_process')
 		let gotPort = false;
 		backendProcess = cp.exec(cmd, {
-			cdw: serverPath.fsPath,maxBuffer: undefined
+			cdw: serverPath.fsPath, maxBuffer: undefined
 		}, (error: Error, stdout: any, stderr: any) => {
 			if (error) {
 				vscode.window.showErrorMessage("Could not start " + extensionName + " server:" + error.message, "Open Preferences").then((ret) => {
@@ -201,7 +206,7 @@ export function activate(context: vscode.ExtensionContext) {
 	var globalStorage: string = context.globalStorageUri ? context.globalStorageUri.toString() + '/preferences/' : "";
 	var localStorage: string = context.storageUri ? context.storageUri.toString() + '/preferences/' : "";
 	var workspaceStorage: string = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.toString() + '/.impulse/' : "";
-	ideClient.send({ id: 0, op: 'init', x0: preferenceScopes, s1: globalStorage, s2: localStorage, s3: workspaceStorage ,s4:extensionAbout,s5:platfromImprint,s6:platformReadme,s7:platformChangelog});
+	ideClient.send({ id: 0, op: 'init', x0: preferenceScopes, s1: globalStorage, s2: localStorage, s3: workspaceStorage, s4: extensionAbout, s5: platfromImprint, s6: platformReadme, s7: platformChangelog });
 
 	// commands
 
@@ -262,16 +267,16 @@ export function activate(context: vscode.ExtensionContext) {
 				} else {
 					vscode.window.showErrorMessage('Failed to read file: Unknown error');
 				}
-			}			
-		}else {		
+			}
+		} else {
 			const activeEditor = vscode.window.activeTextEditor;
 			if (activeEditor) {
 				label = path.basename(activeEditor.document.fileName);
 				expr = activeEditor.document.getText(activeEditor.selection.isEmpty ? undefined : activeEditor.selection);
 				pwd = path.dirname(activeEditor.document.fileName);
 			}
-		}	
-		ideClient.send({ id: 0, op: 'execute', s0: label,s1:expr, s2:pwd, i3:1});
+		}
+		ideClient.send({ id: 0, op: 'execute', s0: label, s1: expr, s2: pwd, i3: 1 });
 
 	}));
 
@@ -353,27 +358,27 @@ class IdeClient extends Endpoint {
 					case "Information": {
 						const title: string = message.s1 + ": " + message.s2;
 						if (message.x3)
-						vscode.window.showInformationMessage(title, ...(message.x2)).then((ret) => {
-							endpoint.send({ id: message.id, op: message.op, i0: message.i0, i1: message.x3.indexOf(ret) });
-						});
+							vscode.window.showInformationMessage(title, ...(message.x2)).then((ret) => {
+								endpoint.send({ id: message.id, op: message.op, i0: message.i0, i1: message.x3.indexOf(ret) });
+							});
 						else vscode.window.showInformationMessage(title);
 					}
 						break;
 					case "Warning": {
 						const title: string = message.s1 + ": " + message.s2;
 						if (message.x3)
-						vscode.window.showWarningMessage(title, ...(message.x3)).then((ret) => {
-							endpoint.send({ id: message.id, op: message.op, i0: message.i0, i1: message.x3.indexOf(ret) });
-						});
+							vscode.window.showWarningMessage(title, ...(message.x3)).then((ret) => {
+								endpoint.send({ id: message.id, op: message.op, i0: message.i0, i1: message.x3.indexOf(ret) });
+							});
 						else vscode.window.showWarningMessage(title);
 					}
 						break;
 					case "Error": {
 						const title: string = message.s1 + ": " + message.s2;
 						if (message.x3)
-						vscode.window.showErrorMessage(title, ...(message.x3)).then((ret) => {
-							endpoint.send({ id: message.id, op: message.op, i0: message.i0, i1: message.x3.indexOf(ret) });
-						});
+							vscode.window.showErrorMessage(title, ...(message.x3)).then((ret) => {
+								endpoint.send({ id: message.id, op: message.op, i0: message.i0, i1: message.x3.indexOf(ret) });
+							});
 						else vscode.window.showErrorMessage(title);
 					}
 						break;
@@ -498,15 +503,49 @@ class IdeClient extends Endpoint {
 						if (message.s0 == "de.toem.help") {
 							let url = message.s3;
 							if (url && url.startsWith('help://')) {
-								// Replace help:// with local path to documentation folder
-								const docPath = path.join(extensionPath, 'impulse', 'documentation');
-								const localPath = url.replace('help://', `file://${docPath}/`);
-								
-								// Use markdown preview for .md files
-								if (localPath.toLowerCase().endsWith('.md')) {
+
+								// if url contains help://impulse-extension/eda-waveform/vcd-reader'
+
+								if (localHelp) {
+
+									var localPath = "";
+									// Extract extension name and relative path
+									const match = url.match(/^help:\/\/impulse-extension\/([^\/]+)\/(.+)$/);
+									if (match) {
+										const extName = match[1];
+										const relPath = match[2];
+										const ext = vscode.extensions.getExtension(extName);
+										if (ext) {
+											// Replace help://impulse-extension/ with local path to impulse documentation folder of the extension
+											const docPath = path.join(ext.extensionPath, 'doc');
+											localPath = `file://${path.join(docPath, relPath)}`;
+										} else {
+											const docPath = path.join(extensionPath, '..', 'de.toem.impulse.extension.' + extName, 'doc');
+											localPath = `file://${path.join(docPath, relPath)}`;
+										}
+									} else {
+
+										// Replace help:// with local path to impulse documentation folder
+										const docPath = path.join(extensionPath, 'impulse', 'doc');
+										localPath = url.replace('help://', `file://${docPath}/`);
+									}
+									// add .md at the end or if fragment '#' add before
+									const hashIndex = localPath.indexOf('#');
+									if (hashIndex >= 0) {
+										const base = localPath.substring(0, hashIndex);
+										if (!base.toLowerCase().endsWith('.md')) {
+											localPath = base + '.md' + localPath.substring(hashIndex);
+										}
+									} else if (!localPath.toLowerCase().endsWith('.md')) {
+										localPath = localPath + '.md';
+									}
+									// Use markdown preview for local .md files
 									const uri = vscode.Uri.parse(localPath);
-									vscode.commands.executeCommand('markdown.showLockedPreviewToSide', uri);
-								} else {
+									vscode.commands.executeCommand('markdown.showPreviewToSide', uri);
+								}
+								// external html help
+								else {
+									let localPath = url.replace(/^help:\/\//, 'https://toem.io/resources/');
 									vscode.commands.executeCommand("simpleBrowser.show", localPath);
 								}
 							} else {
@@ -546,7 +585,7 @@ class IdeClient extends Endpoint {
 					case "CbText": {
 						vscode.env.clipboard.writeText(this.cbText = message.s0);
 					}
-						break;					
+						break;
 				}
 			}
 

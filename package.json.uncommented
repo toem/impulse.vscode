@@ -38,4 +38,14 @@
 		"impulse/plugins/de.toem.impulse.extension.vp_3.0.1.jar",
 		"impulse/plugins/de.toem.impulse.extension.log_3.0.1.jar"
 	]
-
+,
+					"impulse.help": {
+						"order": 3,
+						"type": "string",
+						"enum": [
+							"Online",
+							"Local"
+						],
+						"default": "Local",
+						"description": "Choose the help source. When 'Online', impulse uses online HTML help from the toem.io server; when 'Local', it uses the local Markdown help files bundled with the extension."
+					}
