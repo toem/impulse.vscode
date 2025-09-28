@@ -11,7 +11,7 @@ impulse is a comprehensive and powerful tool designed to integrate seamlessly wi
 
 **Unless otherwise indicated below, the Content is provided to you under the terms and conditions of the **Impulse End-User License**.
     
-A copy of the License is available in the "about_files" sub-folder (eula.txt).
+A copy of the License is available in the "about_files" sub-folder: [eula.txt](about_files/eula.txt)
 
 #### 1. eclipse equinox and other EPL plugins
 
