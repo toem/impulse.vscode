@@ -79,6 +79,7 @@ impulse offers a wide range of data formats and external interfaces through sign
 * Select a file to view.
 * Use the context menus 'Open with' and select the impulse Viewer (You may select the impulse Viewer as the default option at this point).
 * On activation, it may take a while (a few secs) to load the backend java server. The OS may ask you for approval.
+* Accept the license.
 * Create a new view.
 * DnD signals into the view. 
 * Have fun !
@@ -88,19 +89,14 @@ impulse offers a wide range of data formats and external interfaces through sign
 **Our guiding principle for this and all subsequent versions is:**
 
 * Non-commercial use is free.
-* Commercial use requires a commercial license key.
-* This beta version does not require an license keys.
+* Commercial use requires a commercial license (including a free plan).
 
 see [Licensing options](https://toem.io/index.php/pricing)
 
-## Requirements
-
-- impulse requires a java Runtime environment (at least JRE8). For communication to the osgi impulse server, a socket interface is used.
-- vscode >= 1.95.0
 
 ## Documentation
  
-Enter [https://toem.io/index.php/resources](https://toem.io/index.php/resources) for more information about impulse. 
+Enter [https://toem.io/resources/](https://toem.io/resources/) for more information about impulse. 
 
 ## Preferences
 
