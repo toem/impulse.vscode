@@ -30,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	var extensionAbout = fs.readFileSync(path.join(context.extensionPath, "LICENSE.html"), 'utf8');
 
-	var platformVersion = context.extension.packageJSON.veresultrsion;
+	var platformVersion = context.extension.packageJSON.version;
 	var platfromImprint = fs.readFileSync(path.join(context.extensionPath, "IMPRINT.html"), 'utf8');
 	var platformReadme = fs.readFileSync(path.join(context.extensionPath, "README.html"), 'utf8');
 	var platformChangelog = fs.readFileSync(path.join(context.extensionPath, "CHANGELOG.html"), 'utf8');
@@ -500,34 +500,42 @@ class IdeClient extends Endpoint {
 						break;
 
 					case "Browser": {
+						console.log("[Browser] message.s0:", message.s0, "message.s3:", message.s3);
 						if (message.s0 == "de.toem.help") {
 							let url = message.s3;
+							console.log("[Browser] de.toem.help url:", url);
 							if (url && url.startsWith('help://')) {
 
 								// if url contains help://impulse-extension/eda-waveform/vcd-reader'
+								console.trace("[Browser] help:// detected, localHelp:", localHelp);
 
 								if (localHelp) {
 
 									var localPath = "";
 									// Extract extension name and relative path
 									const match = url.match(/^help:\/\/impulse-extension\/([^\/]+)\/(.+)$/);
+									console.trace("[Browser] match:", match);
 									if (match) {
 										const extName = match[1];
 										const relPath = match[2];
-										const ext = vscode.extensions.getExtension(extName);
+										const ext = vscode.extensions.getExtension("toem-de."+extName);
+										console.trace("[Browser] extName:", extName, "relPath:", relPath, "ext:", ext);
 										if (ext) {
 											// Replace help://impulse-extension/ with local path to impulse documentation folder of the extension
 											const docPath = path.join(ext.extensionPath, 'doc');
 											localPath = `file://${path.join(docPath, relPath)}`;
+											console.trace("[Browser] localPath (extension):", localPath);
 										} else {
 											const docPath = path.join(extensionPath, '..', 'de.toem.impulse.extension.' + extName, 'doc');
 											localPath = `file://${path.join(docPath, relPath)}`;
+											console.trace("[Browser] localPath (fallback):", localPath);
 										}
 									} else {
 
 										// Replace help:// with local path to impulse documentation folder
 										const docPath = path.join(extensionPath, 'impulse', 'doc');
 										localPath = url.replace('help://', `file://${docPath}/`);
+										console.trace("[Browser] localPath (default):", localPath);
 									}
 									// add .md at the end or if fragment '#' add before
 									const hashIndex = localPath.indexOf('#');
@@ -535,25 +543,32 @@ class IdeClient extends Endpoint {
 										const base = localPath.substring(0, hashIndex);
 										if (!base.toLowerCase().endsWith('.md')) {
 											localPath = base + '.md' + localPath.substring(hashIndex);
+											console.trace("[Browser] localPath (hash):", localPath);
 										}
 									} else if (!localPath.toLowerCase().endsWith('.md')) {
 										localPath = localPath + '.md';
+										console.trace("[Browser] localPath (.md appended):", localPath);
 									}
 									// Use markdown preview for local .md files
 									const uri = vscode.Uri.parse(localPath);
+									console.trace("[Browser] markdown.showPreviewToSide uri:", uri.toString());
 									vscode.commands.executeCommand('markdown.showPreviewToSide', uri);
 								}
 								// external html help
 								else {
 									let localPath = url.replace(/^help:\/\//, 'https://toem.io/resources/');
+									console.trace("[Browser] external html help localPath:", localPath);
 									vscode.commands.executeCommand("simpleBrowser.show", localPath);
 								}
 							} else {
 								// Use markdown preview for external .md files too
+								console.trace("[Browser] url does not start with help://, url:", url);
 								if (url.toLowerCase().endsWith('.md')) {
 									const uri = vscode.Uri.parse(url);
+									console.trace("[Browser] markdown.showPreview uri:", uri.toString());
 									vscode.commands.executeCommand('markdown.showPreview', uri);
 								} else {
+									console.trace("[Browser] simpleBrowser.show url:", url);
 									vscode.commands.executeCommand("simpleBrowser.show", url);
 								}
 							}

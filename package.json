@@ -8,7 +8,7 @@
 		"name": "Thomas Haber"
 	},
 	"license": "See LICENSE.md",
-	"version": "0.9.37",
+	"version": "0.9.38",
 	"engines": {
 		"vscode": "^1.95.0"
 	},

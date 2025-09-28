@@ -1,5 +1,5 @@
 out/
-vsix/
+vsx/
 *.vsix
 .git/
 media/*dev*
