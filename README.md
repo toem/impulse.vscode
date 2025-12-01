@@ -91,7 +91,7 @@ impulse offers a wide range of data formats and external interfaces through sign
 * Non-commercial use is free.
 * Commercial use requires a commercial license (including a free plan).
 * see [LICENSE.md](LICENSE.md)
-* see [Plans](https://toem.io/index.php/pricing)
+* see [Plans](https://toem.io/pricing)
 
 
 ## Documentation

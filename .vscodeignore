@@ -1,4 +1,4 @@
-vsx
+vsx/
 .git/
 media/*dev*
 impulse/plugins/configuration/org.eclipse.osgi

@@ -4,11 +4,11 @@ import * as vscode from 'vscode';
 import * as WebSocket from 'ws';
 import { EditPartProvider } from './editorPart';
 import { ViewPartProvider } from './viewPart';
-import { ElementFS } from './elementFs';
+import { ElementDocFS } from './elementFs';
 import { Assist } from './assist';
 import { Endpoint, AbstractPart } from './abstractPart';
 import { Connection } from './connection';
-import { LmDocTool, LmPartTool, LmChat } from './lmTools';
+//import { LmDocTool, LmPartTool, LmChat } from './lmTools';
 
 var backendProcess: any;
 export var ideClient: IdeClient;
@@ -17,7 +17,6 @@ var extensionPath: string;
 var extensionVersion: string;
 var extensionAbout: string;
 export var debug: number;
-var localHelp: boolean = true;
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -49,10 +48,11 @@ export function activate(context: vscode.ExtensionContext) {
 					context.subscriptions.push(ViewPartProvider.register(context, view.id));
 
 	// element fs
-	context.subscriptions.push(ElementFS.register(context, extensionName + "Fs"));
-	ElementFS.addDirectory('global', 'prefs://global/de.toem.impulse.base');
-	ElementFS.addDirectory('local', 'prefs://local/de.toem.impulse.base');
-	ElementFS.addDirectory('ws', 'prefs://ws/de.toem.impulse.base');
+	context.subscriptions.push(ElementDocFS.register(context, extensionName + "Fs"));
+	ElementDocFS.addDirectory('global', 'prefs://global/de.toem.impulse.base/',':/global/' ,ElementDocFS.CONTENT_PREF);
+	ElementDocFS.addDirectory('local', 'prefs://local/de.toem.impulse.base/',':/local/' ,ElementDocFS.CONTENT_PREF);
+	ElementDocFS.addDirectory('ws', 'prefs://ws/de.toem.impulse.base/', ':/ws/' ,ElementDocFS.CONTENT_PREF);
+	ElementDocFS.addDirectory('help', 'help:///',':/help/' ,ElementDocFS.CONTENT_DOC);
 
 	// Scripting
 	//Scripting.registerFor(context, "java,(uri) => uri.scheme == extensionName + "Fs" || uri.path.toLowerCase().endsWith(".recJs"));
@@ -60,11 +60,11 @@ export function activate(context: vscode.ExtensionContext) {
 	Assist.registerFor(context, "jx", (uri) => uri.path.toLowerCase().endsWith(".jx") || uri.path.toLowerCase().endsWith(".recjx"));
 
 	// lm tools
-	LmPartTool.register(context, "impulse_fetchSampleTable", "samples", "de.toem.impulse.parts.samples-");
-	//LmTools.register(context, "ask_sampleInspector","sample","de.toem.impulse.parts.sample");
-	//LmTools.register(context, "ask_viewer","viewer","de.toem.impulse.editor.records");
-	LmDocTool.register(context, extensionName + "_getHelp", "query", extensionName + "/doc");
-	LmDocTool.register(context, extensionName + "_getHelpContent", "docIDs", extensionName + "/doc");
+	//LmPartTool.register(context, "impulse_fetchSampleTable", "samples", "de.toem.impulse.parts.samples-");
+	////LmTools.register(context, "ask_sampleInspector","sample","de.toem.impulse.parts.sample");
+	////LmTools.register(context, "ask_viewer","viewer","de.toem.impulse.editor.records");
+	//LmDocTool.register(context, extensionName + "_getHelp", "query", extensionName + "/doc");
+	//LmDocTool.register(context, extensionName + "_getHelpContent", "docIDs", extensionName + "/doc");
 
 	//LmChat.register(context, "chat_impulse","impulse","impulse/documentation");
 
@@ -189,6 +189,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 					Connection.openAll(host, port);
 					gotPort = true;
+
+					registerMcp(host, port);
 				}
 			}
 			console.log(data);
@@ -199,6 +201,7 @@ export function activate(context: vscode.ExtensionContext) {
 	} else {
 		port = 5055;
 		Connection.openAll(host, port);
+		registerMcp(host, port);
 	}
 
 	// start IDE connection
@@ -234,9 +237,9 @@ export function activate(context: vscode.ExtensionContext) {
 */
 
 	// preference Fs open
-	context.subscriptions.push(vscode.commands.registerCommand("de.toem.impulse.commands.preferenceFs.open", (focus: any, selection: vscode.Uri[]) => {
+	context.subscriptions.push(vscode.commands.registerCommand("de.toem.impulse.commands.elementFs.open", (focus: any, selection: vscode.Uri[]) => {
 
-		vscode.workspace.updateWorkspaceFolders(0, 0, { uri: vscode.Uri.parse(ElementFS.scheme + ':/'), name: ElementFS.scheme });
+		vscode.workspace.updateWorkspaceFolders(0, 0, { uri: vscode.Uri.parse(ElementDocFS.scheme + ':/'), name: ElementDocFS.scheme });
 		//vscode.commands.executeCommand('workbench.action.reloadWindow');
 
 	}));
@@ -255,17 +258,49 @@ export function activate(context: vscode.ExtensionContext) {
 		var pwd: string = '';
 
 		if (selection && selection.length > 0) {
-			const uri = selection[0];
-			try {
-				const fileData = fs.readFileSync(uri.fsPath, 'utf8');
-				expr = fileData;
-				label = path.basename(uri.fsPath);
-				pwd = path.dirname(uri.fsPath);
-			} catch (err) {
-				if (err instanceof Error) {
-					vscode.window.showErrorMessage(`Failed to read file: ${err.message}`);
-				} else {
-					vscode.window.showErrorMessage('Failed to read file: Unknown error');
+			// Process each selected file or folder separately
+			for (let i = 0; i < selection.length; i++) {
+				const uri = selection[i];
+				try {
+					const stat = fs.statSync(uri.fsPath);
+					
+					if (stat.isDirectory()) {
+						// Handle folder: process all .jx files in direct children
+						const files = fs.readdirSync(uri.fsPath);
+						for (const file of files) {
+							if (file.toLowerCase().endsWith('.jx')) {
+								const filePath = path.join(uri.fsPath, file);
+								try {
+									const fileData = fs.readFileSync(filePath, 'utf8');
+									const fileLabel = file;
+									const filePwd = uri.fsPath;
+									
+									// Send separate execute command for each .jx file
+									ideClient.send({ id: 0, op: 'execute', s0: fileLabel, s1: fileData, s2: filePwd, i3: 1 });
+								} catch (err) {
+									if (err instanceof Error) {
+										vscode.window.showErrorMessage(`Failed to read file ${file}: ${err.message}`);
+									} else {
+										vscode.window.showErrorMessage(`Failed to read file ${file}: Unknown error`);
+									}
+								}
+							}
+						}
+					} else if (stat.isFile()) {
+						// Handle file: process normally
+						const fileData = fs.readFileSync(uri.fsPath, 'utf8');
+						const fileLabel = path.basename(uri.fsPath);
+						const filePwd = path.dirname(uri.fsPath);
+						
+						// Send separate execute command for each file
+						ideClient.send({ id: 0, op: 'execute', s0: fileLabel, s1: fileData, s2: filePwd, i3: 1 });
+					}
+				} catch (err) {
+					if (err instanceof Error) {
+						vscode.window.showErrorMessage(`Failed to process ${path.basename(uri.fsPath)}: ${err.message}`);
+					} else {
+						vscode.window.showErrorMessage(`Failed to process ${path.basename(uri.fsPath)}: Unknown error`);
+					}
 				}
 			}
 		} else {
@@ -274,9 +309,10 @@ export function activate(context: vscode.ExtensionContext) {
 				label = path.basename(activeEditor.document.fileName);
 				expr = activeEditor.document.getText(activeEditor.selection.isEmpty ? undefined : activeEditor.selection);
 				pwd = path.dirname(activeEditor.document.fileName);
+				ideClient.send({ id: 0, op: 'execute', s0: label, s1: expr, s2: pwd, i3: 1 });
 			}
 		}
-		ideClient.send({ id: 0, op: 'execute', s0: label, s1: expr, s2: pwd, i3: 1 });
+
 
 	}));
 
@@ -307,6 +343,31 @@ export function deactivate() {
 		ideClient.disconnect();
 
 	console.log('deactivated');
+}
+
+export function registerMcp(host: string, port: number){
+/*
+    const lm = (vscode as any).lm;
+
+    if (lm?.registerMcpServerDefinitionProvider) {
+        lm.registerMcpServerDefinitionProvider("de.toem.impulse.mcp-provider", {
+            provideMcpServerDefinitions() {
+                return [
+                    {
+                        id: "impulse",
+                        label: "impulse MCP Server",
+                        type: "http",
+                        uri: vscode.Uri.parse(`http://${host}:${port}/mcp`),
+						headers: {}
+                    }
+                ];
+            }
+        });
+        console.log("HTTP MCP provider registered.");
+    } else {
+        console.warn("MCP API not available in this version of VS Code.");
+    }	
+*/
 }
 
 class IdeClient extends Endpoint {
@@ -346,8 +407,8 @@ class IdeClient extends Endpoint {
 		if (message.id == -11 && message.op != "#")
 			this.handleIde(this, message);
 
-		if (message.id == ElementFS.ENDPOINT_ID && message.op != "#")
-			ElementFS.instance.handle(this, message);
+		if (message.id == ElementDocFS.ENDPOINT_ID && message.op != "#")
+			ElementDocFS.instance.handle(this, message);
 	}
 
 	public handleIde(endpoint: Endpoint, message: any) {
@@ -418,7 +479,18 @@ class IdeClient extends Endpoint {
 						break;
 
 					case "File": {
-						vscode.window.showOpenDialog({ title: message.s1, canSelectFolders: false, canSelectFiles: true }).then((ret) => {
+						const options: vscode.OpenDialogOptions = {
+							title: message.s1,
+							canSelectFolders: false,
+							canSelectFiles: true
+						};
+						
+						// Set default path if provided
+						if (message.s2) {
+							options.defaultUri = vscode.Uri.file(message.s2);
+						}
+						
+						vscode.window.showOpenDialog(options).then((ret) => {
 							var path: string | null = ret ? ret[0].path : null;
 							endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: path });
 						});
@@ -426,7 +498,18 @@ class IdeClient extends Endpoint {
 						break;
 
 					case "Folder": {
-						vscode.window.showOpenDialog({ title: message.s1, canSelectFolders: true, canSelectFiles: false }).then((ret) => {
+						const options: vscode.OpenDialogOptions = {
+							title: message.s1,
+							canSelectFolders: true,
+							canSelectFiles: false
+						};
+						
+						// Set default path if provided
+						if (message.s2) {
+							options.defaultUri = vscode.Uri.file(message.s2);
+						}
+						
+						vscode.window.showOpenDialog(options).then((ret) => {
 							var path: string | null = ret ? ret[0].path : null;
 							endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: path });
 						});
@@ -485,7 +568,7 @@ class IdeClient extends Endpoint {
 
 						var uri: vscode.Uri = vscode.Uri.parse(message.s0);
 						if (uri && uri.scheme != 'file')
-							uri = ElementFS.mapToFsUri(message.s0);
+							uri = ElementDocFS.mapToFsUri(message.s0);
 						if (uri)
 							vscode.window.showTextDocument(uri, {}).then((ret) => {
 								ret
@@ -502,80 +585,29 @@ class IdeClient extends Endpoint {
 					case "Browser": {
 						console.log("[Browser] message.s0:", message.s0, "message.s3:", message.s3);
 						if (message.s0 == "de.toem.help") {
-							let url = message.s3;
-							console.log("[Browser] de.toem.help url:", url);
-							if (url && url.startsWith('help://')) {
+							let loc = message.s3;
+							console.log("[Browser] de.toem.help url:", loc);
+							if (loc && loc.startsWith('help:')) {
+								uri = ElementDocFS.mapToFsUri(loc);
+								uri = uri.with({ path: uri.path+".md" });
+								console.trace("[Browser] markdown.showPreviewToSide uri:", uri.toString());
+								vscode.commands.executeCommand('markdown.showPreviewToSide', uri);
 
-								// if url contains help://impulse-extension/eda-waveform/vcd-reader'
-								console.trace("[Browser] help:// detected, localHelp:", localHelp);
-
-								if (localHelp) {
-
-									var localPath = "";
-									// Extract extension name and relative path
-									const match = url.match(/^help:\/\/impulse-extension\/([^\/]+)\/(.+)$/);
-									console.trace("[Browser] match:", match);
-									if (match) {
-										const extName = match[1];
-										const relPath = match[2];
-										const ext = vscode.extensions.getExtension("toem-de."+extName);
-										console.trace("[Browser] extName:", extName, "relPath:", relPath, "ext:", ext);
-										if (ext) {
-											// Replace help://impulse-extension/ with local path to impulse documentation folder of the extension
-											const docPath = path.join(ext.extensionPath, 'doc');
-											localPath = `file://${path.join(docPath, relPath)}`;
-											console.trace("[Browser] localPath (extension):", localPath);
-										} else {
-											const docPath = path.join(extensionPath, '..', 'de.toem.impulse.extension.' + extName, 'doc');
-											localPath = `file://${path.join(docPath, relPath)}`;
-											console.trace("[Browser] localPath (fallback):", localPath);
-										}
-									} else {
-
-										// Replace help:// with local path to impulse documentation folder
-										const docPath = path.join(extensionPath, 'impulse', 'doc');
-										localPath = url.replace('help://', `file://${docPath}/`);
-										console.trace("[Browser] localPath (default):", localPath);
-									}
-									// add .md at the end or if fragment '#' add before
-									const hashIndex = localPath.indexOf('#');
-									if (hashIndex >= 0) {
-										const base = localPath.substring(0, hashIndex);
-										if (!base.toLowerCase().endsWith('.md')) {
-											localPath = base + '.md' + localPath.substring(hashIndex);
-											console.trace("[Browser] localPath (hash):", localPath);
-										}
-									} else if (!localPath.toLowerCase().endsWith('.md')) {
-										localPath = localPath + '.md';
-										console.trace("[Browser] localPath (.md appended):", localPath);
-									}
-									// Use markdown preview for local .md files
-									const uri = vscode.Uri.parse(localPath);
-									console.trace("[Browser] markdown.showPreviewToSide uri:", uri.toString());
-									vscode.commands.executeCommand('markdown.showPreviewToSide', uri);
-								}
-								// external html help
-								else {
-									let localPath = url.replace(/^help:\/\//, 'https://toem.io/resources/');
-									console.trace("[Browser] external html help localPath:", localPath);
-									vscode.commands.executeCommand("simpleBrowser.show", localPath);
-								}
 							} else {
 								// Use markdown preview for external .md files too
-								console.trace("[Browser] url does not start with help://, url:", url);
-								if (url.toLowerCase().endsWith('.md')) {
-									const uri = vscode.Uri.parse(url);
+
+								if (loc.toLowerCase().endsWith('.md')) {
+									const uri = vscode.Uri.parse(loc);
 									console.trace("[Browser] markdown.showPreview uri:", uri.toString());
 									vscode.commands.executeCommand('markdown.showPreview', uri);
 								} else {
-									console.trace("[Browser] simpleBrowser.show url:", url);
-									vscode.commands.executeCommand("simpleBrowser.show", url);
+									console.trace("[Browser] simpleBrowser.show url:", loc);
+									vscode.commands.executeCommand("simpleBrowser.show", loc);
 								}
 							}
 						}
 					}
 						break;
-
 					case "View": {
 						vscode.commands.executeCommand(message.s0 + '.focus');
 					}
@@ -595,6 +627,16 @@ class IdeClient extends Endpoint {
 
 						if (this.outputChannels.get(message.s0))
 							this.outputChannels.get(message.s0)?.appendLine(message.s1);
+					}
+						break;
+						
+					case "Terminal": {
+						const folderUri = vscode.Uri.file(message.s0);
+						vscode.window.createTerminal({
+							cwd: folderUri.fsPath,
+							name: message.s1 || "impulse Terminal"
+						}).show();
+						
 					}
 						break;
 					case "CbText": {

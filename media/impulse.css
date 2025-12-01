@@ -793,6 +793,18 @@ h6 {
 .tlktable  .header .resize  {border-right: 2px solid var(--de-toem-toolkits-tlk-css-button-hover-background);}
 .tlktable  .header .check { overflow: hidden;font: var(--de-toem-toolkits-tlk-css-table-symbol-font);content: var(--de-toem-toolkits-tlk-css-table-checked-content); }
 
+.tlktable.scrolled  .header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -8px; /* move shadow below the element */
+  width: 100%;
+  height: 8px; /* how tall the shadow looks */
+  pointer-events: none;
+  background: linear-gradient(to bottom,  rgba(0, 0, 0, 0.7), transparent);
+  z-index: 1; 
+}
+
 .tlktable .rows  {padding:1px;}
 .tlktable .row {padding:1px;}
 .tlktable .row.selected  {color: var(--de-toem-toolkits-tlk-css-list-inactive-selection-foreground); background-color: var(--de-toem-toolkits-tlk-css-list-inactive-selection-background);}

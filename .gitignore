@@ -1,0 +1,14 @@
+out/
+vsx/
+*.vsix
+.git/
+.gitignore
+media/*dev*
+impulse/configuration/org.eclipse.osgi
+impulse/plugins/configuration/org.eclipse.osgi
+impulse/plugins/configuration/*.log
+media/links
+node_modules/
+.impulse/
+.vscode/
+scripts/

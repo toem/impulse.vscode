@@ -3,7 +3,7 @@ import * as querystring from 'querystring';
 import { TextDecoder, TextEncoder } from 'util';
 import * as vscode from 'vscode';
 import { ideClient } from './extension';
-import { ElementFS } from './elementFs';
+import { ElementDocFS } from './elementFs';
 
 export class Assist {
 
@@ -22,7 +22,7 @@ export class Assist {
                     return new Promise<vscode.CompletionItem[]>((resolve, reject) => {
 
                         if (ideClient)
-                            ideClient.request({ id: Assist.ENDPOINT_ID, op: "Completions", s1: ElementFS.mapFromFsUri(document.uri), i2: document.offsetAt(position), s3: document.getText(),s5:document.uri,s6:language }, (response) => {
+                            ideClient.request({ id: Assist.ENDPOINT_ID, op: "Completions", s1: ElementDocFS.mapFromFsUri(document.uri), i2: document.offsetAt(position), s3: document.getText(),s5:document.uri,s6:language }, (response) => {
 
                                 if (response.x1) {
 
@@ -66,7 +66,7 @@ export class Assist {
                             ideClient.request({
                                 id: Assist.ENDPOINT_ID, 
                                 op: "Definition", 
-                                s1: ElementFS.mapFromFsUri(document.uri), 
+                                s1: ElementDocFS.mapFromFsUri(document.uri), 
                                 i2: document.offsetAt(position), 
                                 s3: document.getText(),
                                 s5:document.uri,
@@ -100,7 +100,7 @@ export class Assist {
                             ideClient.request({
                                 id: Assist.ENDPOINT_ID,
                                 op: "References",
-                                s1: ElementFS.mapFromFsUri(document.uri),
+                                s1: ElementDocFS.mapFromFsUri(document.uri),
                                 i2: document.offsetAt(position),
                                 s3: document.getText(),
                                 b1: context.includeDeclaration, // Whether to include the declaration in results
@@ -138,7 +138,7 @@ export class Assist {
                 if (isvalid(document.uri))
                     return new Promise<vscode.Hover>((resolve, reject) => {
 
-                        ideClient.request({ id: Assist.ENDPOINT_ID, op: "Hover", s1: ElementFS.mapFromFsUri(document.uri), i2: document.offsetAt(position), s3: document.getText(), s5: document.uri, s6: language }, (response) => {
+                        ideClient.request({ id: Assist.ENDPOINT_ID, op: "Hover", s1: ElementDocFS.mapFromFsUri(document.uri), i2: document.offsetAt(position), s3: document.getText(), s5: document.uri, s6: language }, (response) => {
 
                             if (response.s1) {
                                 let md = Assist.createMarkdownString(response.s1);
@@ -162,7 +162,7 @@ export class Assist {
                             ideClient.request({
                                 id: Assist.ENDPOINT_ID,
                                 op: "Format",
-                                s1: ElementFS.mapFromFsUri(document.uri),
+                                s1: ElementDocFS.mapFromFsUri(document.uri),
                                 s3: document.getText(),
                                 s5: document.uri,
                                 s6: language
@@ -222,7 +222,7 @@ export class Assist {
                         ideClient.request({
                             id: Assist.ENDPOINT_ID,
                             op: "OrganizeImports",
-                            s1: ElementFS.mapFromFsUri(editor.document.uri),
+                            s1: ElementDocFS.mapFromFsUri(editor.document.uri),
                             s3: editor.document.getText(),
                             i1: 0x03 ,// Combine options: remove unused (0x01) + add missing (0x02)
                             s5: editor.document.uri,
@@ -267,7 +267,7 @@ export class Assist {
     static updateDiagnostics(document: vscode.TextDocument, language: string, collection: vscode.DiagnosticCollection): void {
 
         if (ideClient)
-            ideClient.request({ id: Assist.ENDPOINT_ID, op: "Diagnostics", s1: ElementFS.mapFromFsUri(document.uri), s3: document.getText() , s5: document.uri, s6: language }, (response) => {
+            ideClient.request({ id: Assist.ENDPOINT_ID, op: "Diagnostics", s1: ElementDocFS.mapFromFsUri(document.uri), s3: document.getText() , s5: document.uri, s6: language }, (response) => {
 
                 if (response.x1) {
 

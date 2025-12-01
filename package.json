@@ -8,7 +8,7 @@
 		"name": "Thomas Haber"
 	},
 	"license": "See LICENSE.md",
-	"version": "0.9.38",
+	"version": "0.9.40",
 	"engines": {
 		"vscode": "^1.95.0"
 	},
@@ -48,7 +48,7 @@
 		"onFileSystem:impulseFs"
 	],
 	"main": "./out/extension.js",
-	"contributes": {
+	"contributes": {	
 		"customEditors": [
 			{
 				"viewType": "de.toem.impulse.editor.viewer",
@@ -130,85 +130,6 @@
 				}
 			]
 		},
-		"languageModelTools": [
-			{
-				"name": "impulse_fetchSampleTable",
-				"tags": [
-					"samples",
-					"signal",
-					"impulse"
-				],
-				"toolReferenceName": "samples",
-				"displayName": "Sample Tables",
-				"modelDescription": "Reads information and sample data of a sample table. Returns information about the envolved signals, no of samples, selection and columns and returns the requested samples. ",
-				"userDescription": "Reads information and sample data of a sample table",
-				"canBeReferencedInPrompt": true,
-				"icon": "$(list-unordered)",
-				"inputSchema": {
-					"type": "object",
-					"properties": {
-						"pindex": {
-							"type": "number",
-							"description": "Index of a sample table , typically 1..4",
-							"default": 1
-						},
-						"range": {
-							"type": "string",
-							"description": "The range of samples to be read, e.g. '0-50'. If not given, a max number of  samples are fetched. The range is inclusive, i.e. the first and last sample are included in the result."
-						}
-					}
-				}
-			},
-			{
-				"name": "impulse_getHelp",
-				"tags": [
-					"manual",
-					"api",
-					"impulse"
-				],
-				"toolReferenceName": "impulse",
-				"displayName": "impulse Manual & API",
-				"modelDescription": "earch impulse documentation using natural language. Returns relevant content as markdown for manual pages or Java code for API references. For API questions, include class/method names in your query (e.g., RecordSet, SignalProcessor). For conceptual searches, use specific terminology from the impulse domain (signal visualization, trace analysis, etc.). The tool analyzes your query to find the most relevant documentation sections.",
-				"userDescription": "Read impulse manual and API documentation",
-				"canBeReferencedInPrompt": true,
-				"icon": "$(list-unordered)",
-				"inputSchema": {
-					"type": "object",
-					"properties": {
-						"query": {
-							"type": "string",
-							"description": "The query to search the documentation for. Should contain all relevant context. Should ideally be text and keywords that might appear in the documentation."
-						}
-					},
-					"required": [
-						"query"
-					]
-				}
-			},
-			{
-				"name": "impulse_getHelpContent",
-				"tags": [
-					"manual",
-					"api",
-					"impulse"
-				],
-				"toolReferenceName": "impulse",
-				"displayName": "impulse Manual & API",
-				"modelDescription": "Retrieve specific documentation content by document IDs. Use this after impulse_getHelp identifies relevant content. Returns full documentation text for the provided IDs. If no IDs are provided, returns a metadata index of all available documentation. Document IDs from impulse_getHelp can be passed directly to this tool to get complete documentation sections.",
-				"userDescription": "Read impulse manual and API documentation",
-				"canBeReferencedInPrompt": false,
-				"icon": "$(list-unordered)",
-				"inputSchema": {
-					"type": "object",
-					"properties": {
-						"docIDs": {
-							"type": "string",
-							"description": "The docIDs of the requested help content, sperated by comma."
-						}
-					}
-				}
-			}
-		],
 		"commands": [
 			{
 				"command": "de.toem.impulse.commands.preferences",
@@ -219,7 +140,12 @@
 				"command": "de.toem.impulse.commands.expression",
 				"title": "Executes an impulse expression file",
 				"category": "impulse"
-			}
+			},
+			{
+				"command": "de.toem.impulse.commands.elementFs.open",
+				"title": "Open preference/help FS folder",
+				"category": "impulse"
+			}			
 		],
 		"menus": {
 			"explorer/context": [
@@ -228,6 +154,12 @@
 					"title": "Run impulse Expression",
 					"category": "impulse",
 					"when": "explorerResourceIsFolder == false && resourceExtname == .jx"
+				},
+				{
+					"command": "de.toem.impulse.commands.expression",
+					"title": "Run impulse Expressions in Folder",
+					"category": "impulse",
+					"when": "explorerResourceIsFolder == true"
 				}
 			]
 		},
