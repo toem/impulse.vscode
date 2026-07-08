@@ -1,0 +1,592 @@
+{
+  "commands": [
+    {
+      "command": "de.toem.impulse.commands.views.open",
+      "title": "Open Views...",
+      "category": "impulse",
+      "description": "Open dialog to select and activate available view configurations"
+    },
+    {
+      "command": "de.toem.impulse.commands.view.add",
+      "title": "Add New View...",
+      "category": "impulse",
+      "description": "Create a new custom view configuration with specified layout and preferences"
+    },
+    {
+      "command": "de.toem.impulse.commands.view.clone",
+      "title": "Clone View",
+      "category": "impulse",
+      "description": "Duplicate the currently active view with all its settings and signal selections"
+    },
+    {
+      "command": "de.toem.impulse.commands.view.edit",
+      "title": "Edit View...",
+      "category": "impulse",
+      "description": "Modify properties and settings of the currently active view"
+    },
+    {
+      "command": "de.toem.impulse.commands.view.delete",
+      "title": "Delete View",
+      "category": "impulse",
+      "description": "Permanently remove the currently active view configuration"
+    },
+    {
+      "command": "de.toem.impulse.commands.axis.edit",
+      "title": "Edit Active Axis...",
+      "category": "impulse",
+      "description": "Configure the active axis properties and settings"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.add",
+      "title": "Add New Cursor...",
+      "category": "impulse",
+      "description": "Create a new measurement cursor for the active view to mark specific time positions"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.edit",
+      "title": "Edit Active Cursor...",
+      "category": "impulse",
+      "description": "Modify properties such as position, color, and label of the currently active cursor"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.delete",
+      "title": "Delete Active Cursor",
+      "category": "impulse",
+      "description": "Remove the currently active cursor from the view"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.deleteOther",
+      "title": "Delete Other Cursor",
+      "category": "impulse",
+      "description": "Remove all but not the currently active cursor from the view"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.show",
+      "title": "Show Cursor",
+      "category": "impulse",
+      "description": "Scroll the view to make the cursor visible",
+      "args": [
+        {
+          "name": "target",
+          "description": "Cursor target: 'active', '0', '1', '2', '3'",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "title": "Activate Cursor",
+      "category": "impulse",
+      "description": "Set the specified cursor as the active cursor for navigation and editing",
+      "args": [
+        {
+          "name": "cursor",
+          "description": "Cursor to activate: 'prev', 'next', '0'-'9'",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "command": "de.toem.impulse.commands.goto",
+      "title": "Goto",
+      "category": "impulse",
+      "description": "Navigate to a specific position in the signal data timeline",
+      "args": [
+        {
+          "name": "target",
+          "description": "Navigation target: 'prev', 'next', 'pos1', 'end', 'units'",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.color",
+      "title": "Set Color",
+      "category": "impulse",
+      "description": "Change the visual color of the selected cursor"
+    },
+    {
+      "command": "de.toem.impulse.commands.plot.color",
+      "title": "Set Color",
+      "category": "impulse",
+      "description": "Change the visual color of the selected plot or signal trace"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.load",
+      "title": "Load/Re-Load",
+      "category": "impulse",
+      "description": "Load signal record data from source, or reload to refresh cached data"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.unload",
+      "title": "Un-Load",
+      "category": "impulse",
+      "description": "Unload signal record data from memory to free resources"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.openDiff",
+      "title": "Compare with impulse Viewer",
+      "category": "impulse",
+      "description": "Open the impulse Diff Viewer to compare two signal records side-by-side"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.reload",
+      "title": "Re-Load",
+      "category": "impulse",
+      "description": "Reload the signal record data from the source, discarding cached data"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.reader.edit",
+      "title": "Edit reader",
+      "category": "impulse",
+      "description": "Open dialog to modify the configuration of the active signal reader"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.configuration.edit",
+      "title": "Edit reader configuration",
+      "category": "impulse",
+      "description": "Modify advanced configuration parameters for the active reader instance"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.run",
+      "title": "Run/Stop",
+      "category": "impulse",
+      "description": "Start or stop data acquisition from the active record source",
+      "icon": "$(debug-start)"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.continue",
+      "title": "Continue/Pause",
+      "category": "impulse",
+      "description": "Continue or pause data acquisition without stopping the record source",
+      "icon": "$(debug-continue)"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.addToView",
+      "title": "Append to Active View",
+      "category": "impulse",
+      "description": "Appends the selected scopes or signal to the currently active view",
+      "args": [
+        {
+          "name": "mode",
+          "description": "Add mode: empty (default), 'wrap', 'all', 'all,wrap'",
+          "type": "string",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "command": "de.toem.impulse.commands.axis.domain.zoom.in",
+      "title": "Zoom In",
+      "category": "impulse",
+      "description": "Increase magnification of the time axis to show more detail, centered on the active cursor position. Additional navigation: Use Ctrl+Mouse Wheel Down to zoom in centered on mouse pointer location, or Ctrl+Left Mouse Button drag to select and zoom into a specific range."
+    },
+    {
+      "command": "de.toem.impulse.commands.axis.domain.zoom.out",
+      "title": "Zoom Out",
+      "category": "impulse",
+      "description": "Decrease magnification of the time axis to show wider time range, centered on the active cursor position. Additional navigation: Use Ctrl+Mouse Wheel Up to zoom out centered on mouse pointer location."
+    },
+    {
+      "command": "de.toem.impulse.commands.axis.domain.zoom.fit",
+      "title": "Zoom Fit",
+      "category": "impulse",
+      "description": "Automatically adjust zoom level to fit all visible signal data in the view. Additional navigation: Mouse wheel with Shift scrolls the view horizontally."
+    },
+    {
+      "command": "de.toem.impulse.commands.axis.value.range.set",
+      "title": "Set Value Axis",
+      "category": "impulse",
+      "description": "Configure the vertical axis range for analog signal display"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.details",
+      "title": "Show Cursor Details",
+      "category": "impulse",
+      "description": "Toggle visibility of the cursor details panel showing measurements and timing information"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.record",
+      "title": "Show Record Area",
+      "category": "impulse",
+      "description": "Toggle visibility of the record management area in the viewer"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.vsplit",
+      "title": "Splits the view area vertically",
+      "category": "impulse",
+      "description": "Splits the view area vertically, dividing the viewing space into left and right sections to display multiple views side by side"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.hsplit",
+      "title": "Splits the view tree horizontally",
+      "category": "impulse",
+      "description": "Splits the view tree horizontally, dividing the viewing space into top and bottom sections to display multiple views stacked vertically"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.namesRightAligned",
+      "title": "Show Names Right Aligned",
+      "category": "impulse",
+      "description": "Align signal names to the right side of the name column"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.configIcon",
+      "title": "Show Icons",
+      "category": "impulse",
+      "description": "Display signal icons next to signal names"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.valueColumn",
+      "title": "Show Value Column",
+      "category": "impulse",
+      "description": "Display the active value column showing signal values at cursor position"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.axis",
+      "title": "Show Axis",
+      "category": "impulse",
+      "description": "Display the domain axis (time, sample index, etc.) at the bottom of the viewer"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.grid",
+      "title": "Show Grid",
+      "category": "impulse",
+      "description": "Display background grid lines aligned with axis major ticks for easier value reading"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.fitVertical",
+      "title": "Fit Vertical",
+      "category": "impulse",
+      "description": "Automatically adjust row heights to fit all visible diagrams within the viewer height"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.sticky",
+      "title": "Show Sticky Parents",
+      "category": "impulse",
+      "description": "Displays sticky parents in the tree view, keeping parent nodes visible while scrolling through child elements for better navigation context"
+    },
+    {
+      "command": "de.toem.impulse.commands.ports.add",
+      "title": "Add Port",
+      "category": "impulse",
+      "description": "Create a new signal port connection to import data from external sources"
+    },
+    {
+      "command": "de.toem.impulse.commands.ports.edit",
+      "title": "Edit Port",
+      "category": "impulse",
+      "description": "Modify configuration settings for the selected port"
+    },
+    {
+      "command": "de.toem.impulse.commands.ports.open",
+      "title": "Open Port",
+      "category": "impulse",
+      "description": "Activate and open the selected port for data reception"
+    },
+    {
+      "command": "de.toem.impulse.commands.ports.reset",
+      "title": "Reset Port Preferences",
+      "category": "impulse",
+      "description": "Restore port configuration to default settings"
+    },
+    {
+      "command": "de.toem.impulse.commands.ports.save",
+      "title": "Store Port Preferences",
+      "category": "impulse",
+      "description": "Save current port configuration and preferences for future sessions"
+    },
+    {
+      "command": "de.toem.impulse.commands.ports.iterating",
+      "title": "Single / Multiple",
+      "category": "impulse",
+      "description": "Toggle between single-port and multiple-port iteration mode"
+    },
+    {
+      "command": "de.toem.impulse.commands.ports.updating",
+      "title": "Enable/Disable Updating",
+      "category": "impulse",
+      "description": "Enable or disable automatic updating of port data from sources"
+    },
+    {
+      "command": "de.toem.impulse.commands.showIn.textEditor",
+      "title": "Show in text editor...",
+      "category": "impulse",
+      "description": "Open the selected element in an external text editor for viewing or editing"
+    },
+    {
+      "command": "de.toem.impulse.commands.unpageSignals",
+      "title": "Un-page signal data",
+      "category": "impulse",
+      "description": "Load all paged signal data into memory for faster access and analysis"
+    },
+    {
+      "command": "de.toem.impulse.commands.support.preferences",
+      "title": "Open Preferences...",
+      "category": "impulse",
+      "description": "Open the preferences dialog to configure application-wide settings"
+    },
+    {
+      "command": "de.toem.impulse.commands.support.report",
+      "title": "Report issue or proposal",
+      "category": "impulse",
+      "description": "Open dialog to submit bug reports, feature requests, or improvement proposals"
+    },
+    {
+      "command": "de.toem.impulse.commands.support.help",
+      "title": "Open help",
+      "category": "impulse",
+      "description": "Open help browser"
+    },
+    {
+      "command": "de.toem.impulse.commands.views.enableGroups",
+      "title": "Enable Groups",
+      "category": "impulse",
+      "description": "Enable hierarchical group presentation for organizing related signals together",
+      "icon": "$(symbol-variable)"
+    },
+    {
+      "command": "de.toem.impulse.commands.refresh",
+      "title": "Re-fresh",
+      "category": "impulse",
+      "description": "Update the display to reflect any changes in underlying signal data",
+      "args": [
+        {
+          "name": "mode",
+          "description": "Refresh mode: empty (all), 'signals', 'plots'",
+          "type": "string",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "command": "de.toem.impulse.commands.navigate.goInto",
+      "title": "Go Into",
+      "category": "impulse",
+      "description": "Navigate into the selected folder to show only its contained signals"
+    },
+    {
+      "command": "de.toem.impulse.commands.navigate.up",
+      "title": "Go Up",
+      "category": "impulse",
+      "description": "Navigate up one level in the signal hierarchy"
+    }
+  ],
+  "keybindings": [
+    {
+      "command": "de.toem.impulse.commands.cursor.show",
+      "key": "ctrl+alt+a",
+      "mac": "cmd+alt+a",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "active"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+p",
+      "mac": "cmd+alt+p",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "prev"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+n",
+      "mac": "cmd+alt+n",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "next"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+0",
+      "mac": "cmd+alt+0",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "0"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+1",
+      "mac": "cmd+alt+1",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "1"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+2",
+      "mac": "cmd+alt+2",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "2"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+3",
+      "mac": "cmd+alt+3",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "3"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+4",
+      "mac": "cmd+alt+4",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "4"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+5",
+      "mac": "cmd+alt+5",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "5"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+6",
+      "mac": "cmd+alt+6",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "6"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+7",
+      "mac": "cmd+alt+7",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "7"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+8",
+      "mac": "cmd+alt+8",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "8"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.activate",
+      "key": "ctrl+alt+9",
+      "mac": "cmd+alt+9",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "9"
+    },
+    {
+      "command": "de.toem.impulse.commands.axis.domain.zoom.in",
+      "key": "alt+numpad_add",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.axis.domain.zoom.in",
+      "key": "alt+=",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.axis.domain.zoom.out",
+      "key": "alt+numpad_subtract",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.axis.domain.zoom.out",
+      "key": "alt+-",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.axis.domain.zoom.fit",
+      "key": "alt+shift+3",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.add",
+      "key": "alt+c",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.edit",
+      "key": "alt+e",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.delete",
+      "key": "alt+x",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.cursor.deleteOther",
+      "key": "alt+o",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.details",
+      "key": "alt+d",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.record",
+      "key": "alt+s",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.geometry.vsplit",
+      "key": "alt+i",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.reload",
+      "key": "alt+r",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.views.open",
+      "key": "alt+v",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.addToView",
+      "key": "insert",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.addToView",
+      "key": "ctrl+insert",
+      "mac": "cmd+insert",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "wrap"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.addToView",
+      "key": "alt+insert",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "all"
+    },
+    {
+      "command": "de.toem.impulse.commands.record.addToView",
+      "key": "ctrl+alt+insert",
+      "mac": "cmd+alt+insert",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer'",
+      "args": "all,wrap"
+    },
+    {
+      "command": "de.toem.impulse.commands.goto",
+      "key": "alt+left",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer' || focusedView == 'de.toem.impulse.parts.samples-1' || focusedView == 'de.toem.impulse.parts.samples-2' || focusedView == 'de.toem.impulse.parts.samples-3' || focusedView == 'de.toem.impulse.parts.samples-4' || focusedView == 'de.toem.impulse.parts.sample'",
+      "args": "prev"
+    },
+    {
+      "command": "de.toem.impulse.commands.goto",
+      "key": "alt+right",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer' || focusedView == 'de.toem.impulse.parts.samples-1' || focusedView == 'de.toem.impulse.parts.samples-2' || focusedView == 'de.toem.impulse.parts.samples-3' || focusedView == 'de.toem.impulse.parts.samples-4' || focusedView == 'de.toem.impulse.parts.sample'",
+      "args": "next"
+    },
+    {
+      "command": "de.toem.impulse.commands.goto",
+      "key": "alt+home",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer' || focusedView == 'de.toem.impulse.parts.samples-1' || focusedView == 'de.toem.impulse.parts.samples-2' || focusedView == 'de.toem.impulse.parts.samples-3' || focusedView == 'de.toem.impulse.parts.samples-4' || focusedView == 'de.toem.impulse.parts.sample'",
+      "args": "pos1"
+    },
+    {
+      "command": "de.toem.impulse.commands.goto",
+      "key": "alt+end",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer' || focusedView == 'de.toem.impulse.parts.samples-1' || focusedView == 'de.toem.impulse.parts.samples-2' || focusedView == 'de.toem.impulse.parts.samples-3' || focusedView == 'de.toem.impulse.parts.samples-4' || focusedView == 'de.toem.impulse.parts.sample'",
+      "args": "end"
+    },
+    {
+      "command": "de.toem.impulse.commands.goto",
+      "key": "alt+g",
+      "when": "activeCustomEditorId == 'de.toem.impulse.editor.viewer' || focusedView == 'de.toem.impulse.parts.samples-1' || focusedView == 'de.toem.impulse.parts.samples-2' || focusedView == 'de.toem.impulse.parts.samples-3' || focusedView == 'de.toem.impulse.parts.samples-4' || focusedView == 'de.toem.impulse.parts.sample'",
+      "args": "units"
+    }
+  ]
+}

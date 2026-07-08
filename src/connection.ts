@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
-import * as WebSocket from 'ws';
+import WebSocket = require('ws'); // was import * as WebSocket from 'ws';
 
 export class Connection {
 
@@ -11,6 +11,7 @@ export class Connection {
     protected outbuffer: string[] = [];
     protected inbuffer: string[] = [];
     protected listener: ((message: string) => void) | null = null;
+    protected pingInterval: NodeJS.Timeout | null = null;
 
     public constructor(
         protected protocol: string
@@ -56,7 +57,14 @@ export class Connection {
 
             // message and ping
             console.log('Connection ' + this.protocol + ' established with host ' + host + ' on port ' + port + '.');
-            setInterval(() => { socket.send("ping") }, 1000);
+            if (this.pingInterval) {
+                clearInterval(this.pingInterval);
+            }
+            this.pingInterval = setInterval(() => { 
+                if (socket.readyState === WebSocket.OPEN) {
+                    socket.send("ping");
+                }
+            }, 1000);
 
             // clear buffer
             this.outbuffer.forEach((m) => {
@@ -81,6 +89,10 @@ export class Connection {
             this.socket = socket;
         });
         socket.on('close', () => {
+            if (this.pingInterval) {
+                clearInterval(this.pingInterval);
+                this.pingInterval = null;
+            }
             this.socket = null;
         });
         socket.on('error', (err) => {
@@ -107,9 +119,13 @@ export class Connection {
     }
 
     public close() {
+        if (this.pingInterval) {
+            clearInterval(this.pingInterval);
+            this.pingInterval = null;
+        }
         if (this.socket) { }
         if (this.socket)
-            this.socket.close;
+            this.socket.close();
         this.socket = null;
         const index = Connection.connections.indexOf(this);
         if (index > -1) {

@@ -3,21 +3,14 @@ title: "impulse for VS Code"
 author: "Thomas Haber"
 keywords: [impulse, vscode, extension, signal analysis, visualization, log, trace, wave, IDE, integration, data, automation, preferences]
 description: "VS Code extension for the impulse framework, providing advanced signal analysis, visualization, and integration with diverse data sources. Enables engineers to analyze logs, traces, and simulation data directly in VS Code with a powerful, extensible platform."
-category: "impulse-platform"
-tags:
-  - vscode
-  - extension
-  - impulse
-  - signal
-  - analysis
-  - visualization
-  - integration
-  - platform
+category: "impulse-platforms"
+tags: [vscode, extension, impulse, signal, analysis, visualization, integration, platform ]
 docID: 974
+hash: 16f55e29b3484541dd32cc7cca8550c8
 --->
 # impulse for VS Code
 
-[**impulse**](https://toem.io/index.php/products/impulse) is a powerful visualization and analysis workbench designed to help engineers understand, analyze, and debug complex semiconductor and multi-core software systems. It provides a seamless integration into IDE frameworks and supports a growing set of extensions, such as IoT, language IDEs, and reporting tools. 
+[**impulse**](https://toem.io/products/impulse) is a powerful visualization and analysis workbench designed to help engineers understand, analyze, and debug complex semiconductor and multi-core software systems. It provides a seamless integration into IDE frameworks and supports a growing set of extensions, such as IoT, language IDEs, and reporting tools. 
 
 With its client-server architecture, **impulse** divides workloads between signal-providing tasks (on a simulation or application server) and local analysis tools, ensuring efficient performance. Engineers can use their favorite web IDE to analyze logs, traces, and simulation data without transferring large amounts of data or relying on local tools.
 
@@ -109,7 +102,7 @@ The **Preferences** section allows users to configure various aspects of the imp
 
 ### Preference location and format
 
-Impulse provides flexibility in storing preferences by allowing users to choose between different storage locations. These locations can be configured for various preference categories, such as serializers, adaptors, views, and more. The available storage options are:
+impulse provides flexibility in storing preferences by allowing users to choose between different storage locations. These locations can be configured for various preference categories, such as serializers, adaptors, views, and more. The available storage options are:
 
 - **User**: Stores preferences globally for all workspaces.
 - **Workspace**: Stores preferences specific to the current workspace.
@@ -135,11 +128,10 @@ To modify these preferences, use the [impulse Preference editor](command:de.toem
 
 ## Sources
 
-Find the source code of the vscode extension at [https://github.com/toem/impulse.vscode](https://github.com/toem/impulse.vscode/issues). 
+Find the source code of the vscode extension at [https://github.com/toem/impulse.vscode](https://github.com/toem/impulse.vscode). 
 
 ## Issues and Proposals
 
 Use [https://github.com/toem/impulse.vscode/issues](https://github.com/toem/impulse.vscode/issues) for issues and proposals.
 
 You may use [support@toem.de](mailto:support@toem.de) for further information.
-

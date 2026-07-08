@@ -27,12 +27,27 @@ export function activate(context: vscode.ExtensionContext) {
 	extensionName = context.extension.packageJSON.name;
 	extensionPath = context.extensionPath;
 
-	var extensionAbout = fs.readFileSync(path.join(context.extensionPath, "LICENSE.html"), 'utf8');
+	var extensionAbout = fs.readFileSync(path.join(context.extensionPath, "LICENSE.md"), 'utf8');
 
 	var platformVersion = context.extension.packageJSON.version;
-	var platfromImprint = fs.readFileSync(path.join(context.extensionPath, "IMPRINT.html"), 'utf8');
-	var platformReadme = fs.readFileSync(path.join(context.extensionPath, "README.html"), 'utf8');
-	var platformChangelog = fs.readFileSync(path.join(context.extensionPath, "CHANGELOG.html"), 'utf8');
+	var platfromImprint = fs.readFileSync(path.join(context.extensionPath, "IMPRINT.md"), 'utf8');
+	let platformReadme = '';
+	try {
+		platformReadme = fs.readFileSync(path.join(context.extensionPath, "README.md"), 'utf8');
+	} catch {
+		try {
+			platformReadme = fs.readFileSync(path.join(context.extensionPath, "readme.md"), 'utf8');
+		} catch { }
+	}
+
+	let platformChangelog = '';
+	try {
+		platformChangelog = fs.readFileSync(path.join(context.extensionPath, "CHANGELOG.md"), 'utf8');
+	} catch {
+		try {
+			platformChangelog = fs.readFileSync(path.join(context.extensionPath, "changelog.md"), 'utf8');
+		} catch { }
+	}
 
 	// editors	
 	if (context.extension.packageJSON.contributes && context.extension.packageJSON.contributes.customEditors)
@@ -49,10 +64,10 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// element fs
 	context.subscriptions.push(ElementDocFS.register(context, extensionName + "Fs"));
-	ElementDocFS.addDirectory('global', 'prefs://global/de.toem.impulse.base/',':/global/' ,ElementDocFS.CONTENT_PREF);
-	ElementDocFS.addDirectory('local', 'prefs://local/de.toem.impulse.base/',':/local/' ,ElementDocFS.CONTENT_PREF);
-	ElementDocFS.addDirectory('ws', 'prefs://ws/de.toem.impulse.base/', ':/ws/' ,ElementDocFS.CONTENT_PREF);
-	ElementDocFS.addDirectory('help', 'help:///',':/help/' ,ElementDocFS.CONTENT_DOC);
+	ElementDocFS.addDirectory('global', 'prefs://global/de.toem.impulse.base/', ':/global/', ElementDocFS.CONTENT_PREF);
+	ElementDocFS.addDirectory('local', 'prefs://local/de.toem.impulse.base/', ':/local/', ElementDocFS.CONTENT_PREF);
+	ElementDocFS.addDirectory('ws', 'prefs://ws/de.toem.impulse.base/', ':/ws/', ElementDocFS.CONTENT_PREF);
+	ElementDocFS.addDirectory('help', 'help:///', ':/help/', ElementDocFS.CONTENT_DOC);
 
 	// Scripting
 	//Scripting.registerFor(context, "java,(uri) => uri.scheme == extensionName + "Fs" || uri.path.toLowerCase().endsWith(".recJs"));
@@ -71,6 +86,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// Configuation
 	const config = vscode.workspace.getConfiguration(extensionName);
 
+	let configDialogOpen = false;
 	vscode.workspace.onDidChangeConfiguration(event => {
 		let affected = event.affectsConfiguration(extensionName);
 		if (affected) {
@@ -78,9 +94,57 @@ export function activate(context: vscode.ExtensionContext) {
 			const config = vscode.workspace.getConfiguration(extensionName);
 			//const chelp = config.get('help');
 			//localHelp = (chelp == 'Local');
+
+			// Show reload dialog if not already open
+			if (!configDialogOpen) {
+				configDialogOpen = true;
+				vscode.window.showInformationMessage(
+					`${extensionName} preferences changed. Reload window to apply changes.`,
+					'Reload Window'
+				).then(selection => {
+					configDialogOpen = false;
+					if (selection === 'Reload Window') {
+						vscode.commands.executeCommand('workbench.action.reloadWindow');
+					}
+				});
+			}
 		}
 	})
 
+	// Listen for extension installations/uninstallations with bundles
+	let reloadDialogOpen = false;
+	context.subscriptions.push(
+		vscode.extensions.onDidChange(() => {
+			// Ignore if dialog is already open
+			if (reloadDialogOpen) {
+				return;
+			}
+
+			// Check if any extension has impulse bundles
+			let hasBundleExtension = false;
+			for (let extension of vscode.extensions.all) {
+				if (extension.packageJSON &&
+					extension.packageJSON[extensionName + "Bundles"] &&
+					extensionName != extension.packageJSON.name) {
+					hasBundleExtension = true;
+					break;
+				}
+			}
+
+			if (hasBundleExtension) {
+				reloadDialogOpen = true;
+				vscode.window.showInformationMessage(
+					`${extensionName} extension change detected. Reload window to apply changes.`,
+					'Reload Window'
+				).then(selection => {
+					reloadDialogOpen = false;
+					if (selection === 'Reload Window') {
+						vscode.commands.executeCommand('workbench.action.reloadWindow');
+					}
+				});
+			}
+		})
+	);
 
 	// retrieve values
 	const cjava = config.get('java');
@@ -140,7 +204,7 @@ export function activate(context: vscode.ExtensionContext) {
 		for (let bundle of context.extension.packageJSON[extensionName + "Bundles"]) {
 			if (typeof bundle === 'string') {
 				const bundlePath = vscode.Uri.file(path.join(context.extension.extensionPath, bundle));
-				bundles += ' -D' + extensionName + '.bundle.' + index + '="' + bundlePath.toString() + '"';
+				bundles += ' -D' + 'bundle.' + index + '="' + bundlePath.toString() + '"';
 				index = index + 1;
 			}
 		}
@@ -149,7 +213,7 @@ export function activate(context: vscode.ExtensionContext) {
 				for (let bundle of extension.packageJSON[extensionName + "Bundles"]) {
 					if (typeof bundle === 'string') {
 						const bundlePath = vscode.Uri.file(path.join(extension.extensionPath, bundle));
-						bundles += ' -D' + extensionName + '.bundle.' + index + '="' + bundlePath.toString() + '"';
+						bundles += ' -D' + 'bundle.' + index + '="' + bundlePath.toString() + '"';
 						index = index + 1;
 					}
 				}
@@ -165,7 +229,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const serverPath = vscode.Uri.file(path.join(context.extensionPath, extensionName));
 		const osgi = vscode.Uri.file(
 			path.join(context.extensionPath, extensionName, "plugins", 'org.eclipse.osgi_3.16.200.v20210226-1447.jar'));
-		const cmd = cjava + (cxdebugger == true ? ' -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:8888,server=y,suspend=n' : '') + (port > 0 ? ' -Dport=' + port : '') + bundles + ' -jar  "' + osgi.fsPath + '"';
+		const cmd = cjava + (cxdebugger == true ? ' -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:8888,server=y,suspend=n' : '') + ' -Dfrontend=true -Dmcp=true ' + (port > 0 ? ' -Dport=' + port : '') + bundles + ' -jar  "' + osgi.fsPath + '"';
 		console.log('cmd: ' + cmd);
 
 		// process	
@@ -253,30 +317,53 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// execute expressions 
 	context.subscriptions.push(vscode.commands.registerCommand("de.toem.impulse.commands.expression", (focus: any, selection: vscode.Uri[]) => {
+
+
 		var label: string = 'Expression';
 		var expr: string = '';
 		var pwd: string = '';
 
+		// If focus.file exists, stub selection to contain that file
+		if (focus && focus.file && (!selection || selection.length === 0)) {
+			const absolutePath = path.isAbsolute(focus.file)
+				? focus.file
+				: path.resolve(vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '', focus.file);
+			const fileUri = vscode.Uri.file(absolutePath);
+			selection = [fileUri];
+		}
+
+		// If focus.files exists (array), stub selection to contain those files
+		if (focus && focus.files && Array.isArray(focus.files) && (!selection || selection.length === 0)) {
+			selection = focus.files.map((file: string) => {
+				const absolutePath = path.isAbsolute(file)
+					? file
+					: path.resolve(vscode.workspace.workspaceFolders?.[0]?.uri.fsPath || '', file);
+				return vscode.Uri.file(absolutePath);
+			});
+		}
+
+		// if selection exists
 		if (selection && selection.length > 0) {
 			// Process each selected file or folder separately
 			for (let i = 0; i < selection.length; i++) {
 				const uri = selection[i];
 				try {
 					const stat = fs.statSync(uri.fsPath);
-					
+
 					if (stat.isDirectory()) {
 						// Handle folder: process all .jx files in direct children
 						const files = fs.readdirSync(uri.fsPath);
 						for (const file of files) {
 							if (file.toLowerCase().endsWith('.jx')) {
 								const filePath = path.join(uri.fsPath, file);
+								const fileUri = vscode.Uri.file(filePath);
 								try {
 									const fileData = fs.readFileSync(filePath, 'utf8');
 									const fileLabel = file;
-									const filePwd = uri.fsPath;
-									
+
 									// Send separate execute command for each .jx file
-									ideClient.send({ id: 0, op: 'execute', s0: fileLabel, s1: fileData, s2: filePwd, i3: 1 });
+									// s2 is now the URI string instead of pwd
+									ideClient.send({ id: 0, op: 'execute', s0: fileLabel, s1: fileData, s2: fileUri.toString(), i3: 1 });
 								} catch (err) {
 									if (err instanceof Error) {
 										vscode.window.showErrorMessage(`Failed to read file ${file}: ${err.message}`);
@@ -290,10 +377,10 @@ export function activate(context: vscode.ExtensionContext) {
 						// Handle file: process normally
 						const fileData = fs.readFileSync(uri.fsPath, 'utf8');
 						const fileLabel = path.basename(uri.fsPath);
-						const filePwd = path.dirname(uri.fsPath);
-						
+
 						// Send separate execute command for each file
-						ideClient.send({ id: 0, op: 'execute', s0: fileLabel, s1: fileData, s2: filePwd, i3: 1 });
+						// s2 is now the URI string instead of pwd
+						ideClient.send({ id: 0, op: 'execute', s0: fileLabel, s1: fileData, s2: uri.toString(), i3: 1 });
 					}
 				} catch (err) {
 					if (err instanceof Error) {
@@ -308,8 +395,8 @@ export function activate(context: vscode.ExtensionContext) {
 			if (activeEditor) {
 				label = path.basename(activeEditor.document.fileName);
 				expr = activeEditor.document.getText(activeEditor.selection.isEmpty ? undefined : activeEditor.selection);
-				pwd = path.dirname(activeEditor.document.fileName);
-				ideClient.send({ id: 0, op: 'execute', s0: label, s1: expr, s2: pwd, i3: 1 });
+				// s2 is now the URI string instead of pwd
+				ideClient.send({ id: 0, op: 'execute', s0: label, s1: expr, s2: activeEditor.document.uri.toString(), i3: 1 });
 			}
 		}
 
@@ -345,29 +432,29 @@ export function deactivate() {
 	console.log('deactivated');
 }
 
-export function registerMcp(host: string, port: number){
-/*
-    const lm = (vscode as any).lm;
+export function registerMcp(host: string, port: number) {
 
-    if (lm?.registerMcpServerDefinitionProvider) {
-        lm.registerMcpServerDefinitionProvider("de.toem.impulse.mcp-provider", {
-            provideMcpServerDefinitions() {
-                return [
-                    {
-                        id: "impulse",
-                        label: "impulse MCP Server",
-                        type: "http",
-                        uri: vscode.Uri.parse(`http://${host}:${port}/mcp`),
+	const lm = (vscode as any).lm;
+
+	if (lm?.registerMcpServerDefinitionProvider) {
+		lm.registerMcpServerDefinitionProvider("de.toem.impulse.mcp-provider", {
+			provideMcpServerDefinitions() {
+				return [
+					{
+						id: "impulse",
+						label: "impulse",
+						type: "http",
+						uri: vscode.Uri.parse(`http://${host}:${port}/mcp`),
 						headers: {}
-                    }
-                ];
-            }
-        });
-        console.log("HTTP MCP provider registered.");
-    } else {
-        console.warn("MCP API not available in this version of VS Code.");
-    }	
-*/
+					}
+				];
+			}
+		});
+		console.log("HTTP MCP provider registered.");
+	} else {
+		console.warn("MCP API not available in this version of VS Code.");
+	}
+
 }
 
 class IdeClient extends Endpoint {
@@ -419,7 +506,7 @@ class IdeClient extends Endpoint {
 					case "Information": {
 						const title: string = message.s1 + ": " + message.s2;
 						if (message.x3)
-							vscode.window.showInformationMessage(title, ...(message.x2)).then((ret) => {
+							vscode.window.showInformationMessage(title, ...(message.x3)).then((ret) => {
 								endpoint.send({ id: message.id, op: message.op, i0: message.i0, i1: message.x3.indexOf(ret) });
 							});
 						else vscode.window.showInformationMessage(title);
@@ -484,12 +571,12 @@ class IdeClient extends Endpoint {
 							canSelectFolders: false,
 							canSelectFiles: true
 						};
-						
+
 						// Set default path if provided
 						if (message.s2) {
 							options.defaultUri = vscode.Uri.file(message.s2);
 						}
-						
+
 						vscode.window.showOpenDialog(options).then((ret) => {
 							var path: string | null = ret ? ret[0].path : null;
 							endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: path });
@@ -503,12 +590,12 @@ class IdeClient extends Endpoint {
 							canSelectFolders: true,
 							canSelectFiles: false
 						};
-						
+
 						// Set default path if provided
 						if (message.s2) {
 							options.defaultUri = vscode.Uri.file(message.s2);
 						}
-						
+
 						vscode.window.showOpenDialog(options).then((ret) => {
 							var path: string | null = ret ? ret[0].path : null;
 							endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: path });
@@ -589,7 +676,7 @@ class IdeClient extends Endpoint {
 							console.log("[Browser] de.toem.help url:", loc);
 							if (loc && loc.startsWith('help:')) {
 								uri = ElementDocFS.mapToFsUri(loc);
-								uri = uri.with({ path: uri.path+".md" });
+								uri = uri.with({ path: uri.path + ".md" });
 								console.trace("[Browser] markdown.showPreviewToSide uri:", uri.toString());
 								vscode.commands.executeCommand('markdown.showPreviewToSide', uri);
 
@@ -629,17 +716,18 @@ class IdeClient extends Endpoint {
 							this.outputChannels.get(message.s0)?.appendLine(message.s1);
 					}
 						break;
-						
+
 					case "Terminal": {
 						const folderUri = vscode.Uri.file(message.s0);
 						vscode.window.createTerminal({
 							cwd: folderUri.fsPath,
 							name: message.s1 || "impulse Terminal"
 						}).show();
-						
+
 					}
 						break;
 					case "CbText": {
+						var cbRich = message.s1;  // for later
 						vscode.env.clipboard.writeText(this.cbText = message.s0);
 					}
 						break;

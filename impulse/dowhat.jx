@@ -1,0 +1,7 @@
+import de.toem.impulse.api.Serializers;
+
+console.log("huhu");
+var record = Serializers.read(progress,null,"/home/thomas/Workspaces/impulse/de.toem.impulse.extension.eda-waveform/vcd/samples/t0001.recMl",null,console);
+console.log(record.getCell().getName());
+
+

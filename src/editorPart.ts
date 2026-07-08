@@ -123,6 +123,7 @@ class EditorPart extends AbstractPart {
 
 		// close connection on dispose
 		webviewPanel.onDidDispose(e => {
+			this.send({ id: 0, op: "dispose", s0: editprovider.id });
 			this.disconnect();
 			AbstractPart.remove(this);
 		});

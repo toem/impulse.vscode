@@ -8,9 +8,9 @@
 		"name": "Thomas Haber"
 	},
 	"license": "See LICENSE.md",
-	"version": "0.9.40",
+	"version": "0.9.63",
 	"engines": {
-		"vscode": "^1.95.0"
+		"vscode": "^1.99.0"
 	},
 	"icon": "images/lg_impulse.png",
 	"categories": [
@@ -186,7 +186,7 @@
 		},
 		"configuration": [
 			{
-				"title": "Server",
+				"title": "impulse",
 				"properties": {
 					"impulse.java": {
 						"order": 0,
@@ -205,14 +205,9 @@
 						"type": "boolean",
 						"default": false,
 						"description": "Enable java extension debugging."
-					}
-				}
-			},
-			{
-				"title": "Preferences",
-				"properties": {
+					},
 					"impulse.preferences": {
-						"order": 1,
+						"order": 3,
 						"type": "string",
 						"default": "XML",
 						"enum": [
@@ -433,7 +428,14 @@
 					}
 				}
 			}
-		]
+		],
+		"mcpServerDefinitionProviders": [
+			{
+				"id": "de.toem.impulse.mcp-provider",
+				"label": "impulse mcp provider"
+			}
+		]	
+
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
@@ -445,7 +447,7 @@
 		"ws": "^6.2.2"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.95.0",
+		"@types/vscode": "^1.99.0",
 		"@vscode/vsce": "^3.3.0",
 		"@types/ws": "^6.0.0",
 		"@eslint/js": "^9.13.0",
@@ -456,4 +458,5 @@
 		"typescript-eslint": "^8.26.0"
 	},
 	"impulseBundles": []
+
 }

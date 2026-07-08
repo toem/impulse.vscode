@@ -27,6 +27,7 @@ class ViewPart extends AbstractPart {
 		
 		// close connection on dispose
 		webviewView.onDidDispose(e => {
+			this.send({ id: 0, op: "dispose", s0: descriptor });
 			this.disconnect();
 			AbstractPart.remove(this);
 		});

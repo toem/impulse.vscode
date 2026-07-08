@@ -498,7 +498,7 @@ export class ElementDocFS implements vscode.FileSystemProvider {
                         reject(vscode.FileSystemError.FileIsADirectory(uri));
                         return;
                     }
-                    let data = new TextEncoder().encode(response.s2);
+                    let data = (response.i2 == 0) ? new TextEncoder().encode(response.s3) : Buffer.from(response.s3, 'base64');
                     entry.set(data);
                     resolve(data);
 

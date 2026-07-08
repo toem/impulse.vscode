@@ -60,7 +60,7 @@ export class Endpoint {
 	}
 
 	public disconnect() {
-		this.connection.close;
+		this.connection.close();
 	}
 }
 

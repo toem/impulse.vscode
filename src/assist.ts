@@ -266,8 +266,12 @@ export class Assist {
 
     static updateDiagnostics(document: vscode.TextDocument, language: string, collection: vscode.DiagnosticCollection): void {
 
-        if (ideClient)
-            ideClient.request({ id: Assist.ENDPOINT_ID, op: "Diagnostics", s1: ElementDocFS.mapFromFsUri(document.uri), s3: document.getText() , s5: document.uri, s6: language }, (response) => {
+        if (ideClient){
+            var uri = ElementDocFS.mapFromFsUri(document.uri);
+            if (!uri)
+                uri = document.uri.toString();
+
+            ideClient.request({ id: Assist.ENDPOINT_ID, op: "Diagnostics", s1: uri, s3: document.getText() , s5: document.uri, s6: language }, (response) => {
 
                 if (response.x1) {
 
@@ -287,7 +291,7 @@ export class Assist {
                 else collection.set(document.uri, []);
 
             });
-
+        }
     }
 
 
