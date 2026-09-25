@@ -32,7 +32,7 @@ export class Assist {
                                         var x = response.x1[i];
                                         var p = new vscode.CompletionItem(x.la);
                                         if (x.de)
-                                            p.documentation = Assist.createMarkdownString(x.de);
+                                            p.documentation = x.de;
                                         switch (x.ki) {
                                             case "Field": p.kind = vscode.CompletionItemKind.Field; break;
                                             case "Method": p.kind = vscode.CompletionItemKind.Method; break;
@@ -53,7 +53,24 @@ export class Assist {
 
                     });
                 return Promise.reject();
-            }
+            }/*,
+            
+            resolveCompletionItem(item: vscode.CompletionItem, token: vscode.CancellationToken):
+                Thenable<vscode.CompletionItem> {
+                return new Promise(async (resolve) => {
+                    if (item.documentation) {
+                        const result = await Assist.callLLM(
+                            "Generate a short md description (80 words) for the following Java method or field. Return only the markdown text, nothing else:" + item.documentation,
+                            token
+                        );
+                        
+                        if (result) {
+                            item.documentation = Assist.createMarkdownString(result);
+                        }
+                    }
+                    resolve(item);
+                });
+            }*/
         }, '.'));
 
         // Add definition provider (for F12 navigation)
@@ -310,5 +327,54 @@ export class Assist {
         md.supportHtml = true;
         md.isTrusted = true;
         return md;
+    }
+
+    static async callLLM(request: string, token?: vscode.CancellationToken): Promise<string> {
+        try {
+            // Try to select language model - try multiple options
+            let models = await vscode.lm.selectChatModels({ vendor: 'copilot', family: 'gpt-4o' });
+            
+            // Fallback to any gpt-4 model
+            if (!models || models.length === 0) {
+                models = await vscode.lm.selectChatModels({ vendor: 'copilot', family: 'gpt-4' });
+            }
+            
+            // Fallback to any copilot model
+            if (!models || models.length === 0) {
+                models = await vscode.lm.selectChatModels({ vendor: 'copilot' });
+            }
+            
+            // Fallback to any available model
+            if (!models || models.length === 0) {
+                models = await vscode.lm.selectChatModels();
+            }
+            
+            if (!models || models.length === 0) {
+                console.error('No language model available');
+                return '';
+            }
+
+            const model = models[0];
+            console.log('Using language model:', model.id, model.family);
+
+            // Create chat messages
+            const messages = [
+                vscode.LanguageModelChatMessage.User(request)
+            ];
+
+            // Send request to LLM
+            const chatResponse = await model.sendRequest(messages, {}, token);
+
+            // Collect response text
+            let result = '';
+            for await (const fragment of chatResponse.text) {
+                result += fragment;
+            }
+
+            return result;
+        } catch (error) {
+            console.error('LLM call failed:', error);
+            return '';
+        }
     }
 }

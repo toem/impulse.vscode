@@ -8,7 +8,7 @@
 		"name": "Thomas Haber"
 	},
 	"license": "See LICENSE.md",
-	"version": "0.9.63",
+	"version": "0.9.68",
 	"engines": {
 		"vscode": "^1.99.0"
 	},
@@ -425,6 +425,22 @@
 							"Stores preferences in a workspace folder (./impulse)"
 						],
 						"description": "Sets the location of the command preferences. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
+					},
+					"impulse.preferenceLocation.persistence": {
+						"order": 53,
+						"type": "string",
+						"default": "Workspace",
+						"enum": [
+							"User",
+							"Workspace",
+							"Workspace Folder"
+						],
+						"enumDescriptions": [
+							"Stores preferences in user (global) storage -- all workspaces",
+							"Stores preferences in workspace storage",
+							"Stores preferences in a workspace folder (./impulse)"
+						],
+						"description": "Sets the location of the persistence data. You can choose between 'User', 'Workspace' and 'Workspace Folder'."
 					}
 				}
 			}

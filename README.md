@@ -1,14 +1,4 @@
-<!---
-title: "impulse for VS Code"
-author: "Thomas Haber"
-keywords: [impulse, vscode, extension, signal analysis, visualization, log, trace, wave, IDE, integration, data, automation, preferences]
-description: "VS Code extension for the impulse framework, providing advanced signal analysis, visualization, and integration with diverse data sources. Enables engineers to analyze logs, traces, and simulation data directly in VS Code with a powerful, extensible platform."
-category: "impulse-platforms"
-tags: [vscode, extension, impulse, signal, analysis, visualization, integration, platform ]
-docID: 974
-hash: 16f55e29b3484541dd32cc7cca8550c8
---->
-# impulse for VS Code
+# impulse
 
 [**impulse**](https://toem.io/products/impulse) is a powerful visualization and analysis workbench designed to help engineers understand, analyze, and debug complex semiconductor and multi-core software systems. It provides a seamless integration into IDE frameworks and supports a growing set of extensions, such as IoT, language IDEs, and reporting tools. 
 
@@ -17,7 +7,7 @@ With its client-server architecture, **impulse** divides workloads between signa
 **impulse**’s open extension mechanisms allow users to adapt it to their specific needs. Whether defining custom data formats, implementing acquisition interfaces, creating specialized diagrams, or integrating a 3D chart engine, **impulse** offers unparalleled flexibility. Its lightweight frontend and powerful Java backend enable the creation of high-performance, complex analysis applications.
 
 > ## Beta Notice
-> - This VS Code extension is a beta release with core features.
+> - This extension is a beta release with core features.
 > - It may be unstable and contain defects.
 > - Not intended for production use.
 > - Back up important data and use with caution.
@@ -25,12 +15,12 @@ With its client-server architecture, **impulse** divides workloads between signa
 
 ## Scope and Add-ons
 
-- Includes core features and VS Code integration only.
+- Includes core features only.
 - Domain-specific use cases (e.g., EDA, RTOS) requiring additional readers, adaptors, processors, or diagrams are not included.
 - These capabilities are delivered as separate companion extensions (available now or coming soon).
 
 ### Add more features
-- Open the Extensions view in VS Code and search for "impulse".
+- Open the Extensions view and search for "impulse".
 - Install the desired companion extensions (for example, a VCD reader).
 - Reload the window if the backend is already running.
 
@@ -93,7 +83,7 @@ Enter [https://toem.io/resources/](https://toem.io/resources/) for more informat
 
 ## Preferences
 
-The **Preferences** section allows users to configure various aspects of the impulse extension to suit their needs. These include server settings, debugging options, and preference storage locations. Users can modify these settings through the VS Code settings interface or by directly editing the `settings.json` file. Below are some key preferences:
+The **Preferences** section allows users to configure various aspects of the impulse extension to suit their needs. These include server settings, debugging options, and preference storage locations. Users can modify these settings through the settings interface or by directly editing the `settings.json` file. Below are some key preferences:
 
 - **`impulse.java`**: Command to start the Java OSGi backend. Default: `"java -Xms128m -Xmx2048m"`.
 - **`impulse.port`**: Communication port for the backend. Default: `"0"` (random port).
@@ -128,7 +118,7 @@ To modify these preferences, use the [impulse Preference editor](command:de.toem
 
 ## Sources
 
-Find the source code of the vscode extension at [https://github.com/toem/impulse.vscode](https://github.com/toem/impulse.vscode). 
+Find the source code of the extension at [https://github.com/toem/impulse.vscode](https://github.com/toem/impulse.vscode). 
 
 ## Issues and Proposals
 

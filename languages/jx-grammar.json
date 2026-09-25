@@ -49,11 +49,11 @@
       "patterns": [
         {
           "name": "keyword.control.jx",
-          "match": "\\b(if|else|while|for|do|switch|case|default|break|continue|return)\\b"
+          "match": "\\b(function|include|import|uri|var|let|const|if|else|while|for|do|switch|case|default|break|continue|return|new)\\b"
         },
         {
           "name": "keyword.other.jx",
-          "match": "\\b(var|let|const|null|true|false)\\b"
+          "match": "\\b(uri|null|true|false)\\b"
         }
       ]
     },
@@ -65,7 +65,7 @@
         },
         {
           "name": "constant.language.jx",
-          "match": "\\b(null|true|false)\\b"
+          "match": "\\b(uri|null|true|false)\\b"
         }
       ]
     },

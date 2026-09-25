@@ -62,7 +62,7 @@ export function activate(context: vscode.ExtensionContext) {
 				if (view.id)
 					context.subscriptions.push(ViewPartProvider.register(context, view.id));
 
-	// element fs
+	// element fs 
 	context.subscriptions.push(ElementDocFS.register(context, extensionName + "Fs"));
 	ElementDocFS.addDirectory('global', 'prefs://global/de.toem.impulse.base/', ':/global/', ElementDocFS.CONTENT_PREF);
 	ElementDocFS.addDirectory('local', 'prefs://local/de.toem.impulse.base/', ':/local/', ElementDocFS.CONTENT_PREF);
@@ -87,51 +87,45 @@ export function activate(context: vscode.ExtensionContext) {
 	const config = vscode.workspace.getConfiguration(extensionName);
 
 	let configDialogOpen = false;
-	vscode.workspace.onDidChangeConfiguration(event => {
-		let affected = event.affectsConfiguration(extensionName);
-		if (affected) {
-			console.log('affected');
-			const config = vscode.workspace.getConfiguration(extensionName);
-			//const chelp = config.get('help');
-			//localHelp = (chelp == 'Local');
+	context.subscriptions.push(
+		vscode.workspace.onDidChangeConfiguration(event => {
+			let affected = event.affectsConfiguration(extensionName);
+			if (affected) {
+				console.log('affected');
+				const config = vscode.workspace.getConfiguration(extensionName);
+				//const chelp = config.get('help');
+				//localHelp = (chelp == 'Local');
 
-			// Show reload dialog if not already open
-			if (!configDialogOpen) {
-				configDialogOpen = true;
-				vscode.window.showInformationMessage(
-					`${extensionName} preferences changed. Reload window to apply changes.`,
-					'Reload Window'
-				).then(selection => {
-					configDialogOpen = false;
-					if (selection === 'Reload Window') {
-						vscode.commands.executeCommand('workbench.action.reloadWindow');
-					}
-				});
+				// Show reload dialog if not already open
+				if (!configDialogOpen) {
+					configDialogOpen = true;
+					vscode.window.showInformationMessage(
+						`${extensionName} server preferences changed. Reload window to apply changes.`,
+						'Reload Window'
+					).then(selection => {
+						configDialogOpen = false;
+						if (selection === 'Reload Window') {
+							vscode.commands.executeCommand('workbench.action.reloadWindow');
+						}
+					});
+				}
 			}
-		}
-	})
+		})
+	);
 
 	// Listen for extension installations/uninstallations with bundles
+	const getBundleExtensions = () => vscode.extensions.all
+		.filter(ext => ext.packageJSON?.[extensionName + "Bundles"] && ext.packageJSON.name !== extensionName)
+		.map(ext => ext.id);
+	
+	let bundleExtensions = getBundleExtensions();
 	let reloadDialogOpen = false;
 	context.subscriptions.push(
 		vscode.extensions.onDidChange(() => {
-			// Ignore if dialog is already open
-			if (reloadDialogOpen) {
-				return;
-			}
-
-			// Check if any extension has impulse bundles
-			let hasBundleExtension = false;
-			for (let extension of vscode.extensions.all) {
-				if (extension.packageJSON &&
-					extension.packageJSON[extensionName + "Bundles"] &&
-					extensionName != extension.packageJSON.name) {
-					hasBundleExtension = true;
-					break;
-				}
-			}
-
-			if (hasBundleExtension) {
+			if (reloadDialogOpen) return;
+			const newBundleExtensions = getBundleExtensions();
+			if (JSON.stringify(bundleExtensions.sort()) !== JSON.stringify(newBundleExtensions.sort())) {
+				bundleExtensions = newBundleExtensions;
 				reloadDialogOpen = true;
 				vscode.window.showInformationMessage(
 					`${extensionName} extension change detected. Reload window to apply changes.`,
@@ -172,6 +166,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const cPreferenceLocationColors: any = options.indexOf(config.get('preferenceLocation.colors') || "");
 	const cPreferenceLocationParts: any = options.indexOf(config.get('preferenceLocation.parts') || "");
 	const cPreferenceLocationCommands: any = options.indexOf(config.get('preferenceLocation.commands') || "");
+	const cPreferenceLocationPersistence: any = options.indexOf(config.get('preferenceLocation.persistence') || "");
 	const preferenceScopes = {
 		"de.toem.impulse.base/serializers": cPreferenceLocationSerializer,
 		"de.toem.impulse.base/adaptors": cPreferenceLocationAdaptors,
@@ -186,7 +181,8 @@ export function activate(context: vscode.ExtensionContext) {
 		"de.toem.impulse.base/licenses": cPreferenceLocationLicenses,
 		"de.toem.impulse.base/colors": cPreferenceLocationColors,
 		"de.toem.impulse.base/parts": cPreferenceLocationParts,
-		"de.toem.impulse.base/commands": cPreferenceLocationCommands
+		"de.toem.impulse.base/commands": cPreferenceLocationCommands,
+		"de.toem.impulse.base/persistence": cPreferenceLocationPersistence
 	}
 
 	// get host
@@ -271,9 +267,11 @@ export function activate(context: vscode.ExtensionContext) {
 	// start IDE connection
 	ideClient = new IdeClient(new Connection('ide'));
 	var globalStorage: string = context.globalStorageUri ? context.globalStorageUri.toString() + '/preferences/' : "";
-	var localStorage: string = context.storageUri ? context.storageUri.toString() + '/preferences/' : "";
-	var workspaceStorage: string = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.toString() + '/.impulse/' : "";
-	ideClient.send({ id: 0, op: 'init', x0: preferenceScopes, s1: globalStorage, s2: localStorage, s3: workspaceStorage, s4: extensionAbout, s5: platfromImprint, s6: platformReadme, s7: platformChangelog });
+	var localStorage: string = context.storageUri ? context.storageUri.toString() + '/preferences/' : globalStorage;
+	var workspaceStorage: string = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders[0].uri.toString() + '/.impulse/' : globalStorage;
+	var workspaceFolderUris: string[] = vscode.workspace.workspaceFolders ? vscode.workspace.workspaceFolders.map(folder => folder.uri.toString()) : [];
+
+	ideClient.send({ id: 0, op: 'init', x0: preferenceScopes, s1: globalStorage, s2: localStorage, s3: workspaceStorage, x4: workspaceFolderUris, s5: extensionAbout, s6: platfromImprint, s7: platformReadme, s8: platformChangelog });
 
 	// commands
 
@@ -422,12 +420,18 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 
-export function deactivate() {
+export async function deactivate() {
 
 	console.log('deactivate');
 
-	if (ideClient)
+	if (ideClient) {
+		try {
+			await ideClient.promiseRequest({ id: 0, op: 'shutdown' }, 2000);
+		} catch (err) {
+			console.log('shutdown request failed or timed out', err);
+		}
 		ideClient.disconnect();
+	}
 
 	console.log('deactivated');
 }
@@ -436,7 +440,21 @@ export function registerMcp(host: string, port: number) {
 
 	const lm = (vscode as any).lm;
 
-	if (lm?.registerMcpServerDefinitionProvider) {
+	if ('cursor' in vscode && (vscode as any).cursor?.mcp) {
+
+		// Safely call the Cursor API (cast to 'any' to bypass strict TypeScript compiler checks)
+		const cursorMcp = (vscode as any).cursor.mcp;
+
+		cursorMcp.registerServer({
+			name: "impulse",
+			server: {
+				url: `http://${host}:${port}/mcp`,
+				headers: {}
+			}
+		});
+
+		console.log("HTTP MCP provider registered. (Cursor)");
+	} else if (lm?.registerMcpServerDefinitionProvider) {
 		lm.registerMcpServerDefinitionProvider("de.toem.impulse.mcp-provider", {
 			provideMcpServerDefinitions() {
 				return [
@@ -452,7 +470,7 @@ export function registerMcp(host: string, port: number) {
 		});
 		console.log("HTTP MCP provider registered.");
 	} else {
-		console.warn("MCP API not available in this version of VS Code.");
+		console.warn("MCP API not available in this version of VS Code/Cursor.");
 	}
 
 }
@@ -462,6 +480,9 @@ class IdeClient extends Endpoint {
 	private outputChannels = new Map<string, vscode.OutputChannel>();
 	private progressMessages = new Map<number, any>();
 	private inputValidator = new Map<number, any>();
+	private activeReads = new Map<string, Uint8Array>();
+	private activeWrites = new Map<string, Buffer[]>();
+	private stattedUris = new Map<string, vscode.Uri>();
 	private cbText: string = "";
 
 	public constructor(
@@ -486,6 +507,16 @@ class IdeClient extends Endpoint {
 			});
 
 		}, 1000);
+
+		const watcher = vscode.workspace.createFileSystemWatcher('**/*');
+		const notifyChange = (uri: vscode.Uri) => {
+			const key = uri.toString();
+			if (this.stattedUris.has(key))
+				this.send({ id: -11, op: "FsNotify", s1: key });
+		};
+		watcher.onDidChange(notifyChange);
+		watcher.onDidCreate(notifyChange);
+		watcher.onDidDelete(notifyChange);
 	}
 
 	protected handle(message: any) {
@@ -729,6 +760,116 @@ class IdeClient extends Endpoint {
 					case "CbText": {
 						var cbRich = message.s1;  // for later
 						vscode.env.clipboard.writeText(this.cbText = message.s0);
+					}
+						break;
+					case "FsStat": {
+
+						var uri: vscode.Uri = vscode.Uri.parse(message.s1);
+						this.stattedUris.set(message.s1, uri);
+
+						vscode.workspace.fs.stat(uri).then((stat) => {
+							const sendResult = (children: number) => {
+								endpoint.send({
+									id: message.id, op: message.op, i0: message.i0, s1: message.s1,
+									i2: stat.type, d3: stat.ctime, d4: stat.mtime, d5: stat.size, i6: stat.permissions ?? 0, i7: children
+								});
+							};
+							if (stat.type & vscode.FileType.Directory)
+								vscode.workspace.fs.readDirectory(uri).then((entries) => {
+									sendResult(entries.length);
+								}, () => {
+									sendResult(0);
+								});
+							else
+								sendResult(0);
+						}, (err) => {
+							endpoint.send({ id: message.id, op: message.op, i0: message.i0,  s1: message.s1, i2: -1 });
+						});
+					}
+						break;
+					case "FsChildren": {
+
+						var uri: vscode.Uri = vscode.Uri.parse(message.s1);
+						var max: number = message.i2;
+						var pos: number = message.i3;
+
+						vscode.workspace.fs.readDirectory(uri).then((entries) => {
+							const end = max > 0 ? Math.min(pos + max, entries.length) : entries.length;
+							const names = entries.slice(pos, end).map(([name]) => name);
+							const remaining = entries.length - end;
+							endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: message.s1, i2: remaining, x3: names });
+						}, (err) => {
+							endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: message.s1, i2: -1 });
+						});
+					}
+						break;
+					case "FsRead": {
+
+						var uri: vscode.Uri = vscode.Uri.parse(message.s1);
+						var max: number = message.i2;
+						var pos: number = message.i3;
+						console.log("read",uri.toString(),max, pos);
+						// pos == -1 ends (cancels) an active read for this uri
+						if (pos == -1) {
+							this.activeReads.delete(message.s1);
+							endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: message.s1, i2: 0, s3: "" });
+							break;
+						}
+
+						const sendChunk = (data: Uint8Array) => {
+							const end = max > 0 ? Math.min(pos + max, data.length) : data.length;
+							const chunk = data.subarray(pos, end);
+							const base64 = Buffer.from(chunk).toString('base64');
+							const remaining = data.length - end;
+							if (remaining <= 0)
+								this.activeReads.delete(message.s1);
+							endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: message.s1, i2: remaining, s3: base64 });
+							//console.log("send",uri.toString(),max, pos,remaining);
+						};
+
+						const active = this.activeReads.get(message.s1);
+						if (active) {
+							sendChunk(active);
+						} else {
+							vscode.workspace.fs.readFile(uri).then((data) => {
+								this.activeReads.set(message.s1, data);
+								sendChunk(data);
+							}, (err) => {
+								endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: message.s1, i2: -1 });
+								//console.log("err",uri.toString());
+							});
+						}
+					}
+						break;
+					case "FsWrite": {
+
+						var uri: vscode.Uri = vscode.Uri.parse(message.s1);
+						var pos: number = message.i2;
+						var remaining: number = message.i3;
+
+						// pos == -1 aborts (cancels) an active write for this uri
+						if (pos == -1) {
+							this.activeWrites.delete(message.s1);
+							endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: message.s1, i2: 0 });
+							break;
+						}
+
+						const chunk = Buffer.from(message.s4 ?? "", 'base64');
+						const chunks = this.activeWrites.get(message.s1) ?? [];
+						chunks.push(chunk);
+						this.activeWrites.set(message.s1, chunks);
+
+						if (remaining <= 0) {
+							this.activeWrites.delete(message.s1);
+							const data = Buffer.concat(chunks);
+							vscode.workspace.fs.writeFile(uri, data).then(() => {
+								endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: message.s1, i2: 0 });
+							}, (err) => {
+								endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: message.s1, i2: -1 });
+							});
+						} else {
+							endpoint.send({ id: message.id, op: message.op, i0: message.i0, s1: message.s1, i2: remaining });
+						}
 					}
 						break;
 				}

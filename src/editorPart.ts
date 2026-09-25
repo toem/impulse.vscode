@@ -45,8 +45,8 @@ class Document extends Disposable implements vscode.CustomDocument {
 			});
 		}
 		if (_uri.scheme == 'pref') {
-			this.type = _uri.scheme;	
-			this.content = [];		
+			this.type = _uri.scheme;
+			this.content = [];
 		}
 	}
 
@@ -110,16 +110,22 @@ class EditorPart extends AbstractPart {
 		super(editprovider, webviewPanel.webview, connection);
 
 		// request the part
-		this.init  = { id: 0, op: "init", s0: editprovider.id };
+		this.init = { id: 0, op: "init", s0: editprovider.id };
 		if (document.type && document.content) {
 			this.init.s1 = document.type;
 			document.content.forEach((uri, n) => {
-				this.init['s' + (n + 2)] = uri.scheme + ':' + uri.path;
+				this.init['s' + (n + 2)] = uri.toString();
 			});
 		} else {
-			this.init.s2 = document.uri.scheme + ':' + document.uri.path
+			this.init.s2 = document.uri.toString()
 		}
-		this.send(this.init);
+		this.request(this.init, (response) => {
+			if (!response.t1) {
+				console.log("could not open");
+				vscode.window.showErrorMessage(`Could not open ${document.uri.fsPath}.`);
+				webviewPanel.dispose();
+			}
+		});
 
 		// close connection on dispose
 		webviewPanel.onDidDispose(e => {
